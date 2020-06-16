@@ -3,16 +3,26 @@
   display: flex;
   ul {
     list-style: none;
-    padding: 1.8rem;
+    // padding: 1.8rem;
     margin:0 auto;
     display: flex;
     justify-content: space-between;
 
   }
   li {
-    display: inline-block;
+    display: block;
     margin-left: 2rem;
-   
+    height: 3rem;
+    padding: {
+      top: 1.5rem; 
+      left: .2rem;
+      right: .2rem;
+    }; 
+    
+    &:hover {
+      background-color: rgba(187, 187, 187, 0.616)
+      // box-shadow: inset -1px -10px 5px -5px rgb(187, 187, 187);
+    }
   }
 
   a{

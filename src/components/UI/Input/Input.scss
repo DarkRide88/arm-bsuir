@@ -10,13 +10,23 @@
   input {
     display: block;
     box-sizing: border-box;
-    border: 1px solid #bebebe;
+    border: 2px solid rgba(220,220,220,1);
     padding: 7px;
     margin: 0 0 5px;
     width: 100%;
     outline: none;
+    
     transition: all .3 ease-in-out;
-    border-radius: 3px;
+   
+    transition: border-color .3s;
+    &:focus{
+      outline: none;
+    }
+    &:hover {
+      border: 2px solid #bebebe;
+      width: 100%;
+      box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
+    }
   }
   span {
     color: #f01f30;
@@ -26,4 +36,9 @@
   &.invalid label {
     color: #f01f30!important;
   }
+  
+}
+
+.error-message {
+  position: absolute;
 }

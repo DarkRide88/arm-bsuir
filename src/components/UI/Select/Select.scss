@@ -11,9 +11,25 @@
     box-sizing: border-box;
     border: 1px solid #bebebe;
     margin: 0 0 5px;
-    height: 29px;
+    height: 2rem;
     width: 100%;
-    outline: none;
-    transition: all 300ms ease-in-out;
+    outline: none; 
+    border: 2px solid rgba(220,220,220,1);
+    width: 100%;
+    box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
+    transition: border-color .3s;
+    font-family: sans-serif;
+    font-size: .9rem;
+    padding-left: .1rem;  
+    &:focus{
+      outline: none;
+    }
+    &:hover {
+      border-color: #17179b60;
+    }  
+  }
+  option {
+    background-color:rgb(255, 255, 255);
+    border-radius: 2px;
   }
 }

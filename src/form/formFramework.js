@@ -9,23 +9,26 @@ export function createControl(config, validation) {
 }
 
 export function validate(value, validation = null) {
+  console.log(validation)
+  
   if (!validation) {
     return true
   }
 
   let isValid = true
 
-  if(validation.required) {
+  if(validation.required) {  
     isValid = value.trim() !== '' & isValid
-  }
-  return isValid
+  } 
+  return isValid === 1
 }
 
-export function validateForm(formControls) {
+export function validateForm(control1, control2) {
+  let controls = control1.concat(control2)
   let isFormValid = true
-  for (let control in formControls) {
-    if (formControls.hasOwnProperty(control)) {
-      isFormValid = formControls[control].valid && isFormValid
+  for (let control in controls) {
+    if (controls.hasOwnProperty(control)) {
+      isFormValid = controls[control].valid && isFormValid
     }
   }
   return isFormValid

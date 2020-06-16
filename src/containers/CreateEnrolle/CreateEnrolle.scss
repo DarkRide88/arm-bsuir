@@ -1,4 +1,58 @@
+
 .create-enrolle {
   display: flex;
   justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  div {
+    margin-left: .2rem;
+  }
+  form{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;   
+    align-items: flex-start;
+
+    input, select {
+      max-width:30rem;  
+    }  
+    hr{
+      width: 100%;
+    }     
+  }
+
+  h1{
+    margin: 0 auto;
+    padding:20px;
+  }
+  &__item1,&__item2{
+    padding: 20px;
+    border: 1px solid #17179b;
+    background-color:  #17179b;
+    border-radius: 3px;
+    color: white;
+    display:flex;
+    flex-direction: column;  
+  }
+  &__item1{
+    height: 38.45rem;
+  }
+  &__item2{
+    flex-grow: 0.7;
+    display:flex;
+    flex-direction: wrap;
+    flex-wrap: wrap;       
+    
+  }
+  &__certificate {
+    height: 34rem;
+    display:flex;
+    flex-wrap: wrap; 
+    flex-direction: column
+  }
+  select {
+    height: 2rem;
+  }
 }
+
+

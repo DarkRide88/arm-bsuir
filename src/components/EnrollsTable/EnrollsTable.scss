@@ -1,0 +1,29 @@
+.enrolls-table {
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    margin-top: 10px;
+    tr {
+      text-align: left;
+      transition: box-shadow .3s; 
+      user-select: none;  
+     
+    }
+    td,th {
+      padding: 1rem;        
+    }
+    tbody tr {
+      background-color: rgba(187, 187, 187, 0.199);
+    }
+    tbody tr:hover {
+      box-shadow: -9px 10px 17px -8px rgba(0,0,0,0.55);
+    
+    }
+    a {
+
+    }
+    tbody tr:nth-child(2n) {
+      background-color: rgba(187, 187, 187, 0.075);     
+    }
+  }
+}

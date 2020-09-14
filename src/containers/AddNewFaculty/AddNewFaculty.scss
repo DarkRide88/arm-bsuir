@@ -1,0 +1,42 @@
+.add-new-faculty {
+  margin: 0 auto;
+  margin-top: 1rem;
+  width: 60rem;
+  
+  text-align: center;
+  div {
+    margin: 0 auto;
+    
+    text-align: left;
+  }
+  input {
+   
+  }
+  input:nth-child(1) {
+    padding: 20px;
+    border: 1px solid green;
+  }
+  form {    
+    margin: 0 auto;
+    position: relative;
+  }
+  button {    
+    font-size: .6rem;
+    font-style: normal;
+    margin: 0;;
+    // position: absolute;
+    // right: 0px;
+   
+  }
+}
+.facultyName {
+  
+  input {
+    padding: 1rem;
+  }
+}
+.specialities {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

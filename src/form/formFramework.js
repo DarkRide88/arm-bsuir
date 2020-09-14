@@ -9,7 +9,7 @@ export function createControl(config, validation) {
 }
 
 export function validate(value, validation = null) {
-  console.log(validation)
+  
   
   if (!validation) {
     return true

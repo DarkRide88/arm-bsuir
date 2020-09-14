@@ -10,7 +10,7 @@
     text-align: left;
   }
   input {
-   
+   width: 100%;
   }
   input:nth-child(1) {
     padding: 20px;
@@ -33,10 +33,18 @@
   
   input {
     padding: 1rem;
+    
   }
 }
 .specialities {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  // justify-content: space-around;
+  // width: 300px;
+
+  input {
+    width: 100%;
+    max-width: 500px;
+    width: 400px;
+  }
 }

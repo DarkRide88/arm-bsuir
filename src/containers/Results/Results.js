@@ -47,23 +47,25 @@ class Results extends React.Component {
     })  
     return numberOfPlaces
   }
+
   renderEnrollers() {
     let numberOfPlaces = this.getNumberOfPlaces()
+    let count = []
     if(this.state.enrollers) {
       return Object.values(this.state.enrollers).sort((a, b) => a.avgMark < b.avgMark ? 1 : -1).map((enroll, index) => {             
-        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && faculty[this.state.facultyName] && index <= numberOfPlaces) {
-          console.log(enroll.specialtyName + this.state.specialtyName)
-        }
-        // console.log(enroll.specialtyName + this.state.specialtyName)
-        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && faculty[this.state.facultyName] && index+1 <= numberOfPlaces) {       
-          // console.log('Inside ' + enroll)
-          return(
-            <tr  key={index}>
-              <td>{enroll.name}</td>          
-              <td>{enroll.avgMark}</td>     
-        
-            </tr>
-          )
+      
+        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && faculty[this.state.facultyName] ) {                    
+          count.push(index)
+          if(count.length <= numberOfPlaces ){
+            return(
+              <tr  key={index}>
+                <td>{enroll.name}</td>          
+                <td>{enroll.avgMark}</td>     
+          
+              </tr>
+            )
+          }
+         
         } 
       
       })

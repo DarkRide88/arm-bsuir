@@ -5,7 +5,7 @@ import {faculty,enrolleeControlsData,certificateControlsData} from '../../contai
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
 import { validate, validateForm} from '../../form/formFramework'
-import {renderControls,renderOptions} from '../CreateEnrolle/CreateEnrolle'
+import {renderControls,renderOptions} from '../../utils/formControlsUtils'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 
@@ -120,6 +120,7 @@ class Enrollee extends React.Component {
   }
 
   changeCertificate = (value, controlName, controls) => { 
+    console.log(controls)
     const enrollee = this.state.enrollee
     const formControls = [...controls];
     const control = formControls[controlName]
@@ -137,10 +138,9 @@ class Enrollee extends React.Component {
     enrollee.сertificate.belLitr = controls[7].value
     enrollee.сertificate.russianLitr = controls[8].value
     enrollee.сertificate.physicalEduc = controls[9].value
-    enrollee.сertificate.english = controls[10].value
-    enrollee.сertificate.historyBel = controls[11].value
-    enrollee.сertificate.historyWorld = controls[12].value
-    enrollee.сertificate.computerScince = controls[13].value
+    enrollee.сertificate.historyBel = controls[10].value
+    enrollee.сertificate.historyWorld = controls[11].value
+    enrollee.сertificate.computerScince = controls[12].value
     this.setState({    
       enrollee,         
       isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)

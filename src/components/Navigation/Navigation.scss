@@ -7,11 +7,14 @@
     margin:0 auto;
     display: flex;
     justify-content: space-between;
+    padding: 0;
+    max-width: 100rem;
+    width: 60rem;
+    
 
   }
   li {
-    display: block;
-    margin-left: 2rem;
+  
     height: 3rem;
     padding: {
       top: 1.5rem; 

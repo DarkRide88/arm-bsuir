@@ -10,7 +10,7 @@ import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
 
 
-// const controlsNames = [['Фио','text'],['Дата рождения', 'date'],['Адрес'],['Номер телефона'], ['Номер паспорта'] ]
+
 
 export const createFormControls = (controlNames) =>{ 
   let form = controlNames.map(control => {   
@@ -19,7 +19,8 @@ export const createFormControls = (controlNames) =>{
       name: control[2],
       label: control[0],
       type: control[1],
-      errorMessage: 'Неверные данные'
+      errorMessage: 'Неверные данные',
+      placeholder: control[4],
     }, {required: true})
     
   })
@@ -149,7 +150,7 @@ class CreateEnrolle extends React.Component {
     const enrollee = this.state.enrollee
     enrollee.facultyName = event.target.value;
     enrollee.specialtyName = faculty[event.target.value][0]["speaciality"].name;
-    enrollee.
+   
     this.setState({
       enrollee,
     })

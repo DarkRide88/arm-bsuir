@@ -7,6 +7,10 @@ import Enrollee from './containers/Enrollee/Enrollee';
 import Schedule from './containers/Schedule/Schedule'
 import Exams from './containers/Exams/Exams'
 import Results from './containers/Results/Results'
+import Faculty from './containers/Faculty/Faculty'
+import FacultyList from './containers/FacultyList/FacultyList';
+import EditFaculty from './containers/EditFaculty/EditFaculty';
+import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';
 function App() {
 
   return (
@@ -18,6 +22,10 @@ function App() {
           <Route path='/exams' exact component={Exams}/>
           <Route path='/results' exact component={Results}/>
           <Route path='/enrollee/:id' exact component={Enrollee}/>        
+          <Route path='/faculty' exact component={Faculty}/>   
+          <Route path='/faculty-list' exact component={FacultyList}/>  
+          <Route path='/edit-faculty' exact component={EditFaculty}/>  
+          <Route path='/add-new-faculty' exact component={AddNewFaculty}/>       
           <Redirect to='/' />
         </Switch>
     </Layout>

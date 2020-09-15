@@ -21,36 +21,6 @@ export const createFormControls = (controlNames) =>{
   return form 
 }
 
-export const renderOptions = (faculty,facultyName, changeHandler,specialtyHandler, state ) => { 
-  console.log(facultyName)
-  return (  
-  <Auxillary>
-  <Select 
-      label="Выберите факультет"      
-      onChange={(event) => {changeHandler(event)}}    
-      value = {state.enrollee.facultyName}     
-      options={
-        Object.keys(faculty).map((faculty, index)=> { 
-          return {text: faculty, value: faculty}   
-        })          
-      }
-      
-  />    
-  <Select      
-    label="Выберите cпециальность"      
-    onChange={(event) => {specialtyHandler(event)}} 
-    value= {state.enrollee.specialtyName}
-    options={
-      faculty[facultyName].map((faculty, index)=> { 
-      return {text: faculty['speaciality'].name, value: faculty['speaciality'].name}   
-    })          
-    }    
-    /> 
- 
-  </Auxillary>    
-  )     
-}
-
 export function renderControls(controls, handler) {    
   const controll = [...controls]; 
   return controll.map((control,index) => {     

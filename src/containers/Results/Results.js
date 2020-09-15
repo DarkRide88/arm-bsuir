@@ -1,17 +1,18 @@
 import React from 'react'
 import styles from './Results.scss'
 import axios from '../../axios/axios-arm'
-import Select from '../../components/UI/Select/Select'
-import {faculty} from '../CreateEnrolle/DataToEnrolle'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import Loader from '../../components/UI/Loader/Loader'
+import {getFacultys} from '../../utils/getFacultys'
+import FacultyList from '../../components/FacultyList/FacultyList'
 
 class Results extends React.Component {
   state = {
-    enrollers:null,
-    facultyName: Object.entries(faculty)[0][0],
-    specialtyName: Object.entries(faculty)[0][1][0]["speaciality"].name,
+    facultys: null,
+    enrollee:null,
+    facultyName: null,
+    specialtyName: null,
   }
 
   changeHandler = (event) => {
@@ -21,8 +22,7 @@ class Results extends React.Component {
     let facultyName = this.state.facultyName
     let specialtyName = this.state.specialtyName
     facultyName = event.target.value;
- 
-    specialtyName = faculty[event.target.value][0]["speaciality"].name;
+    specialtyName = this.state.facultys[facultyName][0]["speaciality"].name;
     this.setState({
       facultyName,
       specialtyName
@@ -39,22 +39,24 @@ class Results extends React.Component {
   }  
   getNumberOfPlaces = () => {
     let numberOfPlaces = 0
-    faculty[this.state.facultyName].map(faculty => {   
+    this.state.facultys[this.state.facultyName].map(faculty => {   
       if(faculty.speaciality.name === this.state.specialtyName){  
-        numberOfPlaces = faculty.speaciality.numberOfPlaces
-        console.log(numberOfPlaces)
+        numberOfPlaces = faculty.speaciality.numberOfPlaces      
       }
     })  
     return numberOfPlaces
   }
 
-  renderEnrollers() {
+  renderenrollee() {
     let numberOfPlaces = this.getNumberOfPlaces()
     let count = []
-    if(this.state.enrollers) {
-      return Object.values(this.state.enrollers).sort((a, b) => a.avgMark < b.avgMark ? 1 : -1).map((enroll, index) => {             
-      
-        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && faculty[this.state.facultyName] ) {                    
+    console.log(this.state.enrollee)
+    if(this.state.enrollee) {
+      return Object.values(this.state.enrollee).sort((a, b) => a.avgMark < b.avgMark ? 1 : -1).map((enroll, index) => {             
+    
+        console.log(enroll.specialtyName.name + ' ' + enroll.name)
+        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && this.state.facultys[this.state.facultyName] ) {     
+                 
           count.push(index)
           if(count.length <= numberOfPlaces ){
             return(
@@ -71,65 +73,51 @@ class Results extends React.Component {
       })
     } 
  }
-
-  renderSelect = () => {
-    return (
-      <Auxillary>
-        <Select 
-            label="Выберите факультет"      
-            onChange={this.selectChangeHandler}          
-            options={
-              Object.keys(faculty).map((faculty, index)=> { 
-                return {text: faculty, value: faculty}   
-              })          
-            }
-            
-        />    
-        <Select      
-          label="Выберите cпециальность"      
-          onChange={this.selectSpecialtyHandler}      
-          options={
-            faculty[this.state.facultyName].map((faculty, index)=> { 
-            return {text: faculty['speaciality'].name, value: faculty['speaciality'].name}   
-          })          
-          }    
-          /> 
-      </Auxillary>   
-    )
-  }
-
-  sortEnrollersByAvgMark = () => {
+  sortenrolleeByAvgMark = () => {
    
     
   }
 
   async componentDidMount(){
    
-
-   
-    const response = await axios.get('/enrolls.json')  
-    console.log(response.data)
-    let enrollers = Object.entries(response.data).filter(enrollee => {
+    const facultysResponse = await axios.get('/facultys.json') 
+    const enrollsResponse = await axios.get('/enrolls.json')  
+    let facultys = getFacultys(facultysResponse.data)   
+    let enrollee = Object.entries(enrollsResponse.data).filter(enrollee => {
       if(enrollee[1].readyToResults) {
         return enrollee
       }
     })   
-    enrollers = Object.fromEntries(enrollers)
+    enrollee = Object.fromEntries(enrollee)
     this.setState({
-      enrollers,    
+      enrollee,
+      facultys, 
+      facultyName: Object.entries(facultys)[0][0],
+      specialtyName: Object.entries(facultys)[0][1][0]["speaciality"].name,   
     })  
   }
 
   render() {
     return (
       <div className={styles.results}> 
-      {this.state.enrollers !== null ?
-      <Auxillary>       
-        {this.renderSelect()}               
+      {this.state.enrollee !== null ?
+      <Auxillary>    
+        {this.state.facultys === null ? null : 
+
+          <FacultyList
+              facultysList = {this.state.facultys}
+              defaultFacultyName = {Object.keys(this.state.facultys)[0]}
+              selectFacultyChangeHandler = {this.selectChangeHandler}
+              selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
+              enrolleeSpeciality = {this.state.specialtyName}
+              enrolleeFaculty = {this.state.facultyName}
+          />                           
+        }   
+           
         <EnrollsTable
           tableHeads = {['ФИО', 'Средний балл']}        
         >
-         {this.renderEnrollers()}        
+         {this.renderenrollee()}        
         </EnrollsTable>
       </Auxillary>        
       : <Loader/>}

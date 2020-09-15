@@ -1,16 +1,15 @@
 import React from 'react'
 import styles from './CreateEnrolle.scss'
 import {enrolleeControlsData,certificateControlsData} from './DataToEnrolle'
-import Select from '../../components/UI/Select/Select'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
-import Input from '../../components/UI/Input/Input'
-import {createControl, validate, validateForm} from '../../form/formFramework'
+import { validate, validateForm} from '../../form/formFramework'
 import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
 import axios from '../../axios/axios-arm'
-import {createFormControls, renderOptions, renderControls} from '../../utils/formControlsUtils'
-
+import {createFormControls, renderControls} from '../../utils/formControlsUtils'
+import FacultyList from '../../components/FacultyList/FacultyList'
+import {getFacultys} from '../../utils/getFacultys'
 
 class CreateEnrolle extends React.Component {
   state = {
@@ -51,16 +50,7 @@ class CreateEnrolle extends React.Component {
  
   }
 
-  getFacultys = (data) => {
-    let facultys = {}
-    Object.entries(data).filter((faculty,i) => {     
-      Object.assign(facultys,faculty[1])
-      
-    })  
-    
-    return facultys
- 
-  }
+
 
   submitHandler = event => {
     event.preventDefault()  
@@ -160,11 +150,11 @@ class CreateEnrolle extends React.Component {
   async componentDidMount() {     
     try {
       const response = await axios.get('/facultys.json') 
-      let faculty = this.getFacultys(response.data)   
+      let faculty = getFacultys(response.data)   
       let enrollee = this.state.enrollee     
       
       enrollee.facultyName = Object.entries(faculty)[0][0]
-      enrollee.specialtyName = Object.entries(faculty)[0][1][0]["speaciality"]
+      enrollee.specialtyName = Object.entries(faculty)[0][1][0]["speaciality"].name
       enrollee.exams = {
         exam1: {
           name:Object.entries(faculty)[0][1][0]["exam1"],
@@ -201,10 +191,19 @@ class CreateEnrolle extends React.Component {
                {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)}  
                      
                {this.state.facultys === null 
-               ? 'lel' 
+               ? 'Loading' 
                
-               :  renderOptions( this.state.facultys,this.state.enrollee.facultyName,this.selectChangeHandler, this.selectSpecialtyHandler, this.state)  }    
-               
+               :  <FacultyList
+                    facultysList = {this.state.facultys}
+                    defaultFacultyName = {this.state.enrollee.facultyName}
+                    selectFacultyChangeHandler = {this.selectChangeHandler}
+                    selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
+                    state = {this.state}
+                    enrolleeSpeciality = {this.state.enrollee.specialtyName}
+                    enrolleeFaculty = {this.state.enrollee.facultyName}
+                  /> 
+               }   
+
             </div>  
             <div  className={styles['create-enrolle__item2']}>         
               <h2>Аттестат</h2>

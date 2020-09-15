@@ -5,11 +5,11 @@ import {faculty,enrolleeControlsData,certificateControlsData} from '../../contai
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
 import { validate, validateForm} from '../../form/formFramework'
-import {renderControls,renderOptions} from '../../utils/formControlsUtils'
+import {renderControls} from '../../utils/formControlsUtils'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
-
-
+import FacultyList from '../../components/FacultyList/FacultyList'
+import {getFacultys} from '../../utils/getFacultys'
 
 const createFormControls = (controlsName,state) =>{ 
   let form =[]
@@ -37,6 +37,7 @@ const createFormControls = (controlsName,state) =>{
 
 class Enrollee extends React.Component {
   state = {
+    facultys: null,
     isFormValid: true, 
     enrollee: null,
     loading: true,
@@ -55,20 +56,10 @@ class Enrollee extends React.Component {
     })   
   }    
   
-  async componentDidMount() {     
-    try {
-      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)       
-      this.setState({
-        enrollee:response.data
-      })         
-    } catch (e) {
-      console.log(e)
-    }
-    this.setFormControlsToState() 
-  }  
+  
 
   updateExamsNames = (speaciality) => {
-    faculty[this.state.enrollee.facultyName].map(faculty => {   
+    this.state.facultys[this.state.enrollee.facultyName].map(faculty => {   
       if(faculty['speaciality'] === speaciality){        
        this.setState({
          exams: {
@@ -84,7 +75,7 @@ class Enrollee extends React.Component {
   selectChangeHandler = (event) => {   
     const enrollee = this.state.enrollee
     enrollee.facultyName = event.target.value
-    enrollee.specialtyName = faculty[ event.target.value][0]["speaciality"].name
+    enrollee.specialtyName = this.state.facultys[ event.target.value][0]["speaciality"].name
     this.setState({
       enrollee
     })
@@ -153,6 +144,23 @@ class Enrollee extends React.Component {
     this.props.history.push('/');
   }
 
+
+
+  async componentDidMount() {     
+    try {
+      const facultysResponse = await axios.get('/facultys.json') 
+    let facultys = getFacultys(facultysResponse.data)   
+      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)       
+      this.setState({
+        enrollee:response.data,
+        facultys,      
+      })         
+    } catch (e) {
+      console.log(e)
+    }
+    this.setFormControlsToState() 
+  }
+
   render() {  
     return (      
       <Auxillary>  
@@ -166,7 +174,16 @@ class Enrollee extends React.Component {
               <div className={styles['create-enrolle__item1']}>
               <h2>Данные абитуриента:</h2>            
               {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)} 
-                {renderOptions(faculty,this.state.enrollee.facultyName,this.selectChangeHandler, this.selectSpecialtyHandler, this.state)}    
+              <FacultyList
+                    facultysList = {this.state.facultys}
+                    defaultFacultyName = {this.state.enrollee.facultyName}
+                    selectFacultyChangeHandler = {this.selectChangeHandler}
+                    selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
+                    state = {this.state}
+                    enrolleeSpeciality = {this.state.enrollee.specialtyName}
+                    enrolleeFaculty = {this.state.enrollee.facultyName}
+              />    
+
               </div>  
               <div  className={styles['create-enrolle__item2']}>         
                 <h2>Аттестат</h2>

@@ -9,12 +9,12 @@ import { NavLink } from 'react-router-dom'
 import axios from '../../axios/axios-arm'
 import {createFormControls, renderControls} from '../../utils/formControlsUtils'
 import FacultyList from '../../components/FacultyList/FacultyList'
-import {getFacultys} from '../../utils/getFacultys'
+import {getFaculties} from '../../utils/getFaculties'
 
 class CreateEnrolle extends React.Component {
   state = {
     isFormValid: false,   
-    facultys: null,
+    faculties: null,
     formControls: {
       enrollerControls:[...createFormControls(enrolleeControlsData)],
       subjectsControls:[...createFormControls(certificateControlsData)],   
@@ -63,7 +63,7 @@ class CreateEnrolle extends React.Component {
   }
 
     updateExamsNames = (speaciality) => {     
-      this.state.facultys[this.state.enrollee.facultyName].map(faculty => {   
+      this.state.faculties[this.state.enrollee.facultyName].forEach(faculty => {   
       if(faculty['speaciality'] === speaciality){       
         let enrollee = this.state.enrollee
         enrollee.exams = {
@@ -81,7 +81,7 @@ class CreateEnrolle extends React.Component {
     selectChangeHandler = (event) => { 
     const enrollee = this.state.enrollee
     enrollee.facultyName = event.target.value;
-    enrollee.specialtyName =  this.state.facultys[event.target.value][0]["speaciality"].name;
+    enrollee.specialtyName =  this.state.faculties[event.target.value][0]["speaciality"].name;
    
     this.setState({
       enrollee,
@@ -150,7 +150,7 @@ class CreateEnrolle extends React.Component {
   async componentDidMount() {     
     try {
       const response = await axios.get('/facultys.json') 
-      let faculty = getFacultys(response.data)   
+      let faculty = getFaculties(response.data)   
       let enrollee = this.state.enrollee     
       
       enrollee.facultyName = Object.entries(faculty)[0][0]
@@ -170,7 +170,7 @@ class CreateEnrolle extends React.Component {
         }
       }
       this.setState({
-        facultys:faculty,
+        faculties:faculty,
         enrollee,
       })         
     } catch (e) {
@@ -190,11 +190,11 @@ class CreateEnrolle extends React.Component {
             <h2>Данные абитуриента:</h2>           
                {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)}  
                      
-               {this.state.facultys === null 
+               {this.state.faculties === null 
                ? 'Loading' 
                
                :  <FacultyList
-                    facultysList = {this.state.facultys}
+                    facultiesList = {this.state.faculties}
                     defaultFacultyName = {this.state.enrollee.facultyName}
                     selectFacultyChangeHandler = {this.selectChangeHandler}
                     selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../CreateEnrolle/CreateEnrolle.scss'
 import axios from '../../axios/axios-arm'
-import {faculty,enrolleeControlsData,certificateControlsData} from '../../containers/CreateEnrolle/DataToEnrolle'
+import {enrolleeControlsData,certificateControlsData} from '../../containers/CreateEnrolle/DataToEnrolle'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
 import { validate, validateForm} from '../../form/formFramework'
@@ -9,12 +9,12 @@ import {renderControls} from '../../utils/formControlsUtils'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
-import {getFacultys} from '../../utils/getFacultys'
+import {getFaculties} from '../../utils/getFaculties'
 
 const createFormControls = (controlsName,state) =>{ 
   let form =[]
-  controlsName.map(control => {   
-   Object.entries(state).map(enrollee => {     
+  controlsName.forEach(control => {   
+   Object.entries(state).forEach(enrollee => {     
       if(enrollee[0] === control[2] ){    
         form.push({
           maxlength:control[3],
@@ -37,7 +37,7 @@ const createFormControls = (controlsName,state) =>{
 
 class Enrollee extends React.Component {
   state = {
-    facultys: null,
+    faculties: null,
     isFormValid: true, 
     enrollee: null,
     loading: true,
@@ -59,7 +59,7 @@ class Enrollee extends React.Component {
   
 
   updateExamsNames = (speaciality) => {
-    this.state.facultys[this.state.enrollee.facultyName].map(faculty => {   
+    this.state.faculties[this.state.enrollee.facultyName].forEach(faculty => {   
       if(faculty['speaciality'] === speaciality){        
        this.setState({
          exams: {
@@ -75,7 +75,7 @@ class Enrollee extends React.Component {
   selectChangeHandler = (event) => {   
     const enrollee = this.state.enrollee
     enrollee.facultyName = event.target.value
-    enrollee.specialtyName = this.state.facultys[ event.target.value][0]["speaciality"].name
+    enrollee.specialtyName = this.state.faculties[ event.target.value][0]["speaciality"].name
     this.setState({
       enrollee
     })
@@ -148,12 +148,12 @@ class Enrollee extends React.Component {
 
   async componentDidMount() {     
     try {
-      const facultysResponse = await axios.get('/facultys.json') 
-    let facultys = getFacultys(facultysResponse.data)   
+      const facultiesResponse = await axios.get('/facultys.json') 
+    let faculties = getFaculties(facultiesResponse.data)   
       const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)       
       this.setState({
         enrollee:response.data,
-        facultys,      
+        faculties,      
       })         
     } catch (e) {
       console.log(e)
@@ -175,7 +175,7 @@ class Enrollee extends React.Component {
               <h2>Данные абитуриента:</h2>            
               {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)} 
               <FacultyList
-                    facultysList = {this.state.facultys}
+                    facultiesList = {this.state.faculties}
                     defaultFacultyName = {this.state.enrollee.facultyName}
                     selectFacultyChangeHandler = {this.selectChangeHandler}
                     selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}

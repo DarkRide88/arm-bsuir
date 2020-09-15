@@ -34,10 +34,6 @@ class EnrolleList extends React.Component {
   } 
   }
   
-  fetchEnrollers() {
-    // firebase.database().ref('enrolls').push({name:'name'});
-  }
-
  async componentDidMount() { 
     const response = await axios.get('/enrolls.json')  
     this.setState({
@@ -48,10 +44,10 @@ class EnrolleList extends React.Component {
 
    searchHandler =  (event) =>{    
     let enr = []
-     Object.entries(this.state.enrollers).map(enrollee => {     
+     Object.entries(this.state.enrollers).forEach(enrollee => {     
       let name = enrollee[1].name.toLowerCase()
       if(name.indexOf(event.target.value.toLowerCase()) === 0 && event.target.value !== ''){
-        Object.entries(this.state.enrollers).filter(enrollee => {          
+        Object.entries(this.state.enrollers).forEach(enrollee => {          
           if(enrollee[1].name.toLowerCase() === name){
             enr.push(enrollee)            
           }

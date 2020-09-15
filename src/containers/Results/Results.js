@@ -4,12 +4,12 @@ import axios from '../../axios/axios-arm'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import Loader from '../../components/UI/Loader/Loader'
-import {getFacultys} from '../../utils/getFacultys'
+import {getFaculties} from '../../utils/getFaculties'
 import FacultyList from '../../components/FacultyList/FacultyList'
 
 class Results extends React.Component {
   state = {
-    facultys: null,
+    faculties: null,
     enrollee:null,
     facultyName: null,
     specialtyName: null,
@@ -22,7 +22,7 @@ class Results extends React.Component {
     let facultyName = this.state.facultyName
     let specialtyName = this.state.specialtyName
     facultyName = event.target.value;
-    specialtyName = this.state.facultys[facultyName][0]["speaciality"].name;
+    specialtyName = this.state.faculties[facultyName][0]["speaciality"].name;
     this.setState({
       facultyName,
       specialtyName
@@ -39,7 +39,7 @@ class Results extends React.Component {
   }  
   getNumberOfPlaces = () => {
     let numberOfPlaces = 0
-    this.state.facultys[this.state.facultyName].map(faculty => {   
+    this.state.faculties[this.state.facultyName].forEach(faculty => {   
       if(faculty.speaciality.name === this.state.specialtyName){  
         numberOfPlaces = faculty.speaciality.numberOfPlaces      
       }
@@ -50,12 +50,12 @@ class Results extends React.Component {
   renderenrollee() {
     let numberOfPlaces = this.getNumberOfPlaces()
     let count = []
-    console.log(this.state.enrollee)
+  
     if(this.state.enrollee) {
       return Object.values(this.state.enrollee).sort((a, b) => a.avgMark < b.avgMark ? 1 : -1).map((enroll, index) => {             
     
         console.log(enroll.specialtyName.name + ' ' + enroll.name)
-        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && this.state.facultys[this.state.facultyName] ) {     
+        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && this.state.faculties[this.state.facultyName] ) {     
                  
           count.push(index)
           if(count.length <= numberOfPlaces ){
@@ -80,9 +80,10 @@ class Results extends React.Component {
 
   async componentDidMount(){
    
-    const facultysResponse = await axios.get('/facultys.json') 
+    const facultiesResponse = await axios.get('/facultys.json') 
     const enrollsResponse = await axios.get('/enrolls.json')  
-    let facultys = getFacultys(facultysResponse.data)   
+    console.log(facultiesResponse)
+    let faculties = getFaculties(facultiesResponse.data)   
     let enrollee = Object.entries(enrollsResponse.data).filter(enrollee => {
       if(enrollee[1].readyToResults) {
         return enrollee
@@ -91,9 +92,9 @@ class Results extends React.Component {
     enrollee = Object.fromEntries(enrollee)
     this.setState({
       enrollee,
-      facultys, 
-      facultyName: Object.entries(facultys)[0][0],
-      specialtyName: Object.entries(facultys)[0][1][0]["speaciality"].name,   
+      faculties, 
+      facultyName: Object.entries(faculties)[0][0],
+      specialtyName: Object.entries(faculties)[0][1][0]["speaciality"].name,   
     })  
   }
 
@@ -102,11 +103,11 @@ class Results extends React.Component {
       <div className={styles.results}> 
       {this.state.enrollee !== null ?
       <Auxillary>    
-        {this.state.facultys === null ? null : 
+        {this.state.faculties === null ? null : 
 
           <FacultyList
-              facultysList = {this.state.facultys}
-              defaultFacultyName = {Object.keys(this.state.facultys)[0]}
+              facultiesList = {this.state.faculties}
+              defaultFacultyName = {Object.keys(this.state.faculties)[0]}
               selectFacultyChangeHandler = {this.selectChangeHandler}
               selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
               enrolleeSpeciality = {this.state.specialtyName}

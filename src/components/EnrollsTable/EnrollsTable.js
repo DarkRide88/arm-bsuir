@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './EnrollsTable.scss'
-import Auxiliary from '../../hoc/Auxiliary/Auxiliary'
 
 class EnrollsTable extends React.Component {
 
@@ -10,10 +9,7 @@ class EnrollsTable extends React.Component {
       return (
         <th key={index}>{head}</th>
       )
-    });
-    return (      
-      <div>hi</div>
-    )
+    });  
   }
   render() {
     return (

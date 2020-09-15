@@ -1,10 +1,14 @@
 import React from 'react'
-import {createControl, validate, validateForm} from '../form/formFramework'
+import {createControl} from '../form/formFramework'
 import Auxillary from '../hoc/Auxiliary/Auxiliary'
-import Select from '../components/UI/Select/Select'
 import Input from '../components/UI/Input/Input'
 
+
+
+
+
 export const createFormControls = (controlNames) =>{ 
+  
   let form = controlNames.map(control => {   
    return createControl({
       maxlength:control[3],

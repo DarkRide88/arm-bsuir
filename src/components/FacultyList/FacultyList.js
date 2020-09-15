@@ -5,7 +5,7 @@ import Select from '../../components/UI/Select/Select'
 
 
 
- const FacultyList = ({facultysList,selectFacultyChangeHandler,selectSpecialtyChangeHandler,enrolleeSpeciality,enrolleeFaculty}) => { 
+ const FacultyList = ({facultiesList,selectFacultyChangeHandler,selectSpecialtyChangeHandler,enrolleeSpeciality,enrolleeFaculty}) => { 
  
 
   return (  
@@ -15,7 +15,7 @@ import Select from '../../components/UI/Select/Select'
         onChange={(event) => {selectFacultyChangeHandler(event)}}    
         value = {enrolleeFaculty}     
         options={
-          Object.keys(facultysList).map((faculty, index)=> { 
+          Object.keys(facultiesList).map((faculty, index)=> { 
             return {text: faculty, value: faculty}   
           })          
         }        
@@ -26,7 +26,7 @@ import Select from '../../components/UI/Select/Select'
         onChange={(event) => {selectSpecialtyChangeHandler(event)}} 
         value= {enrolleeSpeciality}
         options={
-          facultysList[enrolleeFaculty].map((faculty, index)=> { 
+          facultiesList[enrolleeFaculty].map((faculty, index)=> { 
           return {text: faculty['speaciality'].name, value: faculty['speaciality'].name}   
         })          
         }    

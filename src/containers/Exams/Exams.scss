@@ -2,8 +2,7 @@
   margin: 0 auto;
   text-align: center;
   background-color: white;
-  margin: 0 auto;
-  height: 100vh;
+  margin: 0 auto; 
   width: 100%;
   justify-content: center;
   max-width: 70rem;
@@ -14,10 +13,8 @@
     color: green;
 
   }
-  table {
-    border-collapse: collapse;
-    margin: 0 auto;
-    margin-top: 10px;
+  table {    
+    
     tr {
       text-align: left;
     }

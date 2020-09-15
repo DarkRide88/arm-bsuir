@@ -1,11 +1,5 @@
 import styles from './FacultyList.scss'
 import React from 'react'
-import axios from '../../axios/axios-arm'
-import Input from '../../components/UI/Input/Input'
-import Auxiliary from '../../hoc/Auxiliary/Auxiliary'
-import button from '../../components/UI/Button/Button'
-import {createControl, validate, validateForm} from '../../form/formFramework'
-import {createFormControls, renderControls} from '../CreateEnrolle/CreateEnrolle'
 
 class FacultyList extends React.Component {
 

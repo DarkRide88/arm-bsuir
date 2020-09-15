@@ -3,7 +3,7 @@ import React from 'react'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
-import {createControl, validate, validateForm} from '../../form/formFramework'
+import {validate} from '../../form/formFramework'
 import {createFormControls} from '../../utils/formControlsUtils'
 import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
@@ -46,6 +46,7 @@ class AddNewFaculty extends React.Component {
   }
 
 
+
   submitHandler = event => {
     event.preventDefault()  
   }
@@ -80,7 +81,7 @@ class AddNewFaculty extends React.Component {
       specialities[index] = {speaciality: {name :'', numberOfPlaces: 0}, exam1: '', exam2: '', exam3: '', numberOfPlaces: 0}      
        speciality = specialities[index]  
     }
-    if(controlName == 'name' || controlName =='numberOfPlaces') {      
+    if(controlName === 'name' || controlName ==='numberOfPlaces') {      
       speciality['speaciality'][controlName] = value
     } else {
       speciality[controlName] = value

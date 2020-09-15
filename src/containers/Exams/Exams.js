@@ -28,7 +28,8 @@ class Exams extends React.Component {
     let avgMark = 0
     let marksCount = 1
     let avgStudMark = 0
-    Object.values(enrollee.exams).map(exam =>{   
+
+    Object.values(enrollee.exams).forEach(exam =>{   
       avgMark += +exam.mark  
       marksCount += 1
     })    
@@ -50,8 +51,7 @@ class Exams extends React.Component {
         avgMark += +mark
         marksCount += 1
       })
-      avgMark = Math.round(avgMark/marksCount *10)/10
-      // console.log(avgMark)
+      avgMark = Math.round(avgMark/marksCount *10)/10    
       this.getAvgMarkExam(avgMark, enrollee[1], enrollee[0])
     })
     
@@ -126,10 +126,10 @@ class Exams extends React.Component {
 
   searchHandler =  (event) =>{    
     let enr = []
-     Object.entries(this.state.enrollers).map(enrollee => {     
+     Object.entries(this.state.enrollers).forEach(enrollee => {     
       let name = enrollee[1].name.toLowerCase()
       if(name.indexOf(event.target.value.toLowerCase()) === 0 && event.target.value !== ''){
-        Object.entries(this.state.enrollers).filter(enrollee => {          
+        Object.entries(this.state.enrollers).forEach(enrollee => {          
           if(enrollee[1].name.toLowerCase() === name){
             enr.push(enrollee)            
           }
@@ -154,9 +154,6 @@ class Exams extends React.Component {
 
   render() {
 
-    let data = {
-      
-    }
     return(     
       <div className={styles.exams}>
         {this.state.enrollers !== null ?

@@ -4,10 +4,10 @@
  
   border: 1px solid #ccc;
   color: white;
-  margin-right: 15px;
+  margin-right: 1rem;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 1rem;
   cursor: pointer;
   &:focus {
     outline: none;
@@ -23,7 +23,7 @@
 }
 
 .success {
-  background: #17179b;
+  background: #267373;
 
 }
 

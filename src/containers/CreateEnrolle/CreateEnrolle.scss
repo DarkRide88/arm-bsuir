@@ -4,6 +4,7 @@
   justify-content: center;
   width: 100%;
   flex-direction: column;
+  margin-top: 1rem;
   div {
     margin-left: .2rem;
   }
@@ -13,20 +14,20 @@
     flex-wrap: wrap;   
     align-items: flex-start;
 
-    input, select {
+    input, select,label {
       max-width:30rem;  
+      font-size: .8rem;
     }  
     hr{
       width: 100%;
     }     
   }
 
-  h1{
-    margin: 0 auto;
-    padding:20px;
+  h2 {
+    font-size: 1.2rem;
   }
   &__item1,&__item2{
-    padding: 20px;
+    padding: .9rem;
     border: 1px solid #267373;
     background-color:  #267373;
     border-radius: 3px;
@@ -35,7 +36,7 @@
     flex-direction: column;  
   }
   &__item1{
-    height: 38.45rem;
+   
   }
   &__item2{
     flex-grow: 0.7;
@@ -45,7 +46,7 @@
     
   }
   &__certificate {
-    height: 34rem;
+    height: 32rem;
     display:flex;
     flex-wrap: wrap; 
     flex-direction: column

@@ -25,8 +25,7 @@ const createFormControls = (controlsName,state) =>{
           errorMessage: 'Неверные данные',         
           required: true,
           valid: true,
-          touched: true,   
-          // validation:true,
+          touched: true,           
           validation: {required:true},
         })
       } 
@@ -51,6 +50,8 @@ class Enrollee extends React.Component {
     let formControls = this.state.formControls
     formControls.enrollerControls = [...createFormControls(enrolleeControlsData, this.state.enrollee)]
     formControls.subjectsControls = [...createFormControls(certificateControlsData, this.state.enrollee.сertificate)]
+    console.log( this.state.enrollee.сertificate)
+    console.log([...createFormControls(certificateControlsData, this.state.enrollee.сertificate)])
     this.setState({
       formControls,
     })   
@@ -129,9 +130,10 @@ class Enrollee extends React.Component {
     enrollee.сertificate.belLitr = controls[7].value
     enrollee.сertificate.russianLitr = controls[8].value
     enrollee.сertificate.physicalEduc = controls[9].value
-    enrollee.сertificate.historyBel = controls[10].value
-    enrollee.сertificate.historyWorld = controls[11].value
-    enrollee.сertificate.computerScince = controls[12].value
+    enrollee.сertificate.english = controls[10].value
+    enrollee.сertificate.historyBel = controls[11].value
+    enrollee.сertificate.historyWorld = controls[12].value
+    enrollee.сertificate.computerScince = controls[13].value
     this.setState({    
       enrollee,         
       isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
@@ -149,7 +151,7 @@ class Enrollee extends React.Component {
   async componentDidMount() {     
     try {
       const facultiesResponse = await axios.get('/facultys.json') 
-    let faculties = getFaculties(facultiesResponse.data)   
+      let faculties = getFaculties(facultiesResponse.data)   
       const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)       
       this.setState({
         enrollee:response.data,
@@ -159,6 +161,7 @@ class Enrollee extends React.Component {
       console.log(e)
     }
     this.setFormControlsToState() 
+    console.log(this.state.formControls.subjectsControls)
   }
 
   render() {  
@@ -168,8 +171,6 @@ class Enrollee extends React.Component {
       {this.state.formControls.enrollerControls === null         
       ? <Loader/> 
       : <div className={styles['create-enrolle']}>    
-     
-        <h1>Редактировать данные абитуриента</h1>      
             <form onSubmit={this.submitHandler}> 
               <div className={styles['create-enrolle__item1']}>
               <h2>Данные абитуриента:</h2>            

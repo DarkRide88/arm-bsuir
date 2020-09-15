@@ -10,7 +10,7 @@ import axios from '../../axios/axios-arm'
 import {createFormControls, renderControls} from '../../utils/formControlsUtils'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import {getFaculties} from '../../utils/getFaculties'
-
+import Loader from '../../components/UI/Loader/Loader'
 class CreateEnrolle extends React.Component {
   state = {
     isFormValid: false,   
@@ -182,47 +182,47 @@ class CreateEnrolle extends React.Component {
   render() { 
     return (   
       <Auxillary>
-     
-      <div className={styles['create-enrolle']}>
-      <h1>Регистрация нового абитуриента</h1>   
-          <form onSubmit={this.submitHandler}> 
-            <div className={styles['create-enrolle__item1']}>
-            <h2>Данные абитуриента:</h2>           
-               {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)}  
-                     
-               {this.state.faculties === null 
-               ? 'Loading' 
-               
-               :  <FacultyList
-                    facultiesList = {this.state.faculties}
-                    defaultFacultyName = {this.state.enrollee.facultyName}
-                    selectFacultyChangeHandler = {this.selectChangeHandler}
-                    selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
-                    state = {this.state}
-                    enrolleeSpeciality = {this.state.enrollee.specialtyName}
-                    enrolleeFaculty = {this.state.enrollee.facultyName}
-                  /> 
-               }   
+        {this.state.faculties === null 
+          ? <Loader/>           
+          : <div className={styles['create-enrolle']}>         
+                <form onSubmit={this.submitHandler}> 
+                  <div className={styles['create-enrolle__item1']}>
+                  <h2>Данные абитуриента:</h2>           
+                    {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)}  
+                          
+                  
+                    
+                      <FacultyList
+                          facultiesList = {this.state.faculties}
+                          defaultFacultyName = {this.state.enrollee.facultyName}
+                          selectFacultyChangeHandler = {this.selectChangeHandler}
+                          selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
+                          state = {this.state}
+                          enrolleeSpeciality = {this.state.enrollee.specialtyName}
+                          enrolleeFaculty = {this.state.enrollee.facultyName}
+                        /> 
+                    
 
-            </div>  
-            <div  className={styles['create-enrolle__item2']}>         
-              <h2>Аттестат</h2>
-              <div className={styles['create-enrolle__certificate']}>
-              {renderControls(this.state.formControls.subjectsControls, this.changeCertificate)}</div>   
+                  </div>  
+                  <div  className={styles['create-enrolle__item2']}>         
+                    <h2>Аттестат:</h2>
+                    <div className={styles['create-enrolle__certificate']}>
+                    {renderControls(this.state.formControls.subjectsControls, this.changeCertificate)}</div>   
+                  </div>
+                  <hr/>     
+                  <NavLink to='/'>
+                  <Button
+                    type="success"
+                    onClick={this.registerEnrollee}
+                    disabled={this.state.isFormValid === false}
+                  >
+                    Зарегистрировать
+                </Button>       
+                  </NavLink>
+                  
+                </form>        
             </div>
-            <hr/>     
-            <NavLink to='/'>
-            <Button
-              type="success"
-              onClick={this.registerEnrollee}
-              disabled={this.state.isFormValid === false}
-            >
-              Зарегистрировать
-           </Button>       
-            </NavLink>
-            
-          </form>        
-      </div>
+        }  
       </Auxillary>
     )
   }

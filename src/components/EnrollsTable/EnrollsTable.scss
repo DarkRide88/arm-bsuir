@@ -1,13 +1,16 @@
 .enrolls-table {
+  max-width: 100%;
   table {
     border-collapse: collapse;
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 10px;    
+    width: 100%;
    
     tr {
       text-align: left;
       transition: box-shadow .3s; 
       user-select: none;  
+      width: 100%;
      
     }
     td,th {

@@ -3,14 +3,17 @@
   margin: 0 auto;
   width: 100%;
   justify-content: center;
-  width: 70rem;
+  max-width: 70rem;
   h1 {
     color: green;
   }  
-
-  td {    
-      width: 20rem;  
+  tbody {
+    width: 100%;
   }
+
+  td {         
+      text-align: left;
+  } 
 
   td:nth-child(6) {
     div {

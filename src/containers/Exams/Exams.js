@@ -13,22 +13,25 @@ class Exams extends React.Component {
   state = {
     enrollers: null
   }
-  onChange = (value, controlName, examName) => {   
-    console.log(this.state.enrollers)
+  
+   onChange = async (value, controlName, examName) => {   
+    console.log(controlName)
     const enrollers = this.state.enrollers  
     enrollers[controlName].exams[examName].mark = value
+    console.log(enrollers[controlName])
     this.setState({
       enrollers,
     })
     this.updateIsUreadyToResult()
     this.calcAvgMark()
-    firebase.database().ref('enrolls').set(this.state.enrollers);
+    await firebase.database().ref('enrolls').child(controlName).set(enrollers[controlName]);
   }
-  
+
   getAvgMarkExam = (avg, enrollee, enrolleeName) => {
     let avgMark = 0
     let marksCount = 1
     let avgStudMark = 0
+
     Object.values(enrollee.exams).forEach(exam =>{   
       avgMark += +exam.mark  
       marksCount += 1
@@ -42,7 +45,8 @@ class Exams extends React.Component {
     avgMark = 0
   }
 
-  calcAvgMark = () => { 
+  calcAvgMark = () => {
+ 
     Object.entries(this.state.enrollers).forEach(enrollee =>{
       let avgMark = 0
       let marksCount = 0
@@ -52,9 +56,9 @@ class Exams extends React.Component {
       })
       avgMark = Math.round(avgMark/marksCount *10)/10    
       this.getAvgMarkExam(avgMark, enrollee[1], enrollee[0])
-    })    
+    })
+    
   }
-
   updateIsUreadyToResult = () => {
     let obj = {}
     Object.entries(this.state.enrollers).forEach(enrollee => {          
@@ -62,7 +66,6 @@ class Exams extends React.Component {
           if(exam[1].mark !== '' && +exam[1].mark>= 4){               
            return exam
           }
-          return null
         })       
         if(obj.length === 3) {
           const enrollers = this.state.enrollers

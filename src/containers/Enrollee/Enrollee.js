@@ -49,9 +49,7 @@ class Enrollee extends React.Component {
   setFormControlsToState = () =>{
     let formControls = this.state.formControls
     formControls.enrollerControls = [...createFormControls(enrolleeControlsData, this.state.enrollee)]
-    formControls.subjectsControls = [...createFormControls(certificateControlsData, this.state.enrollee.сertificate)]
-    console.log( this.state.enrollee.сertificate)
-    console.log([...createFormControls(certificateControlsData, this.state.enrollee.сertificate)])
+    formControls.subjectsControls = [...createFormControls(certificateControlsData, this.state.enrollee.сertificate)]   
     this.setState({
       formControls,
     })   
@@ -146,8 +144,7 @@ class Enrollee extends React.Component {
     this.props.history.push('/');
   }
 
-  updateDataInState(faculties,enrollee ) {
-    console.log(enrollee)
+  updateDataInState(faculties,enrollee ) {    
     this.setState({
       enrollee,
       faculties,      

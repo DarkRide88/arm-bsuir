@@ -24,7 +24,9 @@
 
 .success {
   background: #267373;
-
+  &:hover {
+    background: #1d6b6b;
+  }
 }
 
 .error {
@@ -36,6 +38,17 @@
 .primary {
   background: #2884f6;
   color: #fff;
+}
+
+.delete {
+  padding: 10px;
+  background: none;
+  border: none;
+  font-size: .8rem;
+  &:hover {
+    color: rgb(212, 85, 85);   
+  }
+
 }
 
 

@@ -1,0 +1,20 @@
+.popup {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.438);
+  position: fixed;
+  left: 0;
+
+  div {
+    padding: 20px;
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    background-color: #267373;
+    z-index: 100;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+

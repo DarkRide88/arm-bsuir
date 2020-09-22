@@ -6,16 +6,51 @@ import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 import Search from '../../components/Search/Search'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
-// import Loader from '../../components/UI/Loader/Loader'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
+import PopUp from '../../components/PopUp/PopUp'
+import Button from '../../components/UI/Button/Button'
 class EnrolleList extends React.Component {
   state = {
     enrollers:null,
-    loading: true
+    loading: true,
+    popUp: false,
+    userToDelteId: null,
   }
+
+  popupOnDelete = (enrollee) => {
+    this.setState({
+      popUp: true,
+      userToDelteId: enrollee    
+    })    
+  }
+  hidePopUp = () => {
+    this.setState({
+      popUp: false   
+    })
+  }
+  deleteEnrollee = async () => {
+    let enrollers =  Object.fromEntries(Object.entries(this.state.enrollers).filter((enroll, index) => {  
+      if(enroll[0] !== this.state.userToDelteId) {
+        console.log(enroll)       
+        return  enroll[0]
+      } 
+    }))
+    await firebase.database().ref('enrolls').child(this.state.userToDelteId).remove();
+    this.props.history.push('/');
+
+    this.setState({
+      popUp: false,
+      userToDelteId: null,
+      enrollers,
+    })
+  
+  }
+
    renderEnrollers() {
+    console.log(this.state.enrollers)
      if(this.state.enrollers) {
     return Object.entries(this.state.enrollers).map((enroll, index) => {  
+     
       return(
       <tr  key={enroll[0] + index}>
         <td>
@@ -28,6 +63,7 @@ class EnrolleList extends React.Component {
         <td> {enroll[1].address}</td>
         <td>{enroll[1].facultyName}</td>
         <td>  <div><NavLink to={'/enrollee/' + enroll[0]}><i className={"fa fa-pencil fa-fw"}></i>     </NavLink> </div> </td>
+        <td><Button  onClick={()=> {this.popupOnDelete(enroll[0])}}  type="delete">X</Button></td>
       </tr>
      )
    })
@@ -58,8 +94,7 @@ class EnrolleList extends React.Component {
         })
       }
     })
-
-  
+ 
     if(event.target.value === '') {
       firebase.database().ref('enrolls').on('value',(snap)=>{     
         this.setState({
@@ -72,14 +107,12 @@ class EnrolleList extends React.Component {
   render() {
     let content = 
      this.state.enrollers !== '' ?
-      <Auxillary>
+      <Auxillary>       
         <Search            
             type='search'
             placeholder='Найти абитуриента'  
             onChange={this.searchHandler}
-        />
-      
-       
+        />       
         <EnrollsTable
            tableHeads = {['Имя','Телефон','Дата рождения','Адрес','Факультет']}
         >
@@ -96,6 +129,14 @@ class EnrolleList extends React.Component {
     return (
       
       <div className={styles['enrolle-list']}> 
+      {this.state.popUp === false ? null : 
+        <PopUp         
+          onAccept = {this.deleteEnrollee}  
+          onRefuse = {this.hidePopUp}
+          text = 'Вы уверены, что хотите удалить данного абитуриента?'  
+      />
+      }
+  
      {content}
          
       </div>

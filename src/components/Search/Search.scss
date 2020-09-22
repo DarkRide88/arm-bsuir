@@ -1,18 +1,20 @@
 .search {
   margin: 0 auto;
   padding: {
-    top: 3px;
+    top: 5px;
   }
   input {
-    border: 2px solid rgba(220,220,220,1);
+    border-radius: 2px;
+    border: 2px solid rgba(187, 187, 187, 0.801);
     width: 100%;
     box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
     transition: border-color .3s;
+    background-color: #ECEFF1;
     &:focus{
       outline: none;
     }
     &:hover {
-      border-color: #17179b60;
+      border-color: #26737398;;
     }
   }
    
@@ -20,10 +22,6 @@
     padding: 1rem;
     color: gray;
     font-family: Verdana;
-    &:hover {
-      // box-shadow: 1px 1px 3px 1px rgba(145, 145, 146, 0.2) inset;
-      
-    }
     &:focus::-webkit-input-placeholder {
       opacity: 0; 
       transition: opacity 0.3s ease;     

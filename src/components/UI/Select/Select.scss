@@ -12,7 +12,7 @@
     box-sizing: border-box;
     border: 1px solid #bebebe;
     margin: 0 0 5px;
-    height: 2rem;
+    height: 2.8rem;
     width: 100%;
     outline: none; 
     border: 2px solid rgba(220,220,220,1);  
@@ -21,12 +21,13 @@
     font-family: sans-serif;
     font-size: .9rem;
     padding-left: .1rem;  
-    transition: width .3s; 
+    transition: border-color .3s;
+    background-color: rgba(187, 187, 187, 0.199);;
     &:focus{
       outline: none;
     }
     &:hover {
-      border-color: #17179b60;
+      border-color: #26737398;
     }  
   }
   option {

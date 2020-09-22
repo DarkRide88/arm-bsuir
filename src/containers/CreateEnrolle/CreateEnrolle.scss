@@ -5,6 +5,13 @@
   width: 100%;
   flex-direction: column;
   margin-top: 1rem;
+
+  select {
+    height: 2rem!important;
+    background-color: white!important;
+    color: black;
+    appearance: none;;
+  }
   div {
     margin-left: .2rem;
   }
@@ -51,9 +58,7 @@
     flex-wrap: wrap; 
     flex-direction: column
   }
-  select {
-    height: 2rem;
-  }
+ 
 }
 
 

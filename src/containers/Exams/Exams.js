@@ -13,7 +13,7 @@ class Exams extends React.Component {
   state = {
     enrollers: null
   }
-  
+
    onChange = async (value, controlName, examName) => {   
     console.log(controlName)
     const enrollers = this.state.enrollers  
@@ -59,6 +59,7 @@ class Exams extends React.Component {
     })
     
   }
+
   updateIsUreadyToResult = () => {
     let obj = {}
     Object.entries(this.state.enrollers).forEach(enrollee => {          
@@ -141,7 +142,6 @@ class Exams extends React.Component {
         })
       }
     })
-
   
     if(event.target.value === '') {
       firebase.database().ref('enrolls').on('value',(snap)=>{     

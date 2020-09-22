@@ -1,20 +1,17 @@
 .exams {
   margin: 0 auto;
-  text-align: center;
-  background-color: white;
+  text-align: center; 
   margin: 0 auto; 
   width: 100%;
   justify-content: center;
   max-width: 70rem;
-  input {
-    border-radius: 3px;
-  }
   h1 {
     color: green;
 
   }
   table {    
-    
+    // background-color: white;
+  
     tr {
       text-align: left;
     }
@@ -34,7 +31,7 @@
       text-align: center;
     }
     tr:nth-child(2n) {
-      background-color: rgba(187, 187, 187, 0.205);
+      background-color: rgba(236, 235, 235, 0.418);
     }
     input {
       text-align: center;

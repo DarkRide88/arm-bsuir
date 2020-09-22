@@ -146,23 +146,29 @@ class Enrollee extends React.Component {
     this.props.history.push('/');
   }
 
-
+  updateDataInState(faculties,enrollee ) {
+    console.log(enrollee)
+    this.setState({
+      enrollee,
+      faculties,      
+    })   
+  }
 
   async componentDidMount() {     
     try {
-      const facultiesResponse = await axios.get('/facultys.json') 
-      let faculties = getFaculties(facultiesResponse.data)   
-      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)       
-      this.setState({
-        enrollee:response.data,
-        faculties,      
-      })         
+      const facultiesResponse = await axios.get('/facultys.json')       
+      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)   
+      let faculties = getFaculties(facultiesResponse.data)  
+      let enrollee = response.data 
+      this.updateDataInState(faculties, enrollee)           
     } catch (e) {
       console.log(e)
     }
     this.setFormControlsToState() 
     console.log(this.state.formControls.subjectsControls)
   }
+
+
 
   render() {  
     return (      

@@ -14,6 +14,7 @@ class Exams extends React.Component {
     enrollers: null
   }
   onChange = (value, controlName, examName) => {   
+    console.log(this.state.enrollers)
     const enrollers = this.state.enrollers  
     enrollers[controlName].exams[examName].mark = value
     this.setState({
@@ -22,13 +23,12 @@ class Exams extends React.Component {
     this.updateIsUreadyToResult()
     this.calcAvgMark()
     firebase.database().ref('enrolls').set(this.state.enrollers);
-
   }
+  
   getAvgMarkExam = (avg, enrollee, enrolleeName) => {
     let avgMark = 0
     let marksCount = 1
     let avgStudMark = 0
-
     Object.values(enrollee.exams).forEach(exam =>{   
       avgMark += +exam.mark  
       marksCount += 1
@@ -42,8 +42,7 @@ class Exams extends React.Component {
     avgMark = 0
   }
 
-  calcAvgMark = () => {
- 
+  calcAvgMark = () => { 
     Object.entries(this.state.enrollers).forEach(enrollee =>{
       let avgMark = 0
       let marksCount = 0
@@ -53,19 +52,18 @@ class Exams extends React.Component {
       })
       avgMark = Math.round(avgMark/marksCount *10)/10    
       this.getAvgMarkExam(avgMark, enrollee[1], enrollee[0])
-    })
-    
+    })    
   }
+
   updateIsUreadyToResult = () => {
     let obj = {}
     Object.entries(this.state.enrollers).forEach(enrollee => {          
          obj = Object.entries(enrollee[1].exams).filter(exam => {      
-          if(exam[1].mark !== '' && +exam[1].mark>= 4){      
-            console.log(exam[1])    
+          if(exam[1].mark !== '' && +exam[1].mark>= 4){               
            return exam
           }
-        })
-        console.log(obj)
+          return null
+        })       
         if(obj.length === 3) {
           const enrollers = this.state.enrollers
           enrollers[enrollee[0]].readyToResults = true

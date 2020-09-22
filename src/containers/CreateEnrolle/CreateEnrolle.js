@@ -147,32 +147,36 @@ class CreateEnrolle extends React.Component {
       })
   }
 
+
+  updateDataInState(faculties ) {
+    let enrollee = this.state.enrollee   
+    enrollee.facultyName = Object.entries(faculties)[0][0]
+    enrollee.specialtyName = Object.entries(faculties)[0][1][0]["speaciality"].name
+    enrollee.exams = {
+      exam1: {
+        name:Object.entries(faculties)[0][1][0]["exam1"],
+        mark: ''
+      },
+      exam2: {
+        name:Object.entries(faculties)[0][1][0]["exam2"],
+        mark: ''
+      },
+      exam3: {
+        name:Object.entries(faculties)[0][1][0]["exam3"],
+        mark: ''
+      }
+    }
+    this.setState({
+      faculties,
+      enrollee,
+    })   
+  }
+
   async componentDidMount() {     
     try {
       const response = await axios.get('/facultys.json') 
-      let faculty = getFaculties(response.data)   
-      let enrollee = this.state.enrollee     
-      
-      enrollee.facultyName = Object.entries(faculty)[0][0]
-      enrollee.specialtyName = Object.entries(faculty)[0][1][0]["speaciality"].name
-      enrollee.exams = {
-        exam1: {
-          name:Object.entries(faculty)[0][1][0]["exam1"],
-          mark: ''
-        },
-        exam2: {
-          name:Object.entries(faculty)[0][1][0]["exam2"],
-          mark: ''
-        },
-        exam3: {
-          name:Object.entries(faculty)[0][1][0]["exam3"],
-          mark: ''
-        }
-      }
-      this.setState({
-        faculties:faculty,
-        enrollee,
-      })         
+      let faculties = getFaculties(response.data)       
+      this.updateDataInState(faculties)      
     } catch (e) {
       console.log(e)
     }

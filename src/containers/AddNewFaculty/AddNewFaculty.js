@@ -15,6 +15,8 @@ const speciality = [['Название специальности','text','name'
 class AddNewFaculty extends React.Component {
 
   state = {
+    isFacultyNameEmpty:true,
+    isSpecialityEmpty:true,
     controls:{
       faculty:createFormControls(faculty) ,
       specialities:[],
@@ -23,7 +25,7 @@ class AddNewFaculty extends React.Component {
     specialities :[]      
   }
 
-  renderFacultyNameField = (handler) => {
+  renderFacultyNameField = () => {
     let control = this.state.controls.faculty
    
     control = control[0]  
@@ -51,7 +53,11 @@ class AddNewFaculty extends React.Component {
     event.preventDefault()  
   }
 
-  onChangeFacultyHandler = (value, control) => {      
+  onChangeFacultyHandler = (value, control) => { 
+    let flag = true 
+    if(value !== '') {
+      flag = false
+    }   
     let controll = this.state.controls.faculty[0]
     controll.touched = true
     controll.value = value
@@ -59,18 +65,19 @@ class AddNewFaculty extends React.Component {
     let newFacultyName = value
     this.setState({
       facultyName: newFacultyName,
+      isFacultyNameEmpty:flag
     }) 
   
   }
 
-  onChangeSpecialityHandler = (value,index, controlName, control, controlIndex) => { 
 
-    let specialities = this.state.specialities 
-    let speciality
-  
-   
-    let controll = this.state.controls.specialities[index][controlIndex]
+
+
+  onChangeSpecialityHandler = (value,index, controlName, control, controlIndex) => { 
     
+    let specialities = this.state.specialities 
+    let speciality    
+    let controll = this.state.controls.specialities[index][controlIndex]    
     controll.touched = true
     controll.value = value
     controll.valid = validate(control.value, control.validation)
@@ -86,12 +93,8 @@ class AddNewFaculty extends React.Component {
     } else {
       speciality[controlName] = value
     }
-
-    
-   
+  
     specialities[index] = speciality
-    // console.log(this.state.specialities)
-    // console.log(this.state.facultyName)
     this.setState({
       specialities,
     }) 
@@ -141,13 +144,10 @@ class AddNewFaculty extends React.Component {
     const controls = this.state.controls
     let  specialityControls = createFormControls(speciality)     
     specialityControls.push( {name:'id', type: 'hidden', value:Math.random()})    
-    controls.specialities.push(specialityControls)  
-   
+    controls.specialities.push(specialityControls)
     this.setState({
       controls
-    })
-    // console.log(this.state.specialities)
-    
+    })   
   }
 
 
@@ -163,9 +163,9 @@ class AddNewFaculty extends React.Component {
     return (
       <div className={styles['add-new-faculty']}>           
         <form onSubmit={this.submitHandler}> 
-            <div className={styles['facultyName']}>
-              {this.renderFacultyNameField(this.onChangeHandler)}
-            </div>            
+             <div className={styles['facultyName']}>
+                {this.renderFacultyNameField(this.onChangeHandler)}
+             </div>            
              <hr/>
              <div className={styles['specialities']}>
                  {this.renderSpecialities(this.onChangeHandler)}
@@ -183,7 +183,7 @@ class AddNewFaculty extends React.Component {
             <Button
               type="success"
               onClick={this.addFacultyToBase}
-              disabled={this.state.isFormValid === false}
+              disabled={this.state.isFacultyNameEmpty === true}
             >
               Добавить факультет в базу
            </Button>       

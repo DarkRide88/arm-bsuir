@@ -7,6 +7,10 @@
     font-weight: bold;
 
   }
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   input {
     background-color: #eceff1;
     display: block;
@@ -16,7 +20,7 @@
     margin: 0 0 5px;
     width: 100%;
     outline: none;
-    
+    appearance: none;
     transition: all .3 ease-in-out;
    
     transition: border-color .3s;
@@ -27,7 +31,9 @@
       border: 2px solid #bebebe;
       width: 100%;
       box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
+      appearance: none;
     }
+  
   }
   span {
     color: #f01f30;

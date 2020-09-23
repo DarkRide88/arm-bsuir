@@ -10,7 +10,7 @@ export function renderLinks(links) {
         exact={link.exact}   
       >
         {link.label}
-      </NavLink>
+      </NavLink>    
       </li>
     )
   })

@@ -11,17 +11,19 @@ import Search from '../../components/Search/Search'
 class Exams extends React.Component {
 
   state = {
-    enrollers: null
+    enrollers: null,
+    seatchInput: null,
   }
 
-   onChange = async (value, controlName, examName) => {   
-    console.log(controlName)
+ 
+
+   onChange =  async (value, controlName, examName) => {   
     const enrollers = this.state.enrollers  
     enrollers[controlName].exams[examName].mark = value
-    console.log(enrollers[controlName])
     this.setState({
       enrollers,
     })
+
     this.updateIsUreadyToResult()
     this.calcAvgMark()
     await firebase.database().ref('enrolls').child(controlName).set(enrollers[controlName]);
@@ -45,8 +47,7 @@ class Exams extends React.Component {
     avgMark = 0
   }
 
-  calcAvgMark = () => {
- 
+  calcAvgMark = () => { 
     Object.entries(this.state.enrollers).forEach(enrollee =>{
       let avgMark = 0
       let marksCount = 0
@@ -67,6 +68,7 @@ class Exams extends React.Component {
           if(exam[1].mark !== '' && +exam[1].mark>= 4){               
            return exam
           }
+         return null
         })       
         if(obj.length === 3) {
           const enrollers = this.state.enrollers
@@ -119,18 +121,16 @@ class Exams extends React.Component {
     })   
   }
 
-  async componentDidMount() {
-    const response = await axios.get('/enrolls.json')  
-    this.setState({
-      enrollers: response.data,    
-    })  
-  }
 
-  searchHandler =  (event) =>{    
+  searchHandler =  async (event) =>{    
     let enr = []
+    this.state.seatchInput = event.target.value
+    this.setState({
+      seatchInput:event.target.value
+    })
      Object.entries(this.state.enrollers).forEach(enrollee => {     
       let name = enrollee[1].name.toLowerCase()
-      if(name.indexOf(event.target.value.toLowerCase()) === 0 && event.target.value !== ''){
+      if(name.indexOf(this.state.seatchInput.toLowerCase()) === 0 && this.state.seatchInput !== ''){
         Object.entries(this.state.enrollers).forEach(enrollee => {          
           if(enrollee[1].name.toLowerCase() === name){
             enr.push(enrollee)            
@@ -144,13 +144,22 @@ class Exams extends React.Component {
     })
   
     if(event.target.value === '') {
-      firebase.database().ref('enrolls').on('value',(snap)=>{     
+      const response = await axios.get('/enrolls.json')     
         this.setState({
-          enrollers:snap.val()
+          enrollers:response.data,
+          seatchInput:null
         })
-      })
+  
     }
 
+  }
+
+  async componentDidMount() {
+
+    const response = await axios.get('/enrolls.json')  
+    this.setState({
+      enrollers: response.data,    
+    })  
   }
 
   render() {

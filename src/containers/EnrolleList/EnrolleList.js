@@ -34,6 +34,7 @@ class EnrolleList extends React.Component {
         console.log(enroll)       
         return  enroll[0]
       } 
+      return null
     }))
     await firebase.database().ref('enrolls').child(this.state.userToDelteId).remove();
     this.props.history.push('/');

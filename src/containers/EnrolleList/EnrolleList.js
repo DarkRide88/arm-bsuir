@@ -90,8 +90,7 @@ class EnrolleList extends React.Component {
       content = <Loader/>
     }
     return (
-      <div className={styles['enrolle-list']}> 
-      {console.log(this.props.popUp)}
+      <div className={styles['enrolle-list']}>      
       {this.props.popUp === false ? null : 
         <PopUp         
           onAccept = {() => {this.props.deleteEnrollee(this.props.enrollees, this.props.userToDelteId)}}  

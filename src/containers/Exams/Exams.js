@@ -8,12 +8,12 @@ import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Search from '../../components/Search/Search'
 import { connect } from 'react-redux'
-import { fetchEnrollees } from '../../store/actions/enrollees'
+import { fetchEnrollees, findEnrollee } from '../../store/actions/enrollees'
 
 class Exams extends React.Component {
 
   state = {   
-    seatchInput: null,
+    // : null,seatchInput
   }
 
  
@@ -123,37 +123,37 @@ class Exams extends React.Component {
   }
 
 
-  searchHandler =  async (event) =>{    
-    let enr = []
-    this.state.seatchInput = event.target.value
-    this.setState({
-      seatchInput:event.target.value
-    })
-     Object.entries(this.props.enrollees).forEach(enrollee => {     
-      let name = enrollee[1].name.toLowerCase()
-      if(name.indexOf(this.state.seatchInput.toLowerCase()) === 0 && this.state.seatchInput !== ''){
-        Object.entries(this.props.enrollees).forEach(enrollee => {          
-          if(enrollee[1].name.toLowerCase() === name){
-            enr.push(enrollee)            
-          }
-        })
+  // searchHandler =  async (event) =>{    
+  //   let enr = []
+  //   this.state.seatchInput = event.target.value
+  //   this.setState({
+  //     seatchInput:event.target.value
+  //   })
+  //    Object.entries(this.props.enrollees).forEach(enrollee => {     
+  //     let name = enrollee[1].name.toLowerCase()
+  //     if(name.indexOf(this.state.seatchInput.toLowerCase()) === 0 && this.state.seatchInput !== ''){
+  //       Object.entries(this.props.enrollees).forEach(enrollee => {          
+  //         if(enrollee[1].name.toLowerCase() === name){
+  //           enr.push(enrollee)            
+  //         }
+  //       })
      
-        this.setState({
-          enrollers: Object.fromEntries(enr)
-        })
-      }
-    })
+  //       this.setState({
+  //         enrollers: Object.fromEntries(enr)
+  //       })
+  //     }
+  //   })
   
-    if(event.target.value === '') {
-      const response = await axios.get('/enrolls.json')     
-        this.setState({
-          enrollers:response.data,
-          seatchInput:null
-        })
+  //   if(event.target.value === '') {
+  //     const response = await axios.get('/enrolls.json')     
+  //       this.setState({
+  //         enrollers:response.data,
+  //         seatchInput:null
+  //       })
   
-    }
+  //   }
 
-  }
+  // }
 
   async componentDidMount() {
     this.props.fetchEnrollees()
@@ -168,7 +168,7 @@ class Exams extends React.Component {
             <Search            
               type='search'
               placeholder='Найти абитуриента'  
-              onChange={this.searchHandler}
+              onChange={(event) => {this.props.findEnrollee(event, this.props.enrollees) }}
             />
             <EnrollsTable
               tableHeads = {['Имя', 'Факультет', '','','Оценки за экзамены','']}
@@ -188,11 +188,13 @@ class Exams extends React.Component {
 function mapStateToProps(state) {
   return {
     enrollees: state.enrollees.enrollees,
+    searchInputValue: state.enrollees.searchInputValue,
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
     fetchEnrollees: () => dispatch(fetchEnrollees()),
+    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Exams)

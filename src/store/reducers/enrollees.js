@@ -1,11 +1,12 @@
-import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS } from "../actions/actionTypes"
+import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, FIND_ENROLLEE_SUCCESS } from "../actions/actionTypes"
 
 
 const initialState = {
   enrollees: null,
   loading:false,
   popUp:false,
-  userToDelteId:null
+  userToDelteId:null,
+  searchInputValue: null,
 }
 
 export default function enrollees (state = initialState, action) {
@@ -33,11 +34,25 @@ export default function enrollees (state = initialState, action) {
       return {
         ...state, popUp: action.popUp, userToDelteId: action.enrollee
       }
-    case DELETE_USER_SUCCESS: {
+    case DELETE_USER_SUCCESS: 
       return {
         ...state, userDeleteId: null, enrollees: action.enrollees
       }
-    }
+
+    case RESET_SEARCH_FIELD: 
+      return {
+        ...state, searchInputValue:null, enrollees: action.enrollees
+      }
+    case SET_SEARCHED_INPUT_VALUE:
+      return {
+        ...state, searchInputValue: action.searchInputValue,
+      }
+    case FIND_ENROLLEE_SUCCESS:
+      console.log(action.enrollees)
+      return {
+        ...state,  enrollees: action.enrollees
+      }
+    
   }
 
 }

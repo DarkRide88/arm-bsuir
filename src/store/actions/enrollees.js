@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS } from "./actionTypes"
+import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, FIND_ENROLLEE_SUCCESS, SET_SEARCHED_INPUT_VALUE } from "./actionTypes"
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
     
@@ -15,6 +15,60 @@ import axios from '../../axios/axios-arm'
       }
     }
 
+    export function findEnrollee(event, enrollees) {   
+      // console.log(event) 
+      // console.log(enrollees) 
+     
+      return async dispatch => {
+        let searchInputValue = event.target.value
+        let foundEnrollees = []     
+        dispatch(setSearchInputValue(searchInputValue))
+
+         Object.entries(enrollees).forEach(enrollee => {     
+          let name = enrollee[1].name.toLowerCase()
+         
+          if(name.indexOf(searchInputValue.toLowerCase()) === 0 && searchInputValue !== ''){
+            Object.entries(enrollees).forEach(enrollee => {          
+              if(enrollee[1].name.toLowerCase() === name){
+                foundEnrollees.push(enrollee)            
+              }
+            })
+            
+            console.log(foundEnrollees)
+            dispatch(findEnrolleeSuccess(Object.fromEntries(foundEnrollees)))
+          }
+        })
+      
+        if(searchInputValue === '') {
+          const response = await axios.get('/enrolls.json')    
+          dispatch(resetSeatchField(response.data))      
+        }
+      }
+    }
+
+    export function setSearchInputValue (searchInputValue) {
+      return {
+        type: SET_SEARCHED_INPUT_VALUE,
+        searchInputValue,
+      }
+    }
+
+    export function findEnrolleeSuccess (enrollees) {    
+      return {
+        type: FIND_ENROLLEE_SUCCESS,
+        enrollees, 
+      }
+    }
+
+    export function resetSeatchField (enrollees) {
+     
+      return {
+        type: RESET_SEARCH_FIELD,   
+        enrollees,    
+      }
+    }
+
+
     export function deleteEnrollee(enrollees, userToDelteId) {
       return async dispatch=> {
         dispatch(hidePopUp())
@@ -24,14 +78,7 @@ import axios from '../../axios/axios-arm'
           } 
           return null
         }))
-        await firebase.database().ref('enrolls').child(userToDelteId).remove();
-        // this.props.history.push('/');
-    
-        // this.setState({
-        //   popUp: false,
-        //   userToDelteId: null,
-        //   enrollers,
-        // })
+        await firebase.database().ref('enrolls').child(userToDelteId).remove();    
         dispatch(deleteEnrolleeSucceess(enrolleesWithoutDeleted))
       }
     }

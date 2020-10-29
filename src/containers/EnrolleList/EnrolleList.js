@@ -9,6 +9,7 @@ import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import PopUp from '../../components/PopUp/PopUp'
 import Button from '../../components/UI/Button/Button'
+
 class EnrolleList extends React.Component {
   state = {
     enrollers:null,

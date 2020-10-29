@@ -7,20 +7,19 @@ import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Search from '../../components/Search/Search'
 import { connect } from 'react-redux'
-import { fetchEnrollees, findEnrollee } from '../../store/actions/enrollees'
+import { fetchEnrollees, findEnrollee, updateEnrollees } from '../../store/actions/enrollees'
 
 class Exams extends React.Component {
 
   onChange =  async (value, controlName, examName) => {   
-    const enrollers = this.props.enrollees  
-    enrollers[controlName].exams[examName].mark = value
-    this.setState({
-      enrollers,
-    })
-
+    const enrollees = {...this.props.enrollees } 
+    console.log(enrollees)
+    enrollees[controlName].exams[examName].mark = value
+   
+    this.props.updateEnrollees(enrollees)
     this.updateIsUreadyToResult()
     this.calcAvgMark()
-    await firebase.database().ref('enrolls').child(controlName).set(enrollers[controlName]);
+    await firebase.database().ref('enrolls').child(controlName).set(enrollees[controlName]);
   }
 
   getAvgMarkExam = (avg, enrollee, enrolleeName) => {
@@ -33,11 +32,9 @@ class Exams extends React.Component {
       marksCount += 1
     })    
     avgStudMark = Math.round((avgMark + avg) /marksCount  *10)/10    
-    let enrollers = this.props.enrollees
-    enrollers[enrolleeName].avgMark = avgStudMark
-    this.setState({
-      enrollers
-    }) 
+    const enrollees = {...this.props.enrollees } 
+    enrollees[enrolleeName].avgMark = avgStudMark
+    this.props.updateEnrollees(enrollees)
     avgMark = 0
   }
 
@@ -65,23 +62,21 @@ class Exams extends React.Component {
          return null
         })       
         if(obj.length === 3) {
-          const enrollers = this.props.enrollees
-          enrollers[enrollee[0]].readyToResults = true
-          this.setState({
-            enrollers
-          })
+          const enrollees = {...this.props.enrollees } 
+          enrollees[enrollee[0]].readyToResults = true
+          this.props.updateEnrollees(enrollees)
         } else {
-          const enrollers = this.props.enrollees
-          enrollers[enrollee[0]].readyToResults = false
-          this.setState({
-            enrollers
-          })
+          const enrollees = {...this.props.enrollees } 
+          enrollees[enrollee[0]].readyToResults = false
+          this.props.updateEnrollees(enrollees)
+        
         }
     });
   }
 
   renderExams = () => {  
-    return Object.entries(this.props.enrollees).map((enrolle, index) => {  
+    return Object.entries(this.props.enrollees).map((enrolle, index) => { 
+      console.log(enrolle[1])
        return(
         <tr  key={index}>
           <td>{enrolle[1].name}</td>
@@ -97,6 +92,7 @@ class Exams extends React.Component {
           <td>{`${enrolle[1].exams.exam2.name}:`}</td>
           <td>
           <Input 
+          
             label = 'exam2'
             value = {enrolle[1].exams.exam2.mark}
             maxLength = '1'
@@ -153,7 +149,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchEnrollees: () => dispatch(fetchEnrollees()),
-    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))
+    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees )),
+    updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees))
   }
 }
 

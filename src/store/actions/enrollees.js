@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, FIND_ENROLLEE_SUCCESS, SET_SEARCHED_INPUT_VALUE } from "./actionTypes"
+import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, FIND_ENROLLEE_SUCCESS, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES } from "./actionTypes"
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
     
@@ -35,7 +35,7 @@ import axios from '../../axios/axios-arm'
             })
             
             console.log(foundEnrollees)
-            dispatch(findEnrolleeSuccess(Object.fromEntries(foundEnrollees)))
+            dispatch(updateEnrollees(Object.fromEntries(foundEnrollees)))
           }
         })
       
@@ -46,6 +46,13 @@ import axios from '../../axios/axios-arm'
       }
     }
 
+    // export function updateEnrollees(enrollees) {
+    //   return {
+    //     type: UPDATE_ENROLLEES,
+    //     enrollees
+    //   }
+    // }
+
     export function setSearchInputValue (searchInputValue) {
       return {
         type: SET_SEARCHED_INPUT_VALUE,
@@ -53,9 +60,9 @@ import axios from '../../axios/axios-arm'
       }
     }
 
-    export function findEnrolleeSuccess (enrollees) {    
+    export function updateEnrollees (enrollees) {    
       return {
-        type: FIND_ENROLLEE_SUCCESS,
+        type: UPDATE_ENROLLEES,
         enrollees, 
       }
     }

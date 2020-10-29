@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './EnrolleList.scss'
-import axios from '../../axios/axios-arm'
+
 import { NavLink } from 'react-router-dom'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
@@ -9,51 +9,16 @@ import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import PopUp from '../../components/PopUp/PopUp'
 import Button from '../../components/UI/Button/Button'
+import { connect } from 'react-redux'
+import { deleteEnrollee, fetchEnrollees, hidePopUp, showPopUp } from '../../store/actions/enrollees'
 
 class EnrolleList extends React.Component {
-  state = {
-    enrollers:null,
-    loading: true,
-    popUp: false,
-    userToDelteId: null,
-  }
-
-  popupOnDelete = (enrollee) => {
-    this.setState({
-      popUp: true,
-      userToDelteId: enrollee    
-    })    
-  }
-  hidePopUp = () => {
-    this.setState({
-      popUp: false   
-    })
-  }
-  deleteEnrollee = async () => {
-    let enrollers =  Object.fromEntries(Object.entries(this.state.enrollers).filter((enroll, index) => {  
-      if(enroll[0] !== this.state.userToDelteId) {
-        console.log(enroll)       
-        return  enroll[0]
-      } 
-      return null
-    }))
-    await firebase.database().ref('enrolls').child(this.state.userToDelteId).remove();
-    this.props.history.push('/');
-
-    this.setState({
-      popUp: false,
-      userToDelteId: null,
-      enrollers,
-    })
-  
-  }
-
    renderEnrollers() {
-    console.log(this.state.enrollers)
-     if(this.state.enrollers) {
-    return Object.entries(this.state.enrollers).map((enroll, index) => {  
-     
+    if(this.props.enrollees) {
+    return Object.entries(this.props.enrollees).map((enroll, index) => {  
+   
       return(
+      
       <tr  key={enroll[0] + index}>
         <td>
           <NavLink to={'/enrollee/' + enroll[0]}>
@@ -65,27 +30,23 @@ class EnrolleList extends React.Component {
         <td> {enroll[1].address}</td>
         <td>{enroll[1].facultyName}</td>
         <td>  <div><NavLink to={'/enrollee/' + enroll[0]}><i className={"fa fa-pencil fa-fw"}></i>     </NavLink> </div> </td>
-        <td><Button  onClick={()=> {this.popupOnDelete(enroll[0])}}  type="delete">X</Button></td>
+        <td><Button  onClick={()=> {this.props.showPopUp(enroll[0])}}  type="delete">X</Button></td>
       </tr>
      )
    })
   } 
   }
   
- async componentDidMount() { 
-    const response = await axios.get('/enrolls.json')  
-    this.setState({
-      enrollers: response.data,
-      loading:false
-    })  
+ componentDidMount() { 
+    this.props.fetchEnrollees()
   }
 
    searchHandler =  (event) =>{    
     let enr = []
-     Object.entries(this.state.enrollers).forEach(enrollee => {     
+     Object.entries(this.props.enrollees).forEach(enrollee => {     
       let name = enrollee[1].name.toLowerCase()
       if(name.indexOf(event.target.value.toLowerCase()) === 0 && event.target.value !== ''){
-        Object.entries(this.state.enrollers).forEach(enrollee => {          
+        Object.entries(this.props.enrollees).forEach(enrollee => {          
           if(enrollee[1].name.toLowerCase() === name){
             enr.push(enrollee)            
           }
@@ -97,19 +58,19 @@ class EnrolleList extends React.Component {
       }
     })
  
-    if(event.target.value === '') {
+  if(event.target.value === '') {
       firebase.database().ref('enrolls').on('value',(snap)=>{     
         this.setState({
           enrollers:snap.val()
         })
       })
     }
-
   }
-  render() {
+
+  render() {  
     let content = 
-     this.state.enrollers !== '' ?
-      <Auxillary>       
+     this.props.enrollees !== null ?
+      <Auxillary>     
         <Search            
             type='search'
             placeholder='Найти абитуриента'  
@@ -118,34 +79,46 @@ class EnrolleList extends React.Component {
         <EnrollsTable
            tableHeads = {['Имя','Телефон','Дата рождения','Адрес','Факультет']}
         >
-          { this.state.loading  ? <tr><td></td><td></td><Loader/></tr> : this.renderEnrollers()}
+          { this.props.loading  ? <tr><td></td><td></td><Loader/></tr> : this.renderEnrollers()}
         </EnrollsTable>
    
       </Auxillary>
       : <h1 style={{textAlign:'center'}}>Нет зарегистрированных абитуриентов</h1>  
        
    
-    if (this.state.enrollers == null) {
+    if (!this.props.enrollees) {
       content = <Loader/>
     }
     return (
-      
       <div className={styles['enrolle-list']}> 
-      {this.state.popUp === false ? null : 
+      {console.log(this.props.popUp)}
+      {this.props.popUp === false ? null : 
         <PopUp         
-          onAccept = {this.deleteEnrollee}  
-          onRefuse = {this.hidePopUp}
+          onAccept = {() => {this.props.deleteEnrollee(this.props.enrollees, this.props.userToDelteId)}}  
+          onRefuse = {this.props.hidePopUp}
           text = 'Вы уверены, что хотите удалить данного абитуриента?'  
       />
-      }
-  
-     {content}
-         
-      </div>
-      
+      }  
+     {content}         
+      </div>      
     )
   }
 }
 
-
-export default EnrolleList
+function mapStateToProps(state) {
+  return {
+    enrollees: state.enrollees.enrollees,
+    loading: state.enrollees.loading,
+    popUp: state.enrollees.popUp,
+    userToDelteId: state.enrollees.userToDelteId,
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchEnrollees: () => dispatch(fetchEnrollees()),
+    hidePopUp: () => dispatch(hidePopUp()),
+    showPopUp: (enrollee) => dispatch(showPopUp(enrollee)),
+    deleteEnrollee: (enrollees, userToDelteId) => dispatch(deleteEnrollee(enrollees, userToDelteId))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(EnrolleList)

@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './Exams.scss'
-import axios from '../../axios/axios-arm'
 import Input from '../../components/UI/Input/Input'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
@@ -12,13 +11,7 @@ import { fetchEnrollees, findEnrollee } from '../../store/actions/enrollees'
 
 class Exams extends React.Component {
 
-  state = {   
-    // : null,seatchInput
-  }
-
- 
-
-   onChange =  async (value, controlName, examName) => {   
+  onChange =  async (value, controlName, examName) => {   
     const enrollers = this.props.enrollees  
     enrollers[controlName].exams[examName].mark = value
     this.setState({
@@ -122,45 +115,11 @@ class Exams extends React.Component {
     })   
   }
 
-
-  // searchHandler =  async (event) =>{    
-  //   let enr = []
-  //   this.state.seatchInput = event.target.value
-  //   this.setState({
-  //     seatchInput:event.target.value
-  //   })
-  //    Object.entries(this.props.enrollees).forEach(enrollee => {     
-  //     let name = enrollee[1].name.toLowerCase()
-  //     if(name.indexOf(this.state.seatchInput.toLowerCase()) === 0 && this.state.seatchInput !== ''){
-  //       Object.entries(this.props.enrollees).forEach(enrollee => {          
-  //         if(enrollee[1].name.toLowerCase() === name){
-  //           enr.push(enrollee)            
-  //         }
-  //       })
-     
-  //       this.setState({
-  //         enrollers: Object.fromEntries(enr)
-  //       })
-  //     }
-  //   })
-  
-  //   if(event.target.value === '') {
-  //     const response = await axios.get('/enrolls.json')     
-  //       this.setState({
-  //         enrollers:response.data,
-  //         seatchInput:null
-  //       })
-  
-  //   }
-
-  // }
-
   async componentDidMount() {
     this.props.fetchEnrollees()
   }
 
   render() {
-
     return(     
       <div className={styles.exams}>
         {this.props.enrollees !== null ?
@@ -179,7 +138,6 @@ class Exams extends React.Component {
           
         : <Loader/>}      
       </div>
-
     )
   }
 }
@@ -191,10 +149,12 @@ function mapStateToProps(state) {
     searchInputValue: state.enrollees.searchInputValue,
   }
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     fetchEnrollees: () => dispatch(fetchEnrollees()),
     findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Exams)

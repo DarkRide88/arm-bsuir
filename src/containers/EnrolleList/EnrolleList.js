@@ -10,9 +10,10 @@ import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import PopUp from '../../components/PopUp/PopUp'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
-import { deleteEnrollee, fetchEnrollees, hidePopUp, showPopUp } from '../../store/actions/enrollees'
+import { deleteEnrollee, fetchEnrollees, findEnrollee, hidePopUp, showPopUp } from '../../store/actions/enrollees'
 
 class EnrolleList extends React.Component {
+  
    renderEnrollers() {
     if(this.props.enrollees) {
     return Object.entries(this.props.enrollees).map((enroll, index) => {  
@@ -41,32 +42,6 @@ class EnrolleList extends React.Component {
     this.props.fetchEnrollees()
   }
 
-   searchHandler =  (event) =>{    
-    let enr = []
-     Object.entries(this.props.enrollees).forEach(enrollee => {     
-      let name = enrollee[1].name.toLowerCase()
-      if(name.indexOf(event.target.value.toLowerCase()) === 0 && event.target.value !== ''){
-        Object.entries(this.props.enrollees).forEach(enrollee => {          
-          if(enrollee[1].name.toLowerCase() === name){
-            enr.push(enrollee)            
-          }
-        })
-     
-        this.setState({
-          enrollers: Object.fromEntries(enr)
-        })
-      }
-    })
- 
-  if(event.target.value === '') {
-      firebase.database().ref('enrolls').on('value',(snap)=>{     
-        this.setState({
-          enrollers:snap.val()
-        })
-      })
-    }
-  }
-
   render() {  
     let content = 
      this.props.enrollees !== null ?
@@ -74,7 +49,7 @@ class EnrolleList extends React.Component {
         <Search            
             type='search'
             placeholder='Найти абитуриента'  
-            onChange={this.searchHandler}
+            onChange={(event) => {this.props.findEnrollee(event, this.props.enrollees) }}
         />       
         <EnrollsTable
            tableHeads = {['Имя','Телефон','Дата рождения','Адрес','Факультет']}
@@ -117,7 +92,9 @@ function mapDispatchToProps(dispatch) {
     fetchEnrollees: () => dispatch(fetchEnrollees()),
     hidePopUp: () => dispatch(hidePopUp()),
     showPopUp: (enrollee) => dispatch(showPopUp(enrollee)),
-    deleteEnrollee: (enrollees, userToDelteId) => dispatch(deleteEnrollee(enrollees, userToDelteId))
+    deleteEnrollee: (enrollees, userToDelteId) => dispatch(deleteEnrollee(enrollees, userToDelteId)),
+    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))
+    
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EnrolleList)

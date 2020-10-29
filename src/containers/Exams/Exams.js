@@ -7,18 +7,19 @@ import Loader from '../../components/UI/Loader/Loader'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Search from '../../components/Search/Search'
+import { connect } from 'react-redux'
+import { fetchEnrollees } from '../../store/actions/enrollees'
 
 class Exams extends React.Component {
 
-  state = {
-    enrollers: null,
+  state = {   
     seatchInput: null,
   }
 
  
 
    onChange =  async (value, controlName, examName) => {   
-    const enrollers = this.state.enrollers  
+    const enrollers = this.props.enrollees  
     enrollers[controlName].exams[examName].mark = value
     this.setState({
       enrollers,
@@ -39,7 +40,7 @@ class Exams extends React.Component {
       marksCount += 1
     })    
     avgStudMark = Math.round((avgMark + avg) /marksCount  *10)/10    
-    let enrollers = this.state.enrollers
+    let enrollers = this.props.enrollees
     enrollers[enrolleeName].avgMark = avgStudMark
     this.setState({
       enrollers
@@ -48,7 +49,7 @@ class Exams extends React.Component {
   }
 
   calcAvgMark = () => { 
-    Object.entries(this.state.enrollers).forEach(enrollee =>{
+    Object.entries(this.props.enrollees).forEach(enrollee =>{
       let avgMark = 0
       let marksCount = 0
       Object.values(enrollee[1].сertificate).forEach(mark => {        
@@ -63,7 +64,7 @@ class Exams extends React.Component {
 
   updateIsUreadyToResult = () => {
     let obj = {}
-    Object.entries(this.state.enrollers).forEach(enrollee => {          
+    Object.entries(this.props.enrollees).forEach(enrollee => {          
          obj = Object.entries(enrollee[1].exams).filter(exam => {      
           if(exam[1].mark !== '' && +exam[1].mark>= 4){               
            return exam
@@ -71,13 +72,13 @@ class Exams extends React.Component {
          return null
         })       
         if(obj.length === 3) {
-          const enrollers = this.state.enrollers
+          const enrollers = this.props.enrollees
           enrollers[enrollee[0]].readyToResults = true
           this.setState({
             enrollers
           })
         } else {
-          const enrollers = this.state.enrollers
+          const enrollers = this.props.enrollees
           enrollers[enrollee[0]].readyToResults = false
           this.setState({
             enrollers
@@ -87,7 +88,7 @@ class Exams extends React.Component {
   }
 
   renderExams = () => {  
-    return Object.entries(this.state.enrollers).map((enrolle, index) => {  
+    return Object.entries(this.props.enrollees).map((enrolle, index) => {  
        return(
         <tr  key={index}>
           <td>{enrolle[1].name}</td>
@@ -128,10 +129,10 @@ class Exams extends React.Component {
     this.setState({
       seatchInput:event.target.value
     })
-     Object.entries(this.state.enrollers).forEach(enrollee => {     
+     Object.entries(this.props.enrollees).forEach(enrollee => {     
       let name = enrollee[1].name.toLowerCase()
       if(name.indexOf(this.state.seatchInput.toLowerCase()) === 0 && this.state.seatchInput !== ''){
-        Object.entries(this.state.enrollers).forEach(enrollee => {          
+        Object.entries(this.props.enrollees).forEach(enrollee => {          
           if(enrollee[1].name.toLowerCase() === name){
             enr.push(enrollee)            
           }
@@ -155,18 +156,14 @@ class Exams extends React.Component {
   }
 
   async componentDidMount() {
-
-    const response = await axios.get('/enrolls.json')  
-    this.setState({
-      enrollers: response.data,    
-    })  
+    this.props.fetchEnrollees()
   }
 
   render() {
 
     return(     
       <div className={styles.exams}>
-        {this.state.enrollers !== null ?
+        {this.props.enrollees !== null ?
           <Auxillary>
             <Search            
               type='search'
@@ -176,7 +173,7 @@ class Exams extends React.Component {
             <EnrollsTable
               tableHeads = {['Имя', 'Факультет', '','','Оценки за экзамены','']}
             >
-              {this.state.enrollers !== null ? this.renderExams(): null}
+              {this.props.enrollees !== null ? this.renderExams(): null}
             </EnrollsTable>  
           </Auxillary>
           
@@ -187,4 +184,15 @@ class Exams extends React.Component {
   }
 }
 
-export default Exams
+
+function mapStateToProps(state) {
+  return {
+    enrollees: state.enrollees.enrollees,
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchEnrollees: () => dispatch(fetchEnrollees()),
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Exams)

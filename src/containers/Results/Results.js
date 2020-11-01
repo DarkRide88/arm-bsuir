@@ -1,43 +1,35 @@
 import React from 'react'
 import styles from './Results.scss'
-import axios from '../../axios/axios-arm'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
 import Loader from '../../components/UI/Loader/Loader'
-import {getFaculties} from '../../utils/getFaculties'
 import FacultyList from '../../components/FacultyList/FacultyList'
+import { connect } from 'react-redux'
+import { fetchEnrolledEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
+import { fetchFacultys, updateFacultyName, updateSpecialityName } from '../../store/actions/faculties'
 
 class Results extends React.Component {
-  state = {
-    faculties: null,
-    enrollee:null,
-    facultyName: null,
-    specialtyName: null,
-  }
+
 
   selectChangeHandler = (event) => {  
-    let facultyName = this.state.facultyName
-    let specialtyName = this.state.specialtyName
+    let facultyName = this.props.facultyName
+    let specialtyName = this.props.specialtyName
     facultyName = event.target.value;
-    specialtyName = this.state.faculties[facultyName][0]["speaciality"].name;
-    this.setState({
-      facultyName,
-      specialtyName
-    })    
+    specialtyName = this.props.faculties[facultyName][0]["speaciality"].name;
+    console.log(specialtyName)
+    this.props.updateFacultyName(facultyName, specialtyName)
   }  
   
   selectSpecialtyHandler = (event) => {      
-    let specialtyName = this.state.specialtyName 
+    let specialtyName = this.props.specialtyName 
     specialtyName = event.target.value
-    this.setState({
-      specialtyName,       
-    })     
+    this.props.updateSpecialityName(specialtyName) 
   }  
 
   getNumberOfPlaces = () => {
     let numberOfPlaces = 0
-    this.state.faculties[this.state.facultyName].forEach(faculty => {   
-      if(faculty.speaciality.name === this.state.specialtyName){  
+    this.props.faculties[this.props.facultyName].forEach(faculty => {   
+      if(faculty.speaciality.name === this.props.specialtyName){  
         numberOfPlaces = faculty.speaciality.numberOfPlaces      
       }
     })  
@@ -47,11 +39,11 @@ class Results extends React.Component {
   renderenrollee() {
     let numberOfPlaces = this.getNumberOfPlaces()
     let count = []  
-    if(this.state.enrollee) {
-      return Object.values(this.state.enrollee).sort((a, b) => a.avgMark < b.avgMark ?  1 : -1).map((enroll, index) => {             
+    if(this.props.enrollees) {
+      return Object.values(this.props.enrollees).sort((a, b) => a.avgMark < b.avgMark ?  1 : -1).map((enroll, index) => {             
     
-        console.log(enroll.specialtyName.name + ' ' + enroll.name)
-        if(enroll.specialtyName === this.state.specialtyName && enroll.readyToResults === true && this.state.faculties[this.state.facultyName] ) {     
+        
+        if(enroll.specialtyName === this.props.specialtyName && enroll.readyToResults === true && this.props.faculties[this.props.facultyName] ) {     
                  
           count.push(index)
           if(count.length <= numberOfPlaces ){
@@ -68,50 +60,36 @@ class Results extends React.Component {
     } 
  }
  
-  updateDataInState(faculties,enrollee ) {
-    console.log(enrollee)
-    this.setState({
-      enrollee,
-      faculties, 
-      facultyName: Object.entries(faculties)[0][0],
-      specialtyName: Object.entries(faculties)[0][1][0]["speaciality"].name,   
-    })   
-  }
-
-  async componentDidMount(){
-    const facultiesResponse = await axios.get('/facultys.json') 
-    const enrollsResponse = await axios.get('/enrolls.json')  
-    let faculties = getFaculties(facultiesResponse.data)   
-    let enrollee =  Object.fromEntries(Object.entries(enrollsResponse.data).filter(enrollee => {
-      if(enrollee[1].readyToResults) {
-        return enrollee
-      }
-      return null
-    }))   
-    this.updateDataInState(faculties, enrollee)
+  componentDidMount(){
+     this.props.fetchEnrolledEnrollees() 
+     this.props.fetchFacultys()
   }
 
   render() {
     return (
-      <div className={styles.results}> 
-      {this.state.enrollee !== null ?
+      <div className={styles.results}>    
+      {this.props.enrollees === false ||  this.props.faculties !== null  ?
       <Auxillary>    
-        {this.state.faculties === null ? null : 
+     
+        {this.props.faculties === null ? null : 
 
           <FacultyList
-              facultiesList = {this.state.faculties}
-              defaultFacultyName = {Object.keys(this.state.faculties)[0]}
+              facultiesList = {this.props.faculties}
+              defaultFacultyName = {Object.keys(this.props.faculties)[0]}
               selectFacultyChangeHandler = {this.selectChangeHandler}
               selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
-              enrolleeSpeciality = {this.state.specialtyName}
-              enrolleeFaculty = {this.state.facultyName}
+              enrolleeSpeciality = {this.props.specialtyName}
+              enrolleeFaculty = {this.props.facultyName}
           />                           
         }   
            
         <EnrollsTable
           tableHeads = {['ФИО', 'Средний балл']}        
         >
-         {this.renderenrollee()}        
+        {
+          this.props.loading === false ?  this.renderenrollee() : <Loader/>
+        }
+              
         </EnrollsTable>
       </Auxillary>        
       : <Loader/>}
@@ -120,4 +98,23 @@ class Results extends React.Component {
   }
 }
 
-export default Results
+function mapStateToProps(state) {
+  return {
+    enrollees: state.enrollees.enrollees,
+    faculties: state.faculties.faculties,
+    specialtyName: state.faculties.specialtyName,
+    facultyName: state.faculties.facultyName,
+    loading: state.enrollees.loading
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchEnrolledEnrollees: () => dispatch(fetchEnrolledEnrollees()),
+    updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees)),
+    fetchFacultys: () => dispatch(fetchFacultys()),
+    updateFacultyName:(facultyName, specialtyName ) => dispatch(updateFacultyName(facultyName, specialtyName)),
+    updateSpecialityName:(specialtyName) => dispatch(updateSpecialityName(specialtyName))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Results)

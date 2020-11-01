@@ -1,8 +1,6 @@
 import React from 'react'
 import styles from './EnrolleList.scss'
-
 import { NavLink } from 'react-router-dom'
-import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 import Search from '../../components/Search/Search'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'

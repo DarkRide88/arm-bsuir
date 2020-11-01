@@ -1,12 +1,13 @@
-import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, FIND_ENROLLEE_SUCCESS, UPDATE_ENROLLEES } from "../actions/actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES } from "../actions/actionTypes"
 
 
 const initialState = {
   enrollees: null,
-  loading:false,
+  loading:true,
   popUp:false,
   userToDelteId:null,
   searchInputValue: null,
+  enrolleesError:null,
 }
 
 export default function enrollees (state = initialState, action) {
@@ -18,13 +19,13 @@ export default function enrollees (state = initialState, action) {
       return {
         ...state, loading:true, 
       }
-    case FETCH_ENROLLEE_SUCCESS:
+    case FETCH_ENROLLEES_SUCCESS:
       return {
         ...state, loading: false, enrollees: action.enrollees
       }
     case FETCH_ENROLLEES_ERROR:
       return {
-        ...state, loading: false, error: action.error
+        ...state, loading: false, enrolleesError: action.error.name
       }
     case HIDE_POPUP:
       return {
@@ -47,8 +48,7 @@ export default function enrollees (state = initialState, action) {
       return {
         ...state, searchInputValue: action.searchInputValue,
       }
-    case UPDATE_ENROLLEES:
-      console.log(action.enrollees)
+    case UPDATE_ENROLLEES:     
       return {
         ...state,  enrollees: action.enrollees
       }

@@ -1,17 +1,44 @@
-import { FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, FIND_ENROLLEE_SUCCESS, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES } from "./actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES } from "./actionTypes"
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
     
-    export function fetchEnrollees() {
-      return async dispatch => {
-        dispatch(fetchEnrolleesStart())
+    export function fetchEnrollees() {     
+      return async dispatch => {        
+        dispatch(fetchEnrolleesStart())   
+         
         try {
           const response = await axios.get('/enrolls.json') 
-          const enrollees = response.data
+          const enrollees   = response.data       
+       
           dispatch(fetchEnrolleesSuccess(enrollees))
         }  catch (e) {
           dispatch(fetchEnrolleesErrors(e))
-        }
+        }      
+      }
+    }
+
+
+    export function CheckIsEnrolled () {
+
+    }
+
+
+    export function fetchEnrolledEnrollees() {
+     
+      return async dispatch => {        
+        dispatch(fetchEnrolleesStart())           
+        try {
+          const response = await axios.get('/enrolls.json')  
+          const enrollees =   Object.fromEntries(Object.entries(response.data  ).filter(enrollee => {
+            if(enrollee[1].readyToResults) {
+              return enrollee
+            }
+            return null
+          }))       
+          dispatch(fetchEnrolleesSuccess(enrollees))
+        }  catch (e) {
+          dispatch(fetchEnrolleesErrors(e))
+        }      
       }
     }
 
@@ -45,13 +72,6 @@ import axios from '../../axios/axios-arm'
         }
       }
     }
-
-    // export function updateEnrollees(enrollees) {
-    //   return {
-    //     type: UPDATE_ENROLLEES,
-    //     enrollees
-    //   }
-    // }
 
     export function setSearchInputValue (searchInputValue) {
       return {
@@ -121,7 +141,7 @@ import axios from '../../axios/axios-arm'
     
     export function fetchEnrolleesSuccess(enrollees) {
       return {
-        type: FETCH_ENROLLEE_SUCCESS,
+        type: FETCH_ENROLLEES_SUCCESS,
         enrollees
       }
     }

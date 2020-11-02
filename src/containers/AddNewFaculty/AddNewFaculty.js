@@ -9,7 +9,15 @@ import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
 
 const faculty = [['', 'text','facultyName', '', 'Введите название факультета']]
-const speciality = [['Название специальности','text','name'],['Количество мест','text','numberOfPlaces'],['Экзамен 1','text','exam1'],['Экзамен 2','text','exam2'],['Экзамен 3','text','exam3']]
+const speciality = [
+  ['Название специальности','text','name'],['Количество мест','text','numberOfPlaces'],
+  ['Экзамен 1','text','exam1'], ['Дата консультации','date','exam1ConsDate'],['Дата сдачи','date','exam1ExamDate'],
+  ['Время консультации','text','exam1ConsTime'],['Время сдачи','text','exam1ExamTime'],
+  ['Экзамен 2','text','exam2'],  ['Дата консультации','date','exam2ConsDate'],['Дата сдачи','date','exam2ExamDate'],
+  ['Время консультации','text','exam2ConsTime'],['Время сдачи','text','exam2ExamTime'],
+  ['Экзамен 3','text','exam3'], ['Дата консультации','date','exam3ConsDate'],['Дата сдачи','date','exam3ExamDate'],
+  ['Время консультации','text','exam3ConsTime'],['Время сдачи','text','exam3ExamTime'],
+]
 
 
 class AddNewFaculty extends React.Component {
@@ -98,6 +106,7 @@ class AddNewFaculty extends React.Component {
     this.setState({
       specialities,
     }) 
+    console.log(specialities)
   }
 
   onChangeHandler = () => {
@@ -106,13 +115,19 @@ class AddNewFaculty extends React.Component {
 
 
 
-  renderSpecialities = (handler) => {
+  renderSpecialities = () => {
     const controll = this.state.controls.specialities; 
     return controll.map((controls,index) => {     
       return (
-        <div key={index}>
+        <div key={index} className={styles['speciality-container']}>
             {
               controls.map((control,i) => { 
+                {/* console.log(control.name) */}
+                let className 
+                if(control.name.length > 5 && control.name !== 'numberOfPlaces') {
+                  console.log('hi')
+                  className = 'schedule-input'                  
+                }
                 return(
                   <Auxillary key={i}>
                   
@@ -127,13 +142,13 @@ class AddNewFaculty extends React.Component {
                         errorMessage={control.errorMessage}
                         onChange={(event) => {this.onChangeSpecialityHandler(event.target.value, index, control.name, controls, i)}}   
                         placeholder={control.placeholder}   
-                        className={styles['facultyName']}
+                        className={styles[className]}
                       />           
                   </Auxillary>
                 )
               })            
             }
-           <hr/>
+           
         </div>
         
       )
@@ -166,12 +181,12 @@ class AddNewFaculty extends React.Component {
              <div className={styles['facultyName']}>
                 {this.renderFacultyNameField(this.onChangeHandler)}
              </div>            
-             <hr/>
+            
              <div className={styles['specialities']}>
                  {this.renderSpecialities(this.onChangeHandler)}
              </div>
            
-          
+          <hr/>
           <Button 
               type="success"
               onClick={this.addSpecialityHandler}

@@ -1,9 +1,14 @@
 .add-new-faculty {
+
   margin: 0 auto;
   margin-top: 1rem; 
   width: 60rem;
   
   text-align: center;
+
+  hr {
+    width: 500px;
+  }
   div {
     margin: 0 auto;
     
@@ -33,16 +38,35 @@
   
   input {
     padding: 1rem;
-    
+     
   }
 }
+
+
 .specialities {
   display: flex;
   flex-wrap: wrap;
-
+  width: 1000px;
   input {
-    width: 100%;
-    max-width: 500px;
+    // width: 100%;
+    max-width: 400px;
     width: 400px;
   }
+
+}
+.schedule-input {
+  font-size: .8rem;
+ 
+  input {
+    width: 200px!important;
+    &:invalid {
+      color: red;
+    }
+  }
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.speciality-container {
+  max-width: 400px;
 }

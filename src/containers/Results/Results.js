@@ -15,6 +15,7 @@ class Results extends React.Component {
     let facultyName = this.props.facultyName
     let specialtyName = this.props.specialtyName
     facultyName = event.target.value;
+   
     specialtyName = this.props.faculties[facultyName][0]["speaciality"].name;
     console.log(specialtyName)
     this.props.updateFacultyName(facultyName, specialtyName)
@@ -23,6 +24,7 @@ class Results extends React.Component {
   selectSpecialtyHandler = (event) => {      
     let specialtyName = this.props.specialtyName 
     specialtyName = event.target.value
+    console.log(event.target.value)
     this.props.updateSpecialityName(specialtyName) 
   }  
 
@@ -68,7 +70,7 @@ class Results extends React.Component {
   render() {
     return (
       <div className={styles.results}>    
-      {this.props.enrollees === false ||  this.props.faculties !== null  ?
+      {this.props.loading === false ||  this.props.faculties !== null  ?
       <Auxillary>    
      
         {this.props.faculties === null ? null : 

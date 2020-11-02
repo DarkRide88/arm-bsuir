@@ -113,6 +113,7 @@ class Exams extends React.Component {
 
   async componentDidMount() {
     this.props.fetchEnrollees()
+    
   }
 
   render() {

@@ -7,7 +7,7 @@ import Enrollee from './containers/Enrollee/Enrollee';
 import Schedule from './containers/Schedule/Schedule'
 import Exams from './containers/Exams/Exams'
 import Results from './containers/Results/Results'
-import Faculty from './containers/Faculty/Faculty'
+import Faculty from './components/Faculty/Faculty'
 import FacultyList from './containers/FacultyList/FacultyList';
 import EditFaculty from './containers/EditFaculty/EditFaculty';
 import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';

@@ -1,27 +1,19 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES } from "./actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, CREATE_ENROLLE } from "./actionTypes"
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
     
     export function fetchEnrollees() {     
       return async dispatch => {        
-        dispatch(fetchEnrolleesStart())   
-         
+        dispatch(fetchEnrolleesStart())            
         try {
           const response = await axios.get('/enrolls.json') 
-          const enrollees   = response.data       
-       
+          const enrollees   = response.data              
           dispatch(fetchEnrolleesSuccess(enrollees))
         }  catch (e) {
           dispatch(fetchEnrolleesErrors(e))
         }      
       }
     }
-
-
-    export function CheckIsEnrolled () {
-
-    }
-
 
     export function fetchEnrolledEnrollees() {
      
@@ -43,9 +35,6 @@ import axios from '../../axios/axios-arm'
     }
 
     export function findEnrollee(event, enrollees) {   
-      // console.log(event) 
-      // console.log(enrollees) 
-     
       return async dispatch => {
         let searchInputValue = event.target.value
         let foundEnrollees = []     
@@ -73,6 +62,41 @@ import axios from '../../axios/axios-arm'
       }
     }
 
+    export function deleteEnrollee(enrollees, userToDelteId) {
+      return async dispatch=> {
+        dispatch(hidePopUp())
+        let enrolleesWithoutDeleted =  Object.fromEntries(Object.entries(enrollees).filter((enroll, index) => {  
+          if(enroll[0] !== userToDelteId) {          
+            return  enroll[0]
+          } 
+          return null
+        }))
+        await firebase.database().ref('enrolls').child(userToDelteId).remove();    
+        dispatch(deleteEnrolleeSucceess(enrolleesWithoutDeleted))
+      }
+    }
+
+    // export function facultiesDataToEnrollee (faculties) {          
+       
+    //   enrollee.facultyName = Object.entries(faculties)[0][0]
+    //   enrollee.specialtyName = Object.entries(faculties)[0][1][0]["speaciality"].name     
+    //   enrollee.exams = {
+    //     exam1: {
+    //       name:Object.entries(faculties)[0][1][0]["exam1"],
+    //       mark: ''
+    //     },
+    //     exam2: {
+    //       name:Object.entries(faculties)[0][1][0]["exam2"],
+    //       mark: ''
+    //     },
+    //     exam3: {
+    //       name:Object.entries(faculties)[0][1][0]["exam3"],
+    //       mark: ''
+    //     }
+    //   }   
+    // }
+
+
     export function setSearchInputValue (searchInputValue) {
       return {
         type: SET_SEARCHED_INPUT_VALUE,
@@ -96,17 +120,10 @@ import axios from '../../axios/axios-arm'
     }
 
 
-    export function deleteEnrollee(enrollees, userToDelteId) {
-      return async dispatch=> {
-        dispatch(hidePopUp())
-        let enrolleesWithoutDeleted =  Object.fromEntries(Object.entries(enrollees).filter((enroll, index) => {  
-          if(enroll[0] !== userToDelteId) {          
-            return  enroll[0]
-          } 
-          return null
-        }))
-        await firebase.database().ref('enrolls').child(userToDelteId).remove();    
-        dispatch(deleteEnrolleeSucceess(enrolleesWithoutDeleted))
+    export function updateEnrolleeData(enrollee) {
+      return {
+        type: UPDATE_ENROLLE_DATA,
+        enrollee,
       }
     }
 

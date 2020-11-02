@@ -8,7 +8,7 @@ import Input from '../components/UI/Input/Input'
 
 
 export const createFormControls = (controlNames) =>{ 
-  console.log(controlNames)
+  
   let form = controlNames.map(control => {   
    return createControl({
       maxlength:control[3],

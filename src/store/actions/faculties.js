@@ -17,17 +17,21 @@ import axios from '../../axios/axios-arm'
           })              
           const facultyName = Object.entries(faculties)[0][0]
           const specialtyName = Object.entries(faculties)[0][1][0]["speaciality"].name 
+      
           dispatch(fetchFacultysSuccess(faculties,facultyName,specialtyName))
+        
         }  catch (e) {
           dispatch(fetchFacultysErrors(e))
         }      
       }
     }
 
-    export function updateSpecialityName (specilaityName) {
+
+    
+    export function updateSpecialityName (specialtyName) {
       return {
         type: UPDATE_SPECIALITY_NAME,
-        specilaityName,
+        specialtyName,
       }
     }
 

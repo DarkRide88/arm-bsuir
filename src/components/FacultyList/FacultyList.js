@@ -2,12 +2,7 @@ import React from 'react'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Select from '../../components/UI/Select/Select'
 
-
-
-
  const FacultyList = ({facultiesList,selectFacultyChangeHandler,selectSpecialtyChangeHandler,enrolleeSpeciality,enrolleeFaculty}) => { 
- 
-
   return (  
     <Auxillary>
     <Select 
@@ -19,8 +14,7 @@ import Select from '../../components/UI/Select/Select'
             return {text: faculty, value: faculty}   
           })          
         }        
-    />    
-   
+    />          
     <Select      
         label="Выберите cпециальность"      
         onChange={(event) => {selectSpecialtyChangeHandler(event)}} 

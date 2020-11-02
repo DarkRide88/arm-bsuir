@@ -11,7 +11,7 @@
     -webkit-appearance: none;
     margin: 0;
   }
-  input {
+  input {  
     background-color: #eceff1;
     display: block;
     box-sizing: border-box;
@@ -43,6 +43,7 @@
   &.invalid label {
     color: #f01f30!important;
   }
+ 
   
 }
 

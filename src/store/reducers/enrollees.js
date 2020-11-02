@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, CREATE_ENROLLE } from "../actions/actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA } from "../actions/actionTypes"
 
 
 const initialState = {
@@ -84,13 +84,7 @@ export default function enrollees (state = initialState, action) {
     console.log(state.enrollee)
     return {
       ...state, enrollee: action.enrollee
-    }
-    case CREATE_ENROLLE: 
-    return {
-      ...state, enrollee: initialState.enrollee
-    }
-  
-    
+    }   
   }
 
 }

@@ -70,7 +70,7 @@ class Results extends React.Component {
   render() {
     return (
       <div className={styles.results}>    
-      {this.props.loading === false ||  this.props.faculties !== null  ?
+      {this.props.loading === false &&  this.props.faculties !== null && this.props.faculties !== undefined  ?
       <Auxillary>    
      
         {this.props.faculties === null ? null : 
@@ -89,7 +89,7 @@ class Results extends React.Component {
           tableHeads = {['ФИО', 'Средний балл']}        
         >
         {
-          this.props.loading === false ?  this.renderenrollee() : <Loader/>
+          this.props.loading === false && this.props.faculties !== null && this.props.faculties !== undefined ?  this.renderenrollee() : <Loader/>
         }
               
         </EnrollsTable>

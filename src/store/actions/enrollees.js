@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, CREATE_ENROLLE } from "./actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA } from "./actionTypes"
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
     
@@ -76,25 +76,7 @@ import axios from '../../axios/axios-arm'
       }
     }
 
-    // export function facultiesDataToEnrollee (faculties) {          
-       
-    //   enrollee.facultyName = Object.entries(faculties)[0][0]
-    //   enrollee.specialtyName = Object.entries(faculties)[0][1][0]["speaciality"].name     
-    //   enrollee.exams = {
-    //     exam1: {
-    //       name:Object.entries(faculties)[0][1][0]["exam1"],
-    //       mark: ''
-    //     },
-    //     exam2: {
-    //       name:Object.entries(faculties)[0][1][0]["exam2"],
-    //       mark: ''
-    //     },
-    //     exam3: {
-    //       name:Object.entries(faculties)[0][1][0]["exam3"],
-    //       mark: ''
-    //     }
-    //   }   
-    // }
+
 
 
     export function setSearchInputValue (searchInputValue) {

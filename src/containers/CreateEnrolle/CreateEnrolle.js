@@ -6,10 +6,8 @@ import Button from '../../components/UI/Button/Button'
 import { validate, validateForm} from '../../form/formFramework'
 import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
-
 import {createFormControls, renderControls} from '../../utils/formControlsUtils'
 import FacultyList from '../../components/FacultyList/FacultyList'
-
 import Loader from '../../components/UI/Loader/Loader'
 import { connect } from 'react-redux'
 import { fetchFacultys, updateFacultyName, updateSpecialityName } from '../../store/actions/faculties'
@@ -24,14 +22,11 @@ class CreateEnrolle extends React.Component {
     },     
   }
 
-
-
   submitHandler = event => {
     event.preventDefault()  
   }
 
    registerEnrollee = async (event) => {
-
     event.preventDefault()
     await firebase.database().ref('enrolls').push(this.props.enrollee);
     this.props.history.push('/');
@@ -56,14 +51,11 @@ class CreateEnrolle extends React.Component {
     selectChangeHandler = (event) => { 
     const enrollee = this.props.enrollee
     enrollee.facultyName = event.target.value;
-    enrollee.specialtyName =  this.props.faculties[event.target.value][0]["speaciality"].name;
-  
+    enrollee.specialtyName =  this.props.faculties[event.target.value][0]["speaciality"].name;  
     this.props.updateFacultyName( enrollee.facultyName,enrollee.specialtyName) 
     this.props.updateEnrolleeData(enrollee)
     console.log(this.props.facultyName)
     this.updateExamsNames(enrollee.specialtyName,  enrollee.facultyName )   
-   
-
   }  
   
     selectSpecialtyHandler = (event) => {      
@@ -141,14 +133,10 @@ class CreateEnrolle extends React.Component {
   }  
 
   render() { 
-    return (   
-      
-      <Auxillary>
-   
-        {  this.props.faculties !== null && this.props.faculties !== 'undefined'  ?   
-                
-           <div className={styles['create-enrolle']}>   
-         
+    return (         
+      <Auxillary>   
+        {  this.props.faculties !== null && this.props.faculties !== 'undefined'  ?                 
+           <div className={styles['create-enrolle']}>            
                 <form onSubmit={this.submitHandler}> 
                   <div className={styles['create-enrolle__item1']}>
                   <h2>Данные абитуриента:</h2>           
@@ -198,4 +186,5 @@ function mapDispatchToProps(dispatch) {
     updateSpecialityName:(specialtyName) => dispatch(updateSpecialityName(specialtyName))
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEnrolle)

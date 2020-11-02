@@ -7,26 +7,8 @@ import FacultyList from '../../components/FacultyList/FacultyList'
 import { connect } from 'react-redux'
 import { fetchEnrolledEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
 import { fetchFacultys, updateFacultyName, updateSpecialityName } from '../../store/actions/faculties'
-
+import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/facultiesHandlers'
 class Results extends React.Component {
-
-
-  selectChangeHandler = (event) => {  
-    let facultyName = this.props.facultyName
-    let specialtyName = this.props.specialtyName
-    facultyName = event.target.value;
-   
-    specialtyName = this.props.faculties[facultyName][0]["speaciality"].name;
-    console.log(specialtyName)
-    this.props.updateFacultyName(facultyName, specialtyName)
-  }  
-  
-  selectSpecialtyHandler = (event) => {      
-    let specialtyName = this.props.specialtyName 
-    specialtyName = event.target.value
-    console.log(event.target.value)
-    this.props.updateSpecialityName(specialtyName) 
-  }  
 
   getNumberOfPlaces = () => {
     let numberOfPlaces = 0
@@ -78,8 +60,8 @@ class Results extends React.Component {
           <FacultyList
               facultiesList = {this.props.faculties}
               defaultFacultyName = {Object.keys(this.props.faculties)[0]}
-              selectFacultyChangeHandler = {this.selectChangeHandler}
-              selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
+              selectFacultyChangeHandler = {(event)=> {selectChangeHandler(event, this.props)}}
+              selectSpecialtyChangeHandler = {(event)=> {selectSpecialtyHandler(event, this.props)}}
               enrolleeSpeciality = {this.props.specialtyName}
               enrolleeFaculty = {this.props.facultyName}
           />                           

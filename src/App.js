@@ -11,8 +11,8 @@ import Faculty from './components/Faculty/Faculty'
 import FacultyList from './containers/FacultyList/FacultyList';
 import EditFaculty from './containers/EditFaculty/EditFaculty';
 import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';
-function App() {
 
+function App() {
   return (
     <Layout>
       <Switch>          

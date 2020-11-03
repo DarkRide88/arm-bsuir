@@ -108,21 +108,14 @@ class AddNewFaculty extends React.Component {
     }) 
     console.log(specialities)
   }
-
-  onChangeHandler = () => {
-
-  }
-
-
-
+ 
   renderSpecialities = () => {
     const controll = this.state.controls.specialities; 
     return controll.map((controls,index) => {     
       return (
         <div key={index} className={styles['speciality-container']}>
             {
-              controls.map((control,i) => { 
-                {/* console.log(control.name) */}
+              controls.map((control,i) => {                
                 let className 
                 if(control.name.length > 5 && control.name !== 'numberOfPlaces') {
                   console.log('hi')

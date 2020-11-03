@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Results.scss'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
-import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
+import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable'
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import { connect } from 'react-redux'
@@ -67,14 +67,14 @@ class Results extends React.Component {
           />                           
         }   
            
-        <EnrollsTable
-          tableHeads = {['ФИО', 'Средний балл']}        
+        <FetchedDataTable
+          tableHeads = {[{name: 'ФИО', colspan: ''},{name: 'Средний балл', colspan: ''}]}        
         >
         {
           this.props.loading === false && this.props.faculties !== null && this.props.faculties !== undefined ?  this.renderenrollee() : <Loader/>
         }
               
-        </EnrollsTable>
+        </FetchedDataTable>
       </Auxillary>        
       : <Loader/>}
       </div>

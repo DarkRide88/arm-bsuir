@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import Loader from '../../components/UI/Loader/Loader'
 import Search from '../../components/Search/Search'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
-import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
+import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable'
 import PopUp from '../../components/PopUp/PopUp'
 import Button from '../../components/UI/Button/Button'
 import { connect } from 'react-redux'
@@ -49,29 +49,28 @@ class EnrolleList extends React.Component {
             placeholder='Найти абитуриента'  
             onChange={(event) => {this.props.findEnrollee(event, this.props.enrollees) }}
         />       
-        <EnrollsTable
-           tableHeads = {['Имя','Телефон','Дата рождения','Адрес','Факультет']}
-        >
-          { this.props.loading  ? <tr><td></td><td></td><Loader/></tr> : this.renderEnrollers()}
-        </EnrollsTable>
-   
+        {this.props.loading  ? <Loader/> :
+          <FetchedDataTable tableHeads = {[{name: 'Имя', colspan: ''},{name: 'Телефон', colspan: ''},{name: 'Дата рождения', colspan: ''},{name: 'Адрес', colspan: ''},{name: 'Факультет', colspan: ''}]}>
+            {this.renderEnrollers()}         
+          </FetchedDataTable>
+        }   
       </Auxillary>
-      : <h1 style={{textAlign:'center'}}>Нет зарегистрированных абитуриентов</h1>  
-       
+      : <h1 style={{textAlign:'center'}}>Нет зарегистрированных абитуриентов</h1>         
    
     if (!this.props.enrollees) {
       content = <Loader/>
     }
+
     return (
       <div className={styles['enrolle-list']}>      
-      {this.props.popUp === false ? null : 
-        <PopUp         
-          onAccept = {() => {this.props.deleteEnrollee(this.props.enrollees, this.props.userToDelteId)}}  
-          onRefuse = {this.props.hidePopUp}
-          text = 'Вы уверены, что хотите удалить данного абитуриента?'  
-      />
-      }  
-     {content}         
+        {this.props.popUp === false ? null : 
+          <PopUp         
+            onAccept = {() => {this.props.deleteEnrollee(this.props.enrollees, this.props.userToDelteId)}}  
+            onRefuse = {this.props.hidePopUp}
+            text = 'Вы уверены, что хотите удалить данного абитуриента?'  
+        />
+        }  
+        {content}         
       </div>      
     )
   }

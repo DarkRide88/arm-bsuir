@@ -1,4 +1,14 @@
 .schedule {
   margin: 0 auto;
   text-align: center;
+  div:nth-child(n+3) {
+    display: inline-block;
+    margin-right: 2rem;
+  }
+  table {
+    display: inline-block;
+  }
+  th {
+    text-align: center;
+  }
 }

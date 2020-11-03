@@ -3,7 +3,7 @@ import styles from './Schedule.scss'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import { fetchFacultys, updateFacultyName } from '../../store/actions/faculties'
 import FacultyList from '../../components/FacultyList/FacultyList'
-import ScheduleTable from '../../components/ScheduleTable/ScheduleTable'
+import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable'
 import { connect } from 'react-redux'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/facultiesHandlers'
 
@@ -28,7 +28,7 @@ class Schedule extends React.Component{
                 enrolleeSpeciality = {this.props.specialtyName}
                 enrolleeFaculty = {this.props.facultyName}
               />          
-              <ScheduleTable
+              <FetchedDataTable
                  tableHeads= {[{name: 'Консультации', colspan: '3'}] }
               >
                  <tr>
@@ -57,8 +57,8 @@ class Schedule extends React.Component{
                     <td>{this.props.faculties[this.props.facultyName][0].exam3ConsTime}</td>                     
                    
                   </tr>
-              </ScheduleTable> 
-              <ScheduleTable
+              </FetchedDataTable> 
+              <FetchedDataTable
                  tableHeads= {[{name: 'Экзамен', colspan: '3'}] }
               >  
                   <tr>
@@ -81,7 +81,7 @@ class Schedule extends React.Component{
                     <td>{this.props.faculties[this.props.facultyName][0].exam3ExamDate }</td>  
                     <td>{this.props.faculties[this.props.facultyName][0].exam3ExamTime}</td> 
                   </tr>
-              </ScheduleTable>  
+              </FetchedDataTable>  
             </Auxillary>
              
               

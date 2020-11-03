@@ -3,7 +3,7 @@ import styles from './Exams.scss'
 import Input from '../../components/UI/Input/Input'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
-import EnrollsTable from '../../components/EnrollsTable/EnrollsTable'
+import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Search from '../../components/Search/Search'
 import { connect } from 'react-redux'
@@ -126,11 +126,14 @@ class Exams extends React.Component {
               placeholder='Найти абитуриента'  
               onChange={(event) => {this.props.findEnrollee(event, this.props.enrollees) }}
             />
-            <EnrollsTable
-              tableHeads = {['Имя', 'Факультет', '','','Оценки за экзамены','']}
+            <FetchedDataTable
+              tableHeads = {[
+                {name: 'Имя', colspan: ''},{name: 'Факультет', colspan: ''},{name: '', colspan: ''},
+                {name: '', colspan: ''},{name: 'Оценки за экзамены', colspan: ''},{name: '', colspan: ''}
+              ]}
             >
               {this.props.enrollees !== null ? this.renderExams(): null}
-            </EnrollsTable>  
+            </FetchedDataTable>  
           </Auxillary>
           
         : <Loader/>}      

@@ -1,22 +1,22 @@
 import React from 'react'
-import styles from './EnrollsTable.scss'
+import styles from './FetchedDataTable.scss'
 
-class EnrollsTable extends React.Component {
+class FetchedDataTable extends React.Component {
 
   renderTableRows = () => {
-    // console.log(this.props.tableHeads)
-    return this.props.tableHeads.map((head,index) => {
+
+    return this.props.tableHeads.map((head,index) => {     
       return (
-        <th key={index}>{head}</th>
+        <th key={index} colspan={head.colspan}>{head.name}</th>
       )
     });  
   }
   render() {
     return (
-      <div className={styles['enrolls-table']}>
+      <div className={styles['schedule-table']}>
         <table >
           <thead>
-              <tr >
+              <tr>
               {this.renderTableRows()}              
               </tr>
           </thead>        
@@ -30,4 +30,4 @@ class EnrollsTable extends React.Component {
   
 }
 
-export default EnrollsTable
+export default FetchedDataTable

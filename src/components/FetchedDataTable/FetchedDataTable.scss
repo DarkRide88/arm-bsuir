@@ -1,9 +1,6 @@
 .schedule-table {
   max-width: 100%;
-  display: inline-block;
-  margin-right: 2rem;
-  table {
-    display: inline-block;
+  table {    
     border-collapse: collapse;
     margin: 0 auto;
     margin-top: 10px;    
@@ -20,7 +17,7 @@
       padding: 1rem;        
     }
     th {
-      text-align: center;
+      // text-align: center;
     }
     tbody tr {
       background-color: rgba(187, 187, 187, 0.397);

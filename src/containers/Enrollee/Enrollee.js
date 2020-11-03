@@ -111,7 +111,7 @@ class Enrollee extends React.Component {
     enrollee.сertificate.computerScince = controls[13].value
     this.props.updateEnrolleeData(enrollee)
     this.setState({             
-      isFormValid: validateForm(this.props.enrollerControlss, this.props.subjectsControls)
+      isFormValid: validateForm(this.props.enrollerControls, this.props.subjectsControls)
     })
   }
 

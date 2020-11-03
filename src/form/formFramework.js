@@ -24,6 +24,8 @@ export function validate(value, validation = null) {
 }
 
 export function validateForm(control1, control2) {
+  console.log(control1)
+  console.log(control2)
   let controls = control1.concat(control2)
   let isFormValid = true
   for (let control in controls) {

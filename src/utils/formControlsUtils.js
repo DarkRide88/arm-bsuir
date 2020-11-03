@@ -25,8 +25,10 @@ export const createFormControls = (controlNames) =>{
   return form 
 }
 
-export function renderControls(controls, handler) {    
+export function  renderControls (controls, handler) {    
+
   const controll = [...controls]; 
+  
   return controll.map((control,index) => {     
     return(
       <Auxillary key={index}>
@@ -47,4 +49,26 @@ export function renderControls(controls, handler) {
   })
    
   
+}
+export function  createEnrolleeFormControls (controlsName,state) { 
+  let form =[]
+  controlsName.forEach(control => {   
+   Object.entries(state).forEach(enrollee => {     
+      if(enrollee[0] === control[2] ){    
+        form.push({
+          maxlength:control[3],
+          name: control[2],
+          label: control[0],
+          type: control[1],
+          value: enrollee[1],
+          errorMessage: 'Неверные данные',         
+          required: true,
+          valid: true,
+          touched: true,           
+          validation: {required:true},
+        })
+      } 
+    }) 
+  })
+  return form   
 }

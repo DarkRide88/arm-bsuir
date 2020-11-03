@@ -1,7 +1,9 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA } from "./actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEE_ERROR, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE } from "./actionTypes"
+import {enrolleeControlsData,certificateControlsData} from '../../containers/CreateEnrolle/DataToEnrolle'
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
-    
+import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
+
     export function fetchEnrollees() {     
       return async dispatch => {        
         dispatch(fetchEnrolleesStart())            
@@ -14,6 +16,48 @@ import axios from '../../axios/axios-arm'
         }      
       }
     }
+
+    export function fetchEnrollee(id) {     
+      return async dispatch => {        
+        dispatch(fetchEnrolleesStart())            
+        try {
+          const response = await axios.get(`/enrolls/${id}.json`)     
+          let enrollee = response.data   
+          dispatch(fetchEnrolleeSuccess(enrollee))   
+          dispatch(  updateEnrolleFormcontrols([...createEnrolleeFormControls(enrolleeControlsData, enrollee)], [...createEnrolleeFormControls(certificateControlsData, enrollee.сertificate)]  )  )     
+         
+        }  catch (e) {
+          dispatch(fetchEnrolleesErrors(e))
+        }      
+      }
+    }
+    
+    // export function setFormControlsToState(enrollee) {
+    //   // console.log([...createEnrolleeFormControls(enrolleeControlsData, enrollee)])
+    //   // console.log([...createEnrolleeFormControls(certificateControlsData, enrollee.сertificate)])    
+    //   // let formControls = this.state.formControls
+    //   // formControls.enrollerControls = [...createFormControls(enrolleeControlsData, enrollee)]
+    //   // formControls.subjectsControls = [...createFormControls(certificateControlsData, enrollee.сertificate)]  
+     
+  
+    // }    
+
+    export function updateEnrolleFormcontrols (enrollerControls, subjectsControls) {     
+      return {
+        type: UPDATE_ENROLLEE_FROM_CONTROLS,
+        enrollerControls:enrollerControls,
+        subjectsControls:subjectsControls
+      }
+    }
+    export function fetchEnrolleeSuccess(enrollee) {
+      return {
+        type: FETCH_ENROLLEE_SUCCESS,
+        enrollee
+      }
+    }
+    
+
+
 
     export function fetchEnrolledEnrollees() {
      
@@ -65,7 +109,7 @@ import axios from '../../axios/axios-arm'
     export function deleteEnrollee(enrollees, userToDelteId) {
       return async dispatch=> {
         dispatch(hidePopUp())
-        let enrolleesWithoutDeleted =  Object.fromEntries(Object.entries(enrollees).filter((enroll, index) => {  
+        let enrolleesWithoutDeleted =  Object.fromEntries(Object.entries(enrollees).filter((enroll) => {  
           if(enroll[0] !== userToDelteId) {          
             return  enroll[0]
           } 
@@ -106,6 +150,12 @@ import axios from '../../axios/axios-arm'
       return {
         type: UPDATE_ENROLLE_DATA,
         enrollee,
+      }
+    }
+
+    export function resetEnrollee() {
+      return {
+        type: RESET_ENROLLEE,
       }
     }
 

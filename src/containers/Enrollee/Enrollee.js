@@ -9,57 +9,34 @@ import {renderControls} from '../../utils/formControlsUtils'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
-import {getFaculties} from '../../utils/getFaculties'
 import { fetchFacultys } from '../../store/actions/faculties'
 import { connect } from 'react-redux'
+import { fetchEnrollee, resetEnrollee, updateEnrolleeData } from '../../store/actions/enrollees'
 
-const createFormControls = (controlsName,state) =>{ 
-  let form =[]
-  controlsName.forEach(control => {   
-   Object.entries(state).forEach(enrollee => {     
-      if(enrollee[0] === control[2] ){    
-        form.push({
-          maxlength:control[3],
-          name: control[2],
-          label: control[0],
-          type: control[1],
-          value: enrollee[1],
-          errorMessage: 'Неверные данные',         
-          required: true,
-          valid: true,
-          touched: true,           
-          validation: {required:true},
-        })
-      } 
-    }) 
-  })
-  return form   
-}
+
 
 class Enrollee extends React.Component {
   state = {    
     isFormValid: true, 
-    enrollee: null,
-    loading: true,
     formControls: {
       enrollerControls:null,
       subjectsControls: null
     },
   }
 
-  setFormControlsToState = () =>{
-    let formControls = this.state.formControls
-    formControls.enrollerControls = [...createFormControls(enrolleeControlsData, this.state.enrollee)]
-    formControls.subjectsControls = [...createFormControls(certificateControlsData, this.state.enrollee.сertificate)]   
-    this.setState({
-      formControls,
-    })   
-  }    
+  // setFormControlsToState = () =>{
+  //   console.log(this.props.enrollee)
+  //   let formControls = this.state.formControls
+  //   formControls.enrollerControls = [...createFormControls(enrolleeControlsData, this.props.enrollee)]
+  //   formControls.subjectsControls = [...createFormControls(certificateControlsData, this.props.enrollee.сertificate)]   
+  //   this.setState({
+  //     formControls,
+  //   })   
+  // }    
   
   
 
-  updateExamsNames = (speaciality, facultyName) => {
-    let enrollee = {...this.state.enrollee}
+  updateExamsNames = (speaciality, facultyName, enrollee) => {
 
     this.props.faculties[facultyName].forEach(faculty => { 
       if(faculty.speaciality.name=== speaciality){            
@@ -68,35 +45,31 @@ class Enrollee extends React.Component {
            exam2: {name:faculty['exam2'],mark: ''},
            exam3: {name:faculty['exam3'],mark: ''}
         }
-       this.setState({
-        enrollee
-       })   
+        this.props.updateEnrolleeData(enrollee) 
       }
     })  
   }
 
   selectChangeHandler = (event) => {   
-    const enrollee = this.state.enrollee
+    const enrollee = {...this.props.enrollee}
     enrollee.facultyName = event.target.value
     enrollee.specialtyName = this.props.faculties[ event.target.value][0]["speaciality"].name
-    this.setState({
-      enrollee
-    })
-    this.updateExamsNames(enrollee.specialtyName,event.target.value  )   
+    console.log( enrollee)
+   
+    this.props.updateEnrolleeData(enrollee)
+    this.updateExamsNames(enrollee.specialtyName,event.target.value , enrollee )   
   }
 
   selectSpecialtyHandler = (event) => {   
-    const enrollee = this.state.enrollee
+    const enrollee = this.props.enrollee
     enrollee.specialtyName = event.target.value       
-    this.setState({
-       enrollee,
-    })
+    this.props.updateEnrolleeData(enrollee)
     this.updateExamsNames(event.target.value)  
   }
 
 
   changeEnrolleHandler = (value, controlName, controls) => {  
-    const enrollee = this.state.enrollee
+    const enrollee = this.props.enrollee
     const formControls = [...controls];
     const control = formControls[controlName]
     control.touched = true
@@ -109,13 +82,13 @@ class Enrollee extends React.Component {
     enrollee.passNumber=controls[4].value
     this.setState({    
       enrollee,
-      isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
+      isFormValid: validateForm(this.props.enrollerControls, this.props.subjectsControls)
     })
   }
 
   changeCertificate = (value, controlName, controls) => { 
     console.log(controls)
-    const enrollee = this.state.enrollee
+    const enrollee = this.props.enrollee
     const formControls = [...controls];
     const control = formControls[controlName]
     control.touched = true
@@ -136,15 +109,16 @@ class Enrollee extends React.Component {
     enrollee.сertificate.historyBel = controls[11].value
     enrollee.сertificate.historyWorld = controls[12].value
     enrollee.сertificate.computerScince = controls[13].value
-    this.setState({    
-      enrollee,         
-      isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
+    this.props.updateEnrolleeData(enrollee)
+    this.setState({             
+      isFormValid: validateForm(this.props.enrollerControlss, this.props.subjectsControls)
     })
   }
 
   updateEnroller = async (event) =>{
     event.preventDefault()  
-    await firebase.database().ref('enrolls').child(this.props.match.params.id).set(this.state.enrollee);
+    this.props.resetEnrollee()
+    await firebase.database().ref('enrolls').child(this.props.match.params.id).set(this.props.enrollee);
     this.props.history.push('/');
   }
 
@@ -156,15 +130,20 @@ class Enrollee extends React.Component {
   }
 
   async componentDidMount() {     
-    try {
-      this.props.fetchFacultys()
-      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)     
-      let enrollee = response.data 
-      this.updateDataInState( enrollee)           
-    } catch (e) {
-      console.log(e)
-    }
-    this.setFormControlsToState()    
+    this.props.resetEnrollee()
+    this.props.fetchFacultys()
+    this.props.fetchEnrollee(this.props.match.params.id)
+    // this.setFormControlsToState()  
+    // try {
+     
+    //   // const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)     
+    //   // let enrollee = response.data 
+    //   this.props.fetchEnrollee(this.props.match.params.id)
+    //   // this.updateDataInState( enrollee)           
+    // } catch (e) {
+    //   console.log(e)
+    // }
+    
   }
 
 
@@ -173,39 +152,45 @@ class Enrollee extends React.Component {
     return (      
       <Auxillary>  
     
-      {this.state.formControls.enrollerControls === null  ||  this.props.faculties === null
+      {this.props.faculties === null || this.props.enrollee.address === '' || this.props.enrollerControls === null
       ? <Loader/> 
       : <div className={styles['create-enrolle']}>    
-            <form onSubmit={this.submitHandler}> 
-              <div className={styles['create-enrolle__item1']}>
-              <h2>Данные абитуриента:</h2>            
-              {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)} 
-              <FacultyList
-                    facultiesList = {this.props.faculties}
-                    defaultFacultyName = {this.state.enrollee.facultyName}
-                    selectFacultyChangeHandler = {this.selectChangeHandler}
-                    selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
-                    state = {this.state}
-                    enrolleeSpeciality = {this.state.enrollee.specialtyName}
-                    enrolleeFaculty = {this.state.enrollee.facultyName}
-              />    
+      {/* {console.log(this.props.enrollerControls)}
+      {console.log(this.props.subjectsControls)} */}
+      {
+        this.props.enrollerControls !== null ?
+          <form onSubmit={this.submitHandler}> 
+                <div className={styles['create-enrolle__item1']}>
+                <h2>Данные абитуриента:</h2>            
+                {renderControls(this.props.enrollerControls, this.changeEnrolleHandler)} 
+                <FacultyList
+                      facultiesList = {this.props.faculties}
+                      defaultFacultyName = {this.props.enrollee.facultyName}
+                      selectFacultyChangeHandler = {this.selectChangeHandler}
+                      selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
+                      state = {this.state}
+                      enrolleeSpeciality = {this.props.enrollee.specialtyName}
+                      enrolleeFaculty = {this.props.enrollee.facultyName}
+                />    
 
-              </div>  
-              <div  className={styles['create-enrolle__item2']}>         
-                <h2>Аттестат</h2>
-                <div className={styles['create-enrolle__certificate']}>
-                {renderControls(this.state.formControls.subjectsControls, this.changeCertificate)}
-                </div>   
-              </div>            
-              <hr/>            
-              <Button
-                type="success"
-                onClick={this.updateEnroller}
-                disabled={this.state.isFormValid === false}
-              >
-                Сохранить изменения
-            </Button>
-            </form>        
+                </div>  
+                <div  className={styles['create-enrolle__item2']}>         
+                  <h2>Аттестат</h2>
+                  <div className={styles['create-enrolle__certificate']}>
+                  {renderControls(this.props.subjectsControls, this.changeCertificate)}
+                  </div>   
+                </div>            
+                <hr/>            
+                <Button
+                  type="success"
+                  onClick={this.updateEnroller}
+                  disabled={this.state.isFormValid === false}
+                >
+                  Сохранить изменения
+              </Button>
+              </form>
+        : <Loader/> }
+            
         </div>
       } 
       </Auxillary>      
@@ -218,12 +203,18 @@ function mapStateToProps(state) {
     faculties: state.faculties.faculties,
     loading: state.enrollees.loading,
     facultyName: state.faculties.facultyName,
-    specialityName: state.faculties.specialityName
+    specialityName: state.faculties.specialityName,
+    enrollee: state.enrollees.enrollee,
+    enrollerControls :state.enrollees.enrollerControls,
+    subjectsControls : state.enrollees.subjectsControls,
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
     fetchFacultys: () => dispatch(fetchFacultys()),
+    fetchEnrollee: (id) => dispatch(fetchEnrollee(id)),
+    updateEnrolleeData: (enrollee) => dispatch(updateEnrolleeData(enrollee)),
+    resetEnrollee: () => dispatch(resetEnrollee())
   }
 }
 

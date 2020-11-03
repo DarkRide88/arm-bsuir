@@ -10,6 +10,8 @@ import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import {getFaculties} from '../../utils/getFaculties'
+import { fetchFacultys } from '../../store/actions/faculties'
+import { connect } from 'react-redux'
 
 const createFormControls = (controlsName,state) =>{ 
   let form =[]
@@ -35,8 +37,7 @@ const createFormControls = (controlsName,state) =>{
 }
 
 class Enrollee extends React.Component {
-  state = {
-    faculties: null,
+  state = {    
     isFormValid: true, 
     enrollee: null,
     loading: true,
@@ -57,15 +58,18 @@ class Enrollee extends React.Component {
   
   
 
-  updateExamsNames = (speaciality) => {
-    this.state.faculties[this.state.enrollee.facultyName].forEach(faculty => {   
-      if(faculty['speaciality'] === speaciality){        
-       this.setState({
-         exams: {
-           exam1: {name:faculty['exam1'],mark: ''},
+  updateExamsNames = (speaciality, facultyName) => {
+    let enrollee = {...this.state.enrollee}
+
+    this.props.faculties[facultyName].forEach(faculty => { 
+      if(faculty.speaciality.name=== speaciality){            
+        enrollee.exams = {
+          exam1: {name:faculty['exam1'],mark: ''},
            exam2: {name:faculty['exam2'],mark: ''},
            exam3: {name:faculty['exam3'],mark: ''}
-         }
+        }
+       this.setState({
+        enrollee
        })   
       }
     })  
@@ -74,11 +78,11 @@ class Enrollee extends React.Component {
   selectChangeHandler = (event) => {   
     const enrollee = this.state.enrollee
     enrollee.facultyName = event.target.value
-    enrollee.specialtyName = this.state.faculties[ event.target.value][0]["speaciality"].name
+    enrollee.specialtyName = this.props.faculties[ event.target.value][0]["speaciality"].name
     this.setState({
       enrollee
     })
-    this.updateExamsNames(enrollee.specialtyName )   
+    this.updateExamsNames(enrollee.specialtyName,event.target.value  )   
   }
 
   selectSpecialtyHandler = (event) => {   
@@ -144,25 +148,23 @@ class Enrollee extends React.Component {
     this.props.history.push('/');
   }
 
-  updateDataInState(faculties,enrollee ) {    
+  updateDataInState(enrollee ) {    
     this.setState({
       enrollee,
-      faculties,      
+          
     })   
   }
 
   async componentDidMount() {     
     try {
-      const facultiesResponse = await axios.get('/facultys.json')       
-      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)   
-      let faculties = getFaculties(facultiesResponse.data)  
+      this.props.fetchFacultys()
+      const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)     
       let enrollee = response.data 
-      this.updateDataInState(faculties, enrollee)           
+      this.updateDataInState( enrollee)           
     } catch (e) {
       console.log(e)
     }
-    this.setFormControlsToState() 
-    console.log(this.state.formControls.subjectsControls)
+    this.setFormControlsToState()    
   }
 
 
@@ -171,7 +173,7 @@ class Enrollee extends React.Component {
     return (      
       <Auxillary>  
     
-      {this.state.formControls.enrollerControls === null         
+      {this.state.formControls.enrollerControls === null  ||  this.props.faculties === null
       ? <Loader/> 
       : <div className={styles['create-enrolle']}>    
             <form onSubmit={this.submitHandler}> 
@@ -179,7 +181,7 @@ class Enrollee extends React.Component {
               <h2>Данные абитуриента:</h2>            
               {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)} 
               <FacultyList
-                    facultiesList = {this.state.faculties}
+                    facultiesList = {this.props.faculties}
                     defaultFacultyName = {this.state.enrollee.facultyName}
                     selectFacultyChangeHandler = {this.selectChangeHandler}
                     selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
@@ -211,4 +213,18 @@ class Enrollee extends React.Component {
   }
 }
 
-export default Enrollee
+function mapStateToProps(state) {
+  return {
+    faculties: state.faculties.faculties,
+    loading: state.enrollees.loading,
+    facultyName: state.faculties.facultyName,
+    specialityName: state.faculties.specialityName
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchFacultys: () => dispatch(fetchFacultys()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Enrollee)

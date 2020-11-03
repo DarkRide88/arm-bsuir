@@ -1,4 +1,4 @@
-import styles from './Faculty.scss'
+import styles from './Faculties.scss'
 import React from 'react'
 import {renderLinks} from '../../form/links'
 
@@ -8,7 +8,7 @@ const links = [
   {to: '/faculty-list', label: 'Список факультетов', exact:true},
 ]
 
-const Faculty = () => {
+const Faculties = () => {
 
 return (
   <div className={styles['faculty']}>
@@ -20,4 +20,4 @@ return (
 
 }
 
-export default Faculty
+export default Faculties

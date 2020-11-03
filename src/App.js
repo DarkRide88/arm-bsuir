@@ -7,11 +7,11 @@ import Enrollee from './containers/Enrollee/Enrollee';
 import Schedule from './containers/Schedule/Schedule'
 import Exams from './containers/Exams/Exams'
 import Results from './containers/Results/Results'
-import Faculty from './components/Faculty/Faculty'
+import Faculties from './components/Faculties/Faculties'
 import FacultyList from './containers/FacultyList/FacultyList';
 import EditFaculty from './containers/EditFaculty/EditFaculty';
 import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';
-
+import Facuclty from './containers/Faculty/Faculty'
 function App() {
   return (
     <Layout>
@@ -21,10 +21,11 @@ function App() {
           <Route path='/schedule' exact component={Schedule}/>
           <Route path='/exams' exact component={Exams}/>
           <Route path='/results' exact component={Results}/>
-          <Route path='/enrollee/:id' exact component={Enrollee}/>        
-          <Route path='/faculty' exact component={Faculty}/>   
+          <Route path='/enrollee/:id' exact component={Enrollee}/> 
           <Route path='/faculty-list' exact component={FacultyList}/>  
-          <Route path='/edit-faculty' exact component={EditFaculty}/>  
+          <Route path='/faculties/' exact component={Faculties}/> 
+          <Route path='/faculty/:id' exact component={Facuclty}/> 
+          <Route path='/edit-faculty' exact component={EditFaculty}/>         
           <Route path='/add-new-faculty' exact component={AddNewFaculty}/>       
           <Redirect to='/' />
         </Switch>

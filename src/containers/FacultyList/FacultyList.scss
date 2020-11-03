@@ -1,3 +1,15 @@
 .faculty-list {
-  
+  margin: 0 auto;
+  text-align: center;
+  table {
+    width: 500px;
+  }
+  tr td:nth-child(3) {
+    text-align: right;
+   
+  }
+  a {
+    color: black;
+    text-decoration: none;
+  }
 }

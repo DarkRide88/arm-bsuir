@@ -8,7 +8,7 @@ const links = [
   {to: '/schedule', label: 'Расписание', exact:true, className:styles['inactive'], activeClassName:styles['active']},
   {to: '/exams', label: 'Экзамены', exact:true, className:styles['inactive'], activeClassName:styles['active']},
   {to: '/results', label: 'Результаты', exact:true, className:styles['inactive'], activeClassName:styles['active']},
-  {to: '/faculty', label: 'Факультеты', exact:true, className:styles['inactive'], activeClassName:styles['active']},
+  {to: '/faculties', label: 'Факультеты', exact:true, className:styles['inactive'], activeClassName:styles['active']},
 ]
 
 class Navigation extends React.Component {

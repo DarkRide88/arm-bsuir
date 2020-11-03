@@ -1,6 +1,6 @@
 import { DELETE_FACULTY_SUCCESS, FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_NAME, UPDATE_SPECIALITY_NAME } from "./actionTypes"
-import {hidePopUp} from './enrollees'
-// import * as firebase from 'firebase'
+
+
 import axios from '../../axios/axios-arm'
 import * as firebase from 'firebase'
    

@@ -84,14 +84,15 @@ function mapStateToProps(state) {
     userToDelteId: state.enrollees.userToDelteId,
   }
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     fetchEnrollees: () => dispatch(fetchEnrollees()),
     hidePopUp: () => dispatch(hidePopUp()),
     showPopUp: (enrollee) => dispatch(showPopUp(enrollee)),
     deleteEnrollee: (enrollees, userToDelteId) => dispatch(deleteEnrollee(enrollees, userToDelteId)),
-    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))
-    
+    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))    
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(EnrolleList)

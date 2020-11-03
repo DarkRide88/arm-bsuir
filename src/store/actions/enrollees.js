@@ -31,16 +31,6 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
         }      
       }
     }
-    
-    // export function setFormControlsToState(enrollee) {
-    //   // console.log([...createEnrolleeFormControls(enrolleeControlsData, enrollee)])
-    //   // console.log([...createEnrolleeFormControls(certificateControlsData, enrollee.сertificate)])    
-    //   // let formControls = this.state.formControls
-    //   // formControls.enrollerControls = [...createFormControls(enrolleeControlsData, enrollee)]
-    //   // formControls.subjectsControls = [...createFormControls(certificateControlsData, enrollee.сertificate)]  
-     
-  
-    // }    
 
     export function updateEnrolleFormcontrols (enrollerControls, subjectsControls) {     
       return {
@@ -49,15 +39,13 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
         subjectsControls:subjectsControls
       }
     }
+
     export function fetchEnrolleeSuccess(enrollee) {
       return {
         type: FETCH_ENROLLEE_SUCCESS,
         enrollee
       }
     }
-    
-
-
 
     export function fetchEnrolledEnrollees() {
      
@@ -120,9 +108,6 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
       }
     }
 
-
-
-
     export function setSearchInputValue (searchInputValue) {
       return {
         type: SET_SEARCHED_INPUT_VALUE,
@@ -137,14 +122,12 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
       }
     }
 
-    export function resetSeatchField (enrollees) {
-     
+    export function resetSeatchField (enrollees) {     
       return {
         type: RESET_SEARCH_FIELD,   
         enrollees,    
       }
     }
-
 
     export function updateEnrolleeData(enrollee) {
       return {

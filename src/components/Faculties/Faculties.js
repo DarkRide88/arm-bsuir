@@ -9,7 +9,6 @@ const links = [
 ]
 
 const Faculties = () => {
-
 return (
   <div className={styles['faculty']}>
       <ul>
@@ -17,7 +16,6 @@ return (
       </ul>   
   </div>
 )
-
 }
 
 export default Faculties

@@ -8,11 +8,8 @@ import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable
 import { NavLink } from 'react-router-dom'
 import PopUp from '../../components/PopUp/PopUp'
 import Button from '../../components/UI/Button/Button'
-import { hidePopUp, showPopUp } from '../../store/actions/enrollees'
+
 class FacultyList extends React.Component {
-
-
-
 
 renderFacultyList () {
   console.log(this.props.facultiesLinks)
@@ -33,7 +30,6 @@ renderFacultyList () {
     )
  })
 }
-
 
 componentDidMount() {
   this.props.fetchFacultys()

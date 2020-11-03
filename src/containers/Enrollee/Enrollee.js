@@ -1,7 +1,5 @@
 import React from 'react'
 import styles from '../CreateEnrolle/CreateEnrolle.scss'
-import axios from '../../axios/axios-arm'
-import {enrolleeControlsData,certificateControlsData} from '../../containers/CreateEnrolle/DataToEnrolle'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
 import { validate, validateForm} from '../../form/formFramework'
@@ -24,20 +22,8 @@ class Enrollee extends React.Component {
     },
   }
 
-  // setFormControlsToState = () =>{
-  //   console.log(this.props.enrollee)
-  //   let formControls = this.state.formControls
-  //   formControls.enrollerControls = [...createFormControls(enrolleeControlsData, this.props.enrollee)]
-  //   formControls.subjectsControls = [...createFormControls(certificateControlsData, this.props.enrollee.сertificate)]   
-  //   this.setState({
-  //     formControls,
-  //   })   
-  // }    
-  
-  
 
   updateExamsNames = (speaciality, facultyName, enrollee) => {
-
     this.props.faculties[facultyName].forEach(faculty => { 
       if(faculty.speaciality.name=== speaciality){            
         enrollee.exams = {
@@ -133,17 +119,6 @@ class Enrollee extends React.Component {
     this.props.resetEnrollee()
     this.props.fetchFacultys()
     this.props.fetchEnrollee(this.props.match.params.id)
-    // this.setFormControlsToState()  
-    // try {
-     
-    //   // const response = await axios.get(`/enrolls/${this.props.match.params.id}.json`)     
-    //   // let enrollee = response.data 
-    //   this.props.fetchEnrollee(this.props.match.params.id)
-    //   // this.updateDataInState( enrollee)           
-    // } catch (e) {
-    //   console.log(e)
-    // }
-    
   }
 
 
@@ -154,9 +129,7 @@ class Enrollee extends React.Component {
     
       {this.props.faculties === null || this.props.enrollee.address === '' || this.props.enrollerControls === null
       ? <Loader/> 
-      : <div className={styles['create-enrolle']}>    
-      {/* {console.log(this.props.enrollerControls)}
-      {console.log(this.props.subjectsControls)} */}
+      : <div className={styles['create-enrolle']}>   
       {
         this.props.enrollerControls !== null ?
           <form onSubmit={this.submitHandler}> 

@@ -17,20 +17,27 @@ export function validate(value, validation = null) {
   let isValid = true
 
   if(validation.required) {  
-    isValid = value.trim() !== '' & isValid
-  } 
-  return isValid === 1
+    isValid = value.trim() !== '' && isValid   
+    console.log(isValid)
+  }   
+  return isValid 
 }
 
-export function validateForm(control1, control2) {
-  console.log(control1)
-  console.log(control2)
-  let controls = control1.concat(control2)
-  let isFormValid = true
-  for (let control in controls) {
-    if (controls.hasOwnProperty(control)) {
-      isFormValid = controls[control].valid && isFormValid
-    }
-  }
-  return isFormValid
+export function validateForm(controls) {
+    let isValid = true
+    console.log(controls)
+    Object.values(controls).forEach(control => 
+      {
+        control.forEach(contolField => {
+          if(contolField.valid !== true && contolField.type !== 'hidden') {
+            console.log(contolField)
+            return isValid = false
+          }
+       
+        })
+     
+      })
+
+  return isValid
 }
+

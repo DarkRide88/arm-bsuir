@@ -12,10 +12,7 @@ import Button from '../../components/UI/Button/Button'
 class FacultyList extends React.Component {
 
 renderFacultyList () {
-  console.log(this.props.facultiesLinks)
-  console.log(this.props.faculties)
-  return Object.entries(this.props.facultiesLinks).map((faculty, index) => {  
-    console.log(faculty[1])
+  return Object.entries(this.props.facultiesLinks).map((faculty, index) => {     
     return(
     
     <tr  key={faculty[0] + index}>

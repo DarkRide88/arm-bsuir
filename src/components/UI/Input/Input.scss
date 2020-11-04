@@ -1,5 +1,6 @@
 .input {
   margin-bottom: 15px;
+  position: relative;
   label {
     margin-bottom: 3px;
     padding: 0;
@@ -37,7 +38,7 @@
   }
   span {
     color: #f01f30;
-    font-size: 12px;
+    font-size: .6rem;
     font-weight: bold;
   }
   &.invalid label {
@@ -49,4 +50,6 @@
 
 .error-message {
   position: absolute;
+  bottom: -12px;
+  right: 0;
 }

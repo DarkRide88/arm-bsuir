@@ -14,7 +14,7 @@ export const createFormControls = (controlNames) =>{
       name: control[2],
       label: control[0],
       type: control[1],
-      errorMessage: 'Неверные данные',
+      errorMessage: 'Заполните поле',
       placeholder: control[4],
       
     }, {required: true})

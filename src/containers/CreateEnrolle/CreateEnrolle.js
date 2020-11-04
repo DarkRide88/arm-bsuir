@@ -15,7 +15,7 @@ import { updateEnrolleeData } from '../../store/actions/enrollees'
 class CreateEnrolle extends React.Component {
 
   state = {
-    isFormValid: false,  
+    isFormValid: true,  
     formControls: {
       enrollerControls:[...createFormControls(enrolleeControlsData)],
       subjectsControls:[...createFormControls(certificateControlsData)],   
@@ -33,8 +33,9 @@ class CreateEnrolle extends React.Component {
   }
 
     updateExamsNames = (speaciality, facultyName) => {    
-      this.props.faculties[facultyName].forEach(faculty => {    
-      if(faculty.speaciality.name=== speaciality){       
+      console.log(facultyName)  
+      this.props.faculties[facultyName].forEach(faculty => {        
+      if(faculty.name=== speaciality){       
         let enrollee = this.props.enrollee      
         enrollee.facultyName = facultyName
         enrollee.specialtyName = speaciality
@@ -44,6 +45,7 @@ class CreateEnrolle extends React.Component {
           exam3: {name:faculty['exam3'],mark: ''}
         }     
         this.props.updateEnrolleeData(enrollee)
+      
       }
     })  
    }
@@ -51,17 +53,15 @@ class CreateEnrolle extends React.Component {
     selectChangeHandler = (event) => { 
     const enrollee = this.props.enrollee
     enrollee.facultyName = event.target.value;
-    enrollee.specialtyName =  this.props.faculties[event.target.value][0]["speaciality"].name;  
+    enrollee.specialtyName =  this.props.faculties[event.target.value][0]["name"];  
     this.props.updateFacultyName( enrollee.facultyName,enrollee.specialtyName) 
-    this.props.updateEnrolleeData(enrollee)
-    console.log(this.props.facultyName)
+    this.props.updateEnrolleeData(enrollee)  
     this.updateExamsNames(enrollee.specialtyName,  enrollee.facultyName )   
   }  
   
     selectSpecialtyHandler = (event) => {      
     const enrollee = this.props.enrollee 
-    enrollee.specialtyName = event.target.value   
-    console.log(enrollee.specialtyName)
+    enrollee.specialtyName = event.target.value    
     this.props.updateEnrolleeData(enrollee)
     this.props.updateSpecialityName(event.target.value )  
     this.updateExamsNames(event.target.value, this.props.facultyName)
@@ -79,9 +79,10 @@ class CreateEnrolle extends React.Component {
       enrollee.address=controls[2].value
       enrollee.phoneNumber=controls[3].value
       enrollee.passNumber=controls[4].value
+      console.log(enrollee)
       this.props.updateEnrolleeData(enrollee)  
       this.setState({          
-        isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
+        // isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
       })
   }
 
@@ -109,7 +110,7 @@ class CreateEnrolle extends React.Component {
       enrollee.сertificate.computerScince = controls[13].value
       this.props.updateEnrolleeData(enrollee)
       this.setState({          
-        isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
+        // isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
       })
   } 
   
@@ -141,7 +142,7 @@ class CreateEnrolle extends React.Component {
                   <div className={styles['create-enrolle__item1']}>
                   <h2>Данные абитуриента:</h2>           
                     {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)}                    
-                    {this.renderFacultyList()}      
+                    {this.renderFacultyList()}                       
                   </div>  
                   <div  className={styles['create-enrolle__item2']}>         
                     <h2>Аттестат:</h2>

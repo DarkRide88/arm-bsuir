@@ -3,10 +3,13 @@ import React from 'react'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
-import {validate} from '../../form/formFramework'
+import {validate,validateForm} from '../../form/formFramework'
 import {createFormControls} from '../../utils/formControlsUtils'
+import {renderFacultyNameField} from '../../utils/facultiesHandlers'
 import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { checkIsFormValid } from '../../store/actions/faculties'
 
 const faculty = [['', 'text','facultyName', '', 'Введите название факультета']]
 const speciality = [
@@ -17,7 +20,7 @@ const speciality = [
   ['Время консультации','text','exam2ConsTime'],['Время сдачи','text','exam2ExamTime'],
   ['Экзамен 3','text','exam3'], ['Дата консультации','date','exam3ConsDate'],['Дата сдачи','date','exam3ExamDate'],
   ['Время консультации','text','exam3ConsTime'],['Время сдачи','text','exam3ExamTime'],
-]
+] 
 
 
 class AddNewFaculty extends React.Component {
@@ -33,27 +36,26 @@ class AddNewFaculty extends React.Component {
     specialities :[]      
   }
 
-  renderFacultyNameField = () => {
-    let control = this.state.controls.faculty
-   
-    control = control[0]  
+  // renderFacultyNameField = (facultyControl, handler) => {
+ 
+  //   let control = this.state.controls.faculty[0]  
     
-    return (
-      <Input
-      maxlength={control.maxlength}
-      type={control.type}
-      label={control.label}
-      value={control.value}
-      valid={control.valid}
-      shouldValidate={!!control.validation}
-      touched={control.touched}
-      placeholder={control.placeholder}
-      errorMessage={control.errorMessage}
-      onChange={event => {this.onChangeFacultyHandler(event.target.value, event.target)}
-      }
-    />
-    )
-  }
+  //   return (
+  //     <Input
+  //     maxlength={control.maxlength}
+  //     type={control.type}
+  //     label={control.label}
+  //     value={control.value}
+  //     valid={control.valid}
+  //     shouldValidate={!!control.validation}
+  //     touched={control.touched}
+  //     placeholder={control.placeholder}
+  //     errorMessage={control.errorMessage}
+  //     onChange={event => {this.onChangeFacultyHandler(event.target.value, event.target)}
+  //     }
+  //   />
+  //   )
+  // }
 
 
 
@@ -75,6 +77,7 @@ class AddNewFaculty extends React.Component {
       facultyName: newFacultyName,
       isFacultyNameEmpty:flag
     }) 
+    // this.props.checkIsFormValid(flag)
   
   }
 
@@ -82,31 +85,29 @@ class AddNewFaculty extends React.Component {
 
 
   onChangeSpecialityHandler = (value,index, controlName, control, controlIndex) => { 
-    
+
     let specialities = this.state.specialities 
     let speciality    
     let controll = this.state.controls.specialities[index][controlIndex]    
     controll.touched = true
     controll.value = value
-    controll.valid = validate(control.value, control.validation)
-
+    controll.valid = validate(value, control[index].validation)
     if(specialities[index]){
        speciality = specialities[index]           
-    } else {
-      specialities[index] = {speaciality: {name :'', numberOfPlaces: 0}, exam1: '', exam2: '', exam3: '', numberOfPlaces: 0}      
+    } 
+    else {
+      specialities[index] = {}      
        speciality = specialities[index]  
     }
-    if(controlName === 'name' || controlName ==='numberOfPlaces') {      
-      speciality['speaciality'][controlName] = value
-    } else {
-      speciality[controlName] = value
-    }
-  
+    speciality[controlName] = value
     specialities[index] = speciality
     this.setState({
       specialities,
     }) 
-    console.log(specialities)
+    let IsValid = validateForm(this.state.controls.specialities)
+    console.log(IsValid)
+    this.props.checkIsFormValid(IsValid)
+    // console.log(this.state.specialities)
   }
  
   renderSpecialities = () => {
@@ -117,8 +118,7 @@ class AddNewFaculty extends React.Component {
             {
               controls.map((control,i) => {                
                 let className 
-                if(control.name.length > 5 && control.name !== 'numberOfPlaces') {
-                  console.log('hi')
+                if(control.name.length > 5 && control.name !== 'numberOfPlaces') {             
                   className = 'schedule-input'                  
                 }
                 return(
@@ -161,10 +161,13 @@ class AddNewFaculty extends React.Component {
 
   addFacultyToBase = async (event) => {    
     let faculty = {}   
+  
     faculty[this.state.facultyName] = this.state.specialities   
     event.preventDefault()
     await firebase.database().ref('facultys').push(faculty);
-    this.props.history.push('/');
+ 
+    // await firebase.database().ref('facultiesControls').push({...this.state.controls.specialities});
+    this.props.history.push('/faculty-list');
   }
 
   render() {
@@ -172,7 +175,8 @@ class AddNewFaculty extends React.Component {
       <div className={styles['add-new-faculty']}>           
         <form onSubmit={this.submitHandler}> 
              <div className={styles['facultyName']}>
-                {this.renderFacultyNameField(this.onChangeHandler)}
+             {/* {console.log(renderFacultyNameField())} */}
+                { renderFacultyNameField(this.state.controls.faculty[0] , this.onChangeFacultyHandler)}
              </div>            
             
              <div className={styles['specialities']}>
@@ -191,7 +195,7 @@ class AddNewFaculty extends React.Component {
             <Button
               type="success"
               onClick={this.addFacultyToBase}
-              disabled={this.state.isFacultyNameEmpty === true}
+              disabled={this.props.isFormValid === false}
             >
               Добавить факультет в базу
            </Button>       
@@ -202,5 +206,14 @@ class AddNewFaculty extends React.Component {
     )
   }
 }
-
-export default AddNewFaculty
+function mapStateToProps(state) {
+  return {
+    isFormValid: state.faculties.isFormValid
+  }
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    checkIsFormValid: (isFormValid) => dispatch(checkIsFormValid(isFormValid))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewFaculty)

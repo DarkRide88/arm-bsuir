@@ -25,7 +25,7 @@ class Enrollee extends React.Component {
 
   updateExamsNames = (speaciality, facultyName, enrollee) => {
     this.props.faculties[facultyName].forEach(faculty => { 
-      if(faculty.speaciality.name=== speaciality){            
+      if(faculty.name=== speaciality){            
         enrollee.exams = {
           exam1: {name:faculty['exam1'],mark: ''},
            exam2: {name:faculty['exam2'],mark: ''},
@@ -39,7 +39,8 @@ class Enrollee extends React.Component {
   selectChangeHandler = (event) => {   
     const enrollee = {...this.props.enrollee}
     enrollee.facultyName = event.target.value
-    enrollee.specialtyName = this.props.faculties[ event.target.value][0]["speaciality"].name
+    enrollee.specialtyName = this.props.faculties[ event.target.value][0]["name"]
+    enrollee.readyToResults = false
     console.log( enrollee)
    
     this.props.updateEnrolleeData(enrollee)

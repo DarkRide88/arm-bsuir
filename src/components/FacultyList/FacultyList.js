@@ -3,6 +3,7 @@ import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Select from '../../components/UI/Select/Select'
 
  const FacultyList = ({facultiesList,selectFacultyChangeHandler,selectSpecialtyChangeHandler,enrolleeSpeciality,enrolleeFaculty}) => { 
+   console.log( facultiesList[enrolleeFaculty])
   return (  
     <Auxillary>
     <Select 
@@ -21,7 +22,7 @@ import Select from '../../components/UI/Select/Select'
         value= {enrolleeSpeciality}
         options={
           facultiesList[enrolleeFaculty].map((faculty, index)=> { 
-          return {text: faculty['speaciality'].name, value: faculty['speaciality'].name}   
+          return {text: faculty.name, value: faculty.name}   
         })          
         }    
       /> 

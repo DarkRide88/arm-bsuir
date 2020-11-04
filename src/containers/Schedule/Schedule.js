@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Schedule.scss'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
-import { fetchFacultys, updateFacultyName } from '../../store/actions/faculties'
+import { fetchFacultys, updateFacultyName, updateSpecialityName } from '../../store/actions/faculties'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable'
 import { connect } from 'react-redux'
@@ -102,6 +102,7 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchFacultys: () => dispatch(fetchFacultys()),
     updateFacultyName:(facultyName, specialtyName ) => dispatch(updateFacultyName(facultyName, specialtyName)),
+    updateSpecialityName:(specialtyName) => dispatch(updateSpecialityName(specialtyName))
   }
 }
 

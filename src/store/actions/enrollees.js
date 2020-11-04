@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_USER_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, FETCH_ENROLLEE_ERROR, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE } from "./actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_ENROLLEE_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE } from "./actionTypes"
 import {enrolleeControlsData,certificateControlsData} from '../../containers/CreateEnrolle/DataToEnrolle'
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
@@ -130,6 +130,7 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
     }
 
     export function updateEnrolleeData(enrollee) {
+      console.log(enrollee)
       return {
         type: UPDATE_ENROLLE_DATA,
         enrollee,
@@ -144,7 +145,7 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
 
     export function deleteEnrolleeSucceess(enrollees) {
       return {
-        type: DELETE_USER_SUCCESS,
+        type: DELETE_ENROLLEE_SUCCESS,
         enrollees: enrollees,
         userToDelteId: null,
       }

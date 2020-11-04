@@ -7,7 +7,7 @@ class FetchedDataTable extends React.Component {
 
     return this.props.tableHeads.map((head,index) => {     
       return (
-        <th key={index} colspan={head.colspan}>{head.name}</th>
+        <th key={index} colSpan={head.colspan}>{head.name}</th>
       )
     });  
   }

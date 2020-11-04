@@ -13,8 +13,8 @@ class Results extends React.Component {
   getNumberOfPlaces = () => {
     let numberOfPlaces = 0
     this.props.faculties[this.props.facultyName].forEach(faculty => {   
-      if(faculty.speaciality.name === this.props.specialtyName){  
-        numberOfPlaces = faculty.speaciality.numberOfPlaces      
+      if(faculty.name === this.props.specialtyName){  
+        numberOfPlaces = faculty.numberOfPlaces      
       }
     })  
     return numberOfPlaces

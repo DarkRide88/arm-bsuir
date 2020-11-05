@@ -14,6 +14,79 @@ class Schedule extends React.Component{
   
   }
 
+  chekCurrentSpeciality = () => {
+
+  }
+
+  renderShedule = () =>{
+    let schedule = Object.values(this.props.faculties[this.props.facultyName]).map((speciality, index) => {
+      if(speciality.name === this.props.specialtyName) {        
+        return (
+          <Auxillary key = {index}>       
+             <FetchedDataTable
+                 tableHeads= {[{name: 'Консультации', colspan: '3'}] }
+              >
+                  <tr>
+                    <td></td>
+                    <td>Дата</td>
+                    <td>Время</td>   
+                  </tr>
+                  <tr>                      
+                    <td>{speciality.exam1}</td>                                      
+                    <td> {speciality.exam1ConsDate }</td>
+                    <td> {speciality.exam1ConsTime}</td>                      
+                  </tr>
+                  <tr>
+                    <td>{speciality.exam2}</td>                     
+                    <td>{speciality.exam2ConsDate }</td> 
+                    <td>{speciality.exam2ConsTime}</td>        
+                  </tr>
+                  <tr>
+                    <td>{speciality.exam3}</td>                 
+                    <td>{speciality.exam3ConsDate}</td> 
+                    <td>{speciality.exam3ConsTime}</td>                     
+                  </tr>
+                       
+              </FetchedDataTable>
+              <FetchedDataTable
+                 tableHeads= {[{name: 'Экзамен', colspan: '3'}] }
+              >  
+                  <tr>
+                    <td></td>
+                    <td>Дата</td>
+                    <td>Время</td> 
+                  </tr>
+                  <tr>
+                    <td>{speciality.exam1}</td>
+                    <td>{speciality.exam1ExamDate }</td>
+                    <td> {speciality.exam1ExamTime}</td>  
+                  </tr>
+                  <tr>
+                    <td>{speciality.exam2}</td>
+                    <td>{speciality.exam2ExamDate }</td>    
+                    <td> {speciality.exam2ExamTime}</td>
+                  </tr>
+                  <tr>
+                    <td>{speciality.exam3}</td>
+                    <td>{speciality.exam3ExamDate }</td>  
+                    <td>{speciality.exam3ExamTime}</td> 
+                  </tr>
+              </FetchedDataTable>  
+          </Auxillary>
+     
+        
+        )
+        
+      }
+      console.log(speciality)
+   
+    })
+
+    return schedule
+  }
+
+
+
   render() {
     return(
       <div className={styles.schedule}>
@@ -27,61 +100,9 @@ class Schedule extends React.Component{
                 selectSpecialtyChangeHandler = {(event)=> {selectSpecialtyHandler(event, this.props)}}
                 enrolleeSpeciality = {this.props.specialtyName}
                 enrolleeFaculty = {this.props.facultyName}
-              />          
-              <FetchedDataTable
-                 tableHeads= {[{name: 'Консультации', colspan: '3'}] }
-              >
-                 <tr>
-                    <td></td>
-                    <td>Дата</td>
-                    <td>Время</td>   
-                                   
-                  
-                  </tr>
-                  <tr>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam1}</td>                                      
-                    <td> {this.props.faculties[this.props.facultyName][0].exam1ConsDate }</td>
-                    <td> {this.props.faculties[this.props.facultyName][0].exam1ConsTime}</td>
-                  
-                  </tr>
-                  <tr>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam2}</td>                     
-                    <td>{this.props.faculties[this.props.facultyName][0].exam2ConsDate }</td> 
-                    <td>{this.props.faculties[this.props.facultyName][0].exam2ConsTime}</td>
-                    
-               
-                  </tr>
-                  <tr>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam3}</td>                 
-                    <td>{this.props.faculties[this.props.facultyName][0].exam3ConsDate}</td> 
-                    <td>{this.props.faculties[this.props.facultyName][0].exam3ConsTime}</td>                     
-                   
-                  </tr>
-              </FetchedDataTable> 
-              <FetchedDataTable
-                 tableHeads= {[{name: 'Экзамен', colspan: '3'}] }
-              >  
-                  <tr>
-                    <td></td>
-                    <td>Дата</td>
-                    <td>Время</td> 
-                  </tr>
-                  <tr>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam1}</td>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam1ExamDate }</td>
-                    <td> {this.props.faculties[this.props.facultyName][0].exam1ExamTime}</td>  
-                  </tr>
-                  <tr>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam2}</td>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam2ExamDate }</td>    
-                    <td> {this.props.faculties[this.props.facultyName][0].exam2ExamTime}</td>
-                  </tr>
-                  <tr>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam3}</td>
-                    <td>{this.props.faculties[this.props.facultyName][0].exam3ExamDate }</td>  
-                    <td>{this.props.faculties[this.props.facultyName][0].exam3ExamTime}</td> 
-                  </tr>
-              </FetchedDataTable>  
+              />        
+              {this.renderShedule()}
+            
             </Auxillary>
              
               

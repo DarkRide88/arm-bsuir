@@ -3,7 +3,7 @@ import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Select from '../../components/UI/Select/Select'
 
  const FacultyList = ({facultiesList,selectFacultyChangeHandler,selectSpecialtyChangeHandler,enrolleeSpeciality,enrolleeFaculty}) => { 
-   console.log( facultiesList[enrolleeFaculty])
+
   return (  
     <Auxillary>
     <Select 

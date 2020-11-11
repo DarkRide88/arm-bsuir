@@ -8,7 +8,8 @@ import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Search from '../../components/Search/Search'
 import { connect } from 'react-redux'
 import { fetchEnrollees, findEnrollee, updateEnrollees } from '../../store/actions/enrollees'
-
+import {getFacultyNameFromKey} from '../../utils/facultiesHandlers'
+import { fetchFacultys } from '../../store/actions/faculties'
 class Exams extends React.Component {
 
   onChange =  async (value, controlName, examName) => {   
@@ -75,12 +76,13 @@ class Exams extends React.Component {
   }
 
   renderExams = () => {  
+    
     return Object.entries(this.props.enrollees).map((enrolle, index) => { 
       console.log(enrolle[1])
        return(
         <tr  key={index}>
           <td>{enrolle[1].name}</td>
-          <td>{enrolle[1].facultyName}</td>
+          <td>{getFacultyNameFromKey(enrolle[1].facultyName,this.props.facultiesFromRespoense)}</td>
           <td>{`${enrolle[1].exams.exam1.name}:`}</td>
           <td>
           <Input 
@@ -113,13 +115,14 @@ class Exams extends React.Component {
 
   async componentDidMount() {
     this.props.fetchEnrollees()
+    this.props.fetchFacultys()
     
   }
 
   render() {
     return(     
       <div className={styles.exams}>
-        {this.props.enrollees !== null ?
+        {this.props.enrollees !== null && this.props.facultiesFromRespoense !== null ?
           <Auxillary>
             <Search            
               type='search'
@@ -147,6 +150,7 @@ function mapStateToProps(state) {
   return {
     enrollees: state.enrollees.enrollees,
     searchInputValue: state.enrollees.searchInputValue,
+    facultiesFromRespoense: state.faculties.facultiesFromRespoense,
   }
 }
 
@@ -154,7 +158,8 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchEnrollees: () => dispatch(fetchEnrollees()),
     findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees )),
-    updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees))
+    updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees)),
+    fetchFacultys: () => dispatch(fetchFacultys()),
   }
 }
 

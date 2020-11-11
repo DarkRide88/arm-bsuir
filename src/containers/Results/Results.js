@@ -6,7 +6,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import { connect } from 'react-redux'
 import { fetchEnrolledEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
-import { fetchFacultys, updateFacultyName, updateSpecialityName } from '../../store/actions/faculties'
+import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/facultiesHandlers'
 class Results extends React.Component {
 
@@ -96,7 +96,7 @@ function mapDispatchToProps(dispatch) {
     fetchEnrolledEnrollees: () => dispatch(fetchEnrolledEnrollees()),
     updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees)),
     fetchFacultys: () => dispatch(fetchFacultys()),
-    updateFacultyName:(facultyName, specialtyName ) => dispatch(updateFacultyName(facultyName, specialtyName)),
+    updateFacultyData:(facultyName, specialtyName ) => dispatch(updateFacultyData(facultyName, specialtyName)),
     updateSpecialityName:(specialtyName) => dispatch(updateSpecialityName(specialtyName))
   }
 }

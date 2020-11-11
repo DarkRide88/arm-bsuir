@@ -10,15 +10,18 @@ import PopUp from '../../components/PopUp/PopUp'
 
 import { connect } from 'react-redux'
 import { deleteEnrollee, fetchEnrollees, findEnrollee, hidePopUp, showPopUp } from '../../store/actions/enrollees'
-
+import { fetchFacultys } from '../../store/actions/faculties'
+import {getFacultyNameFromKey} from '../../utils/facultiesHandlers'
 class EnrolleList extends React.Component {
+
+
   
+
    renderEnrollers() {
+     
     if(this.props.enrollees) {
-    return Object.entries(this.props.enrollees).map((enroll, index) => {  
-   
-      return(
-      
+    return Object.entries(this.props.enrollees).map((enroll, index) => {     
+      return(      
       <tr  key={enroll[0] + index}>
         <td>
           <NavLink to={'/enrollee/' + enroll[0]}>
@@ -28,7 +31,7 @@ class EnrolleList extends React.Component {
         <td> {enroll[1].phoneNumber}</td>
         <td>{enroll[1].age}</td>     
         <td> {enroll[1].address}</td>
-        <td>{enroll[1].facultyName}</td>
+        <td>{getFacultyNameFromKey(enroll[1].facultyName,this.props.facultiesFromRespoense)}</td>
         <td>  <div><NavLink to={'/enrollee/' + enroll[0]}><i className={"fa fa-pencil fa-fw"}></i>     </NavLink> </div> </td>
         <td><Button  onClick={()=> {this.props.showPopUp(enroll[0])}}  type="delete">X</Button></td>
       </tr>
@@ -39,11 +42,12 @@ class EnrolleList extends React.Component {
   
  componentDidMount() { 
     this.props.fetchEnrollees()
+    this.props.fetchFacultys()
   }
 
   render() {  
     let content = 
-     this.props.enrollees !== null ?
+     this.props.enrollees !== null  && this.props.facultiesFromRespoense!== null?
       <Auxillary>     
         <Search            
             type='search'
@@ -83,16 +87,19 @@ function mapStateToProps(state) {
     loading: state.enrollees.loading,
     popUp: state.enrollees.popUp,
     userToDelteId: state.enrollees.userToDelteId,
+    facultiesFromRespoense: state.faculties.facultiesFromRespoense,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchFacultys: () => dispatch(fetchFacultys()),
     fetchEnrollees: () => dispatch(fetchEnrollees()),
     hidePopUp: () => dispatch(hidePopUp()),
     showPopUp: (enrollee) => dispatch(showPopUp(enrollee)),
     deleteEnrollee: (enrollees, userToDelteId) => dispatch(deleteEnrollee(enrollees, userToDelteId)),
-    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))    
+    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))   
+     
   }
 }
 

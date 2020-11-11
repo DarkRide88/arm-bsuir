@@ -83,7 +83,6 @@ export default function enrollees (state = initialState, action) {
         ...state,  enrollees: action.enrollees
       }
     case UPDATE_ENROLLE_DATA:  
-    console.log(action.enrollee)
     return {
       ...state, enrollee: action.enrollee
     }   

@@ -161,7 +161,8 @@ class AddNewFaculty extends React.Component {
 
   addFacultyToBase = async (event) => {    
     let faculty = {}   
-  
+    // faculty['facultyName'] = this.state.facultyName
+    // faculty['specialities'] = this.state.specialities 
     faculty[this.state.facultyName] = this.state.specialities   
     event.preventDefault()
     await firebase.database().ref('facultys').push(faculty);

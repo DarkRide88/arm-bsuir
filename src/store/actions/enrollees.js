@@ -130,7 +130,7 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
     }
 
     export function updateEnrolleeData(enrollee) {
-      console.log(enrollee)
+
       return {
         type: UPDATE_ENROLLE_DATA,
         enrollee,

@@ -1,4 +1,4 @@
-import { FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_NAME, UPDATE_SPECIALITY_NAME , FETCH_FACULTY_SUCCESS, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS} from "./actionTypes"
+import { FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_DATA, UPDATE_SPECIALITY_NAME , FETCH_FACULTY_SUCCESS, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME} from "./actionTypes"
 import {createFormControls} from '../../utils/formControlsUtils'
 
 import axios from '../../axios/axios-arm'
@@ -23,13 +23,16 @@ const specialityDefault = [
 
           let faculties = {}
           Object.entries(facultiesResponse.data).forEach((faculty,i) => {     
-            Object.assign(faculties,faculty[1])      
+            Object.assign(faculties,faculty[1])                
           })              
-          const facultyName = Object.entries(faculties)[0][0]
-          // console.log(Object.entries(faculties)[0][1][0]['name'])
+ 
+          const facultyName = Object.entries(faculties)[0][0]      
           const specialtyName = Object.entries(faculties)[0][1][0]["name"] 
+          const facultyNameKey =  Object.keys(facultiesResponse.data)[0]
+          const specialityNameKey = 0
+          const facultiesFromRespoense = facultiesResponse.data
          
-          dispatch(fetchFacultysSuccess(faculties,facultyName,specialtyName))
+          dispatch(fetchFacultysSuccess(faculties,facultyName,specialtyName,facultyNameKey,specialityNameKey,facultiesFromRespoense))
           dispatch(fetchFacultysLinks(facultiesResponse.data))
         }  catch (e) {
           dispatch(fetchFacultysErrors(e))
@@ -58,7 +61,8 @@ const specialityDefault = [
           const response = await axios.get(`/facultys/${id}.json`)     
           let faculty = response.data           
           dispatch(fetchFacultySuccess(faculty))   
-          console.log(Object.values(faculty)[0])
+          console.log(faculty)
+          dispatch(getPrevFacultyData(Object.keys(faculty)))
           dispatch( checkIsFormValid(true)) 
           dispatch(updateSpecialities(Object.values(faculty)[0])) 
           dispatch(updateFacultyFormcontrols(facultyNameToControl(faculty),specialitiesToControls(faculty)))
@@ -122,8 +126,14 @@ const specialityDefault = [
         
       }
     }
-
-    export function updatefacultyNameControl(facultyNameControl){     
+    export function getPrevFacultyData(prevFacultyName,prevSpecialityName) {
+      return {
+        type: GET_PREV_FACULTY_NAME,
+        prevFacultyName,
+        prevSpecialityName,
+      }
+    }
+    export function updatefacultyNameControl(facultyNameControl, ){     
       return {
         type: UPDATE_FACULTY_NAME_CONTROL,
         facultyNameControl
@@ -159,18 +169,21 @@ const specialityDefault = [
       }
     }
     
-    export function updateSpecialityName (specialtyName) {
+    export function updateSpecialityName (specialtyName,specialityNameKey) {
       return {
         type: UPDATE_SPECIALITY_NAME,
         specialtyName,
+        specialityNameKey,
       }
     }
 
-    export function updateFacultyName (facultyName, specialtyName) {
+    export function updateFacultyData(facultyName, specialtyName, facultyNameKey, specialityNameKey) {
       return {
-        type: UPDATE_FACULTY_NAME,
+        type: UPDATE_FACULTY_DATA,
         facultyName,
         specialtyName,
+        facultyNameKey,
+        specialityNameKey
       }
     }
 
@@ -180,12 +193,15 @@ const specialityDefault = [
       }
     }
     
-    export function fetchFacultysSuccess(faculties, facultyName, specialtyName) {
+    export function fetchFacultysSuccess(faculties, facultyName, specialtyName, facultyNameKey, specialityNameKey, facultiesFromRespoense) {
       return {
         type: FETCH_FACULTYS_SUCCESS,
         faculties,
         facultyName,
         specialtyName,
+        facultyNameKey,
+        specialityNameKey,
+        facultiesFromRespoense,
       }
     }
     

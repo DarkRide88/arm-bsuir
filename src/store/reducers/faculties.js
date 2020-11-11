@@ -1,18 +1,24 @@
-import { CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, FETCH_FACULTY_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, UPDATE_SPECIALITY_NAME } from "../actions/actionTypes"
+import { CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, FETCH_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_DATA, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, UPDATE_SPECIALITY_NAME } from "../actions/actionTypes"
 
 const initialState = {
   faculties: null,  
   facultyName: null,
+  facultyNameKey: null,
   specialtyName: null,
+  specialityNameKey: null,
   facultiesError: null,
   facultiesLinks: null,
   facultyToDeleteId: null,
+  facultiesFromRespoense: null,
   popUpFaculty:false,
   faculty:null,
   facultyNameControl: null,
   specialities :[],
   specialitiesControls: null,
   isFormValid: false,
+  prevFacultyName: null,
+  prevSpecialityName: null,
+  isFirstLoad: true,
 }
 
 export default function faculties (state = initialState, action) {
@@ -25,19 +31,20 @@ export default function faculties (state = initialState, action) {
       }
     case FETCH_FACULTYS_SUCCESS:    
       return {
-        ...state, loading: false, faculties: action.faculties, facultyName: action.facultyName, specialtyName: action.specialtyName
+        ...state, loading: false, faculties: action.faculties, facultyName: action.facultyName, specialtyName: action.specialtyName, facultyNameKey: action.facultyNameKey,
+        specialityNameKey: action.specialityNameKey, facultiesFromRespoense: action.facultiesFromRespoense, isFirstLoad: true
       }
     case FETCH_FACULTYS_ERROR:
       return {
         ...state, loading: false, facultiesError: action.error
       }       
-    case UPDATE_FACULTY_NAME: 
+    case UPDATE_FACULTY_DATA: 
       return {
-        ...state,   facultyName: action.facultyName, specialtyName: action.specialtyName
+        ...state,   facultyName: action.facultyName, specialtyName: action.specialtyName, facultyNameKey: action.facultyNameKey, specialityNameKey: action.specialityNameKey, isFirstLoad: false
       }    
     case UPDATE_SPECIALITY_NAME: 
       return {
-        ...state, specialtyName: action.specialtyName
+        ...state, specialtyName: action.specialtyName, specialityNameKey: action.specialityNameKey
       }    
     case FETCH_FACULTYS_LINKS: 
       return {
@@ -80,6 +87,10 @@ export default function faculties (state = initialState, action) {
     return {
       ...state, facultiesLinks: action.facultiesLinks
     }
+    case GET_PREV_FACULTY_NAME:
+      return {
+        ...state, prevFacultyName: action.prevFacultyName, prevSpecialityName: action.prevSpecialityName
+      }
   }
 }
 

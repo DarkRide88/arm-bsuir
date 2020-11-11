@@ -10,8 +10,9 @@ import {createFormControls, renderControls} from '../../utils/formControlsUtils'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import Loader from '../../components/UI/Loader/Loader'
 import { connect } from 'react-redux'
-import { fetchFacultys, updateFacultyName, updateSpecialityName } from '../../store/actions/faculties'
+import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import { updateEnrolleeData } from '../../store/actions/enrollees'
+import {selectChangeHandler,selectSpecialtyHandler,updateExamsNames } from '../../utils/enrollees'
 class CreateEnrolle extends React.Component {
 
   state = {
@@ -32,46 +33,70 @@ class CreateEnrolle extends React.Component {
     this.props.history.push('/');
   }
 
-    updateExamsNames = (speaciality, facultyName) => {    
-      console.log(facultyName)  
-      this.props.faculties[facultyName].forEach(faculty => {        
-      if(faculty.name=== speaciality){       
-        let enrollee = this.props.enrollee      
-        enrollee.facultyName = facultyName
-        enrollee.specialtyName = speaciality
-        enrollee.exams = {
-          exam1: {name:faculty['exam1'],mark: ''},
-          exam2: {name:faculty['exam2'],mark: ''},
-          exam3: {name:faculty['exam3'],mark: ''}
-        }     
-        this.props.updateEnrolleeData(enrollee)
+  //   updateExamsNames = (speaciality, facultyName) => {    
+
+  //     this.props.faculties[facultyName].forEach(faculty => {        
+  //     if(faculty.name=== speaciality){       
+  //       let enrollee = this.props.enrollee      
+  //       enrollee.facultyName = this.props.facultyNameKey
+  //       enrollee.specialtyName = this.props.specialityNameKey
+  //       enrollee.exams = {
+  //         exam1: {name:faculty['exam1'],mark: ''},
+  //         exam2: {name:faculty['exam2'],mark: ''},
+  //         exam3: {name:faculty['exam3'],mark: ''}
+  //       }     
+  //       this.props.updateEnrolleeData(enrollee)
       
-      }
-    })  
-   }
+  //     }
+  //   })  
+  //  }
+   
+  //  getFacultyNameKey = (facultyName) => {
+  //   let FacultyKey 
+  //   Object.entries(this.props.facultiesFromRespoense).filter(faculty => {
+  //     // console.log((faculty))
+  //     if(Object.keys(faculty[1])[0] === facultyName) {
+  //       FacultyKey = faculty[0]        
+  //     }
+  //   })
+  //   return FacultyKey
+  //  }
+
+  //  getSpecialityNameKey = (specialityName) => {
+  //   let specialityKey 
+  //   this.props.faculties[this.props.facultyName].forEach((speciality, index) => {    
+  //     if(speciality.name === specialityName)
+  //     specialityKey = index
+  //   })
+  //   return specialityKey
+  //  }
+
+
+  //   selectChangeHandler = (event) => { 
+  //   const enrollee = {...this.props.enrollee}
+  //   enrollee.facultyName = this.getFacultyNameKey( event.target.value)
+  //   enrollee.specialtyName =  0; 
+  //   const porpsFacultyName =   event.target.value
+  //   const poropsSpecialtyName = this.props.faculties[event.target.value][0]["name"]
+  //   this.props.updateFacultyData( porpsFacultyName,poropsSpecialtyName, enrollee.facultyName, enrollee.specialtyName) 
+  //   this.props.updateEnrolleeData(enrollee)  
+  //   this.updateExamsNames(poropsSpecialtyName,  porpsFacultyName)  
+  // }  
   
-    selectChangeHandler = (event) => { 
-    const enrollee = this.props.enrollee
-    enrollee.facultyName = event.target.value;
-    enrollee.specialtyName =  this.props.faculties[event.target.value][0]["name"];  
-    this.props.updateFacultyName( enrollee.facultyName,enrollee.specialtyName) 
-    this.props.updateEnrolleeData(enrollee)  
-    this.updateExamsNames(enrollee.specialtyName,  enrollee.facultyName )   
-  }  
-  
-    selectSpecialtyHandler = (event) => {      
-    const enrollee = this.props.enrollee 
-    enrollee.specialtyName = event.target.value    
-    this.props.updateEnrolleeData(enrollee)
-    this.props.updateSpecialityName(event.target.value )  
-    this.updateExamsNames(event.target.value, this.props.facultyName)
-  }
+  //   selectSpecialtyHandler = (event) => {      
+  //   const enrollee = {...this.props.enrollee}
+  //   enrollee.specialtyName =   this.getSpecialityNameKey(event.target.value) 
+  //   this.props.updateEnrolleeData(enrollee)
+  //   this.props.updateSpecialityName(event.target.value,  enrollee.specialtyName  )  
+  //   this.updateExamsNames(event.target.value, this.props.facultyName)
+  // }
   
     changeEnrolleHandler = (value, controlName, controls) => {  
       const enrollee = this.props.enrollee
       const formControls = [...controls];
       const control = formControls[controlName]
       control.touched = true
+      console.log(value)
       control.value = value
       control.valid = validate(control.value, control.validation)
       enrollee.name=controls[0].value
@@ -79,7 +104,6 @@ class CreateEnrolle extends React.Component {
       enrollee.address=controls[2].value
       enrollee.phoneNumber=controls[3].value
       enrollee.passNumber=controls[4].value
-      console.log(enrollee)
       this.props.updateEnrolleeData(enrollee)  
       this.setState({          
         // isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
@@ -114,15 +138,32 @@ class CreateEnrolle extends React.Component {
       })
   } 
   
+
+  setStartedFacultyData = (facultyName, speaciality) => {
+    this.props.faculties[facultyName].forEach(faculty => {        
+      if(faculty.name=== speaciality){       
+        let enrollee =  this.props.enrollee      
+        enrollee.facultyName =  this.props.facultyNameKey
+        enrollee.specialtyName =  this.props.specialityNameKey
+        enrollee.exams = {
+          exam1: {name:faculty['exam1'],mark: ''},
+          exam2: {name:faculty['exam2'],mark: ''},
+          exam3: {name:faculty['exam3'],mark: ''}
+        }     
+        this.props.updateEnrolleeData(enrollee)
+      
+      }
+    }) 
+  }
+
   renderFacultyList () { 
-    this.updateExamsNames(this.props.specialtyName, this.props.facultyName)
+    this.setStartedFacultyData(this.props.facultyName, this.props.specialtyName)   
     return (
       <FacultyList
       facultiesList = {this.props.faculties}
-      defaultFacultyName = {this.props.enrollee.facultyName}
-      selectFacultyChangeHandler = {this.selectChangeHandler}
-      selectSpecialtyChangeHandler = {this.selectSpecialtyHandler}
-      state = {this.state}
+      defaultFacultyName = {Object.keys(this.props.faculties)[0]}
+      selectFacultyChangeHandler = {(event)=> {selectChangeHandler(event, this.props)}}
+      selectSpecialtyChangeHandler = {(event)=> {selectSpecialtyHandler(event, this.props)}}
       enrolleeSpeciality = {this.props.specialtyName}
       enrolleeFaculty = {this.props.facultyName}
     /> 
@@ -136,8 +177,10 @@ class CreateEnrolle extends React.Component {
   render() { 
     return (         
       <Auxillary>   
-        {  this.props.faculties !== null && this.props.faculties !== 'undefined'  ?                 
-           <div className={styles['create-enrolle']}>            
+        {  this.props.faculties !== null && this.props.faculties !== 'undefined'  ?   
+               
+           <div className={styles['create-enrolle']}>         
+           {/* {this.getSpecialityNameKey()}       */}
                 <form onSubmit={this.submitHandler}> 
                   <div className={styles['create-enrolle__item1']}>
                   <h2>Данные абитуриента:</h2>           
@@ -175,7 +218,10 @@ function mapStateToProps(state) {
     loading: state.enrollees.loading,
     enrollee: state.enrollees.enrollee,
     specialtyName: state.faculties.specialtyName,
-    facultyName:  state.faculties.facultyName
+    facultyName:  state.faculties.facultyName,
+    facultiesFromRespoense: state.faculties.facultiesFromRespoense,
+    facultyNameKey: state.faculties.facultyNameKey,
+    specialityNameKey: state.faculties.specialityNameKey,
   }
 }
 
@@ -183,8 +229,8 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchFacultys: () => {dispatch(fetchFacultys())},
     updateEnrolleeData: (enrollee) => {dispatch(updateEnrolleeData(enrollee))},
-    updateFacultyName:(facultyName, specialtyName ) => dispatch(updateFacultyName(facultyName, specialtyName)),
-    updateSpecialityName:(specialtyName) => dispatch(updateSpecialityName(specialtyName))
+    updateFacultyData:(facultyName, specialtyName, facultyNameKey,specialityNameKey ) => dispatch(updateFacultyData(facultyName, specialtyName, facultyNameKey, specialityNameKey)),
+    updateSpecialityName:(specialtyName, specialtyNameKey) => dispatch(updateSpecialityName(specialtyName, specialtyNameKey))
   }
 }
 

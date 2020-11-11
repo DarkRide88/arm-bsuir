@@ -6,6 +6,7 @@ import Select from '../../components/UI/Select/Select'
 
   return (  
     <Auxillary>
+   
     <Select 
         label="Выберите факультет"      
         onChange={(event) => {selectFacultyChangeHandler(event)}}    
@@ -15,8 +16,10 @@ import Select from '../../components/UI/Select/Select'
             return {text: faculty, value: faculty}   
           })          
         }        
-    />          
+    />         
+ 
     <Select      
+
         label="Выберите cпециальность"      
         onChange={(event) => {selectSpecialtyChangeHandler(event)}} 
         value= {enrolleeSpeciality}

@@ -40,7 +40,7 @@ export function  renderControls (controls, handler) {
         shouldValidate={!!control.validation}
         touched={control.touched}
         errorMessage={control.errorMessage}
-        onChange={event => handler(event.target.value, index, controll)}
+        onChange={event => handler(event.target.value, index, controll, control)}
 
       />
      </Auxillary>

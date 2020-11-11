@@ -7,7 +7,7 @@ export function selectChangeHandler  (event, props) {
   facultyName = event.target.value;
  
   specialtyName = props.faculties[facultyName][0]["name"];
-  props.updateFacultyName(facultyName, specialtyName)
+  props.updateFacultyData(facultyName, specialtyName)
 }  
 
 export function selectSpecialtyHandler(event, props){      
@@ -19,10 +19,8 @@ export function selectSpecialtyHandler(event, props){
 }  
 
 
-export function renderFacultyNameField (facultyControl, handler) {
-  
-  let control = facultyControl 
-  
+export function renderFacultyNameField (facultyControl, handler) {  
+  let control = facultyControl   
   return (
     <Input
     maxlength={control.maxlength}
@@ -38,4 +36,15 @@ export function renderFacultyNameField (facultyControl, handler) {
     
   />
   )
+}
+
+export function  getFacultyNameFromKey(facultyNameKey , faculties) {
+  let facultyName   
+  console.log(faculties)
+  Object.entries(faculties).forEach(faculty => {
+    if(facultyNameKey === faculty[0]) {         
+      facultyName = Object.keys(faculty[1])[0]
+    }
+  })
+  return  facultyName
 }

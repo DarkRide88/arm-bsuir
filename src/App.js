@@ -9,7 +9,6 @@ import Exams from './containers/Exams/Exams'
 import Results from './containers/Results/Results'
 import Faculties from './components/Faculties/Faculties'
 import FacultyList from './containers/FacultyList/FacultyList';
-import EditFaculty from './containers/EditFaculty/EditFaculty';
 import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';
 import Facuclty from './containers/Faculty/Faculty'
 function App() {
@@ -24,8 +23,7 @@ function App() {
           <Route path='/enrollee/:id' exact component={Enrollee}/> 
           <Route path='/faculty-list' exact component={FacultyList}/>  
           <Route path='/faculties/' exact component={Faculties}/> 
-          <Route path='/faculty/:id' exact component={Facuclty}/> 
-          <Route path='/edit-faculty' exact component={EditFaculty}/>         
+          <Route path='/faculty/:id' exact component={Facuclty}/>              
           <Route path='/add-new-faculty' exact component={AddNewFaculty}/>       
           <Redirect to='/' />
         </Switch>

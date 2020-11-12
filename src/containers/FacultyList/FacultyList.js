@@ -68,8 +68,7 @@ render() {
 function mapStateToProps(state) {
   return {
     faculties: state.faculties.faculties,
-    loading: state.faculties.loading,
-    // facultiesFromRespoense: state.faculties.facultiesFromRespoense,
+    loading: state.faculties.loading,   
     facultiesFromRespoense: state.faculties.facultiesFromRespoense,
     popUpFaculty: state.faculties.popUpFaculty,
     facultyToDeleteId: state.faculties.facultyToDeleteId,

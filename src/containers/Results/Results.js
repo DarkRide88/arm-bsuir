@@ -5,7 +5,7 @@ import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import { connect } from 'react-redux'
-import { fetchEnrolledEnrollees,  fetchEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
+import { fetchEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
 import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/facultiesHandlers'
 class Results extends React.Component {
@@ -37,8 +37,7 @@ class Results extends React.Component {
     let numberOfPlaces = this.getNumberOfPlaces()
     let count = []  
     if(this.props.enrollees) {
-      return Object.values(this.props.enrollees).sort((a, b) => a.avgMark < b.avgMark ?  1 : -1).map((enroll, index) => {             
-        // console.log(enroll)
+      return Object.values(this.props.enrollees).sort((a, b) => a.avgMark < b.avgMark ?  1 : -1).map((enroll, index) => {     
         let [specialityName] = this.getFacultyDataFromKeys(enroll)
         if(specialityName === this.props.specialtyName && enroll.readyToResults === true && this.props.faculties[this.props.facultyName] ) {     
                  

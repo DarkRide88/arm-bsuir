@@ -15,19 +15,15 @@ export const createFormControls = (controlNames) =>{
       label: control[0],
       type: control[1],
       errorMessage: 'Заполните поле',
-      placeholder: control[4],
-      
-    }, {required: true})
-    
-  })
-  
+      placeholder: control[4],      
+    }, {required: true})    
+  })  
   return form 
 }
 
-export function  renderControls (controls, handler) {    
-
+export function  renderControls (controls, handler) { 
   const controll = [...controls]; 
-  
+
   return controll.map((control,index) => {     
     return(
       <Auxillary key={index}>
@@ -41,14 +37,12 @@ export function  renderControls (controls, handler) {
         touched={control.touched}
         errorMessage={control.errorMessage}
         onChange={event => handler(event.target.value, index, controll, control)}
-
       />
      </Auxillary>
     )
-  })
-   
-  
+  }) 
 }
+
 export function  createEnrolleeFormControls (controlsName,state) { 
   let form =[]
   controlsName.forEach(control => {   

@@ -15,10 +15,6 @@ class Schedule extends React.Component{
     }  
   }
 
-  chekCurrentSpeciality = () => {
-
-  }
-
   renderShedule = () =>{
     let schedule = Object.values(this.props.faculties[this.props.facultyName]).map((speciality, index) => {
       if(speciality.name === this.props.specialtyName) {        
@@ -80,14 +76,11 @@ class Schedule extends React.Component{
     return schedule
   }
 
-
-
   render() {
     return(
       <div className={styles.schedule}>
            {this.props.faculties === null ? null : 
-            <Auxillary>
-        
+            <Auxillary>        
               <FacultyList
                 facultiesList = {this.props.faculties}
                 defaultFacultyName = {Object.keys(this.props.faculties)[0]}
@@ -96,11 +89,8 @@ class Schedule extends React.Component{
                 enrolleeSpeciality = {this.props.specialtyName}
                 enrolleeFaculty = {this.props.facultyName}
               />        
-              {this.renderShedule()}
-            
-            </Auxillary>
-             
-              
+              {this.renderShedule()}            
+            </Auxillary>   
           }   
       </div>
     )

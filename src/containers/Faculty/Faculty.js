@@ -25,25 +25,15 @@ const specialityDefault = [
 
 
 class Faculty extends React.Component {
-  state = {
-    prevFacultyName : null
-    
-  }
 
-
-  changeFacultyNameInEnrollees = () => {
-    console.log(  Object.values(this.props.enrollees))
+  changeFacultyNameInEnrollees = () => {  
     let enrollees = {... this.props.enrollees}
     Object.values(enrollees).forEach(enrollee => {
-      if(enrollee.facultyName === this.props.prevFacultyName) {
-        console.log('there beach')
+      if(enrollee.facultyName === this.props.prevFacultyName) {     
         enrollee.facultyName = this.props.facultyNameControl[0].value
       }
-    })
-    
-    this.props.updateEnrollees(enrollees)
-    console.log(enrollees)
-  
+    })    
+    this.props.updateEnrollees(enrollees)  
   }
 
 
@@ -94,8 +84,7 @@ class Faculty extends React.Component {
     } else {
       specialities[index] = {}      
        speciality = specialities[index]  
-    }
- 
+    } 
     speciality[controlName] = value
     specialities[index] = speciality  
     this.props.updateSpecialities(specialities)
@@ -126,9 +115,7 @@ class Faculty extends React.Component {
   }  
 
 
-  onChangeFacultyHandler = (value, control) => {    
-    // changeFacultyNameInEnrollees()
-    console.log(this.props.prevFacultyName)
+  onChangeFacultyHandler = (value, control) => {      
     let flag = false 
     if(value !== '') {
       flag = true
@@ -149,12 +136,7 @@ class Faculty extends React.Component {
     specialitiesControls.push(specialityControl)
     this.props.updateSpecialitiesControls(specialitiesControls)
   }
-  // loadPrevFacultyName = (name) => {
-  //   this.props.facultyNameControl[0]
-  //   this.setState({
-  //     prevFacultyName
-  //   })
-  // }
+
   componentDidMount() {
     this.props.updateShoudUpdateFacultiesStatus(true)
     this.props.fetchFaculty(this.props.match.params.id)
@@ -165,10 +147,8 @@ class Faculty extends React.Component {
     event.preventDefault()
   }
 
-   updateFacultyInDatabase = async (event) =>{
-   
-     this.changeFacultyNameInEnrollees()
-
+   updateFacultyInDatabase = async (event) =>{   
+    this.changeFacultyNameInEnrollees()
     event.preventDefault()     
     let faculty = {}   
     faculty[this.props.facultyNameControl[0].value] = this.props.specialities   
@@ -196,8 +176,7 @@ class Faculty extends React.Component {
             <hr/>
             <Button 
                 type="success"
-                onClick={this.addSpecialityHandler}
-                // disabled={this.state.isFormValid === false}
+                onClick={this.addSpecialityHandler}              
             >
               Добавить специальность
             </Button>

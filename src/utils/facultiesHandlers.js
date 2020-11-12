@@ -4,8 +4,7 @@ import Input from '../components/UI/Input/Input'
 export function selectChangeHandler  (event, props) {  
   let facultyName = props.facultyName
   let specialtyName = props.specialtyName
-  facultyName = event.target.value;
- 
+  facultyName = event.target.value; 
   specialtyName = props.faculties[facultyName][0]["name"];
   props.updateFacultyData(facultyName, specialtyName)
 }  
@@ -13,8 +12,6 @@ export function selectChangeHandler  (event, props) {
 export function selectSpecialtyHandler(event, props){      
   let specialtyName = props.specialtyName 
   specialtyName = event.target.value
-  console.log(specialtyName)
-  
   props.updateSpecialityName(specialtyName) 
 }  
 
@@ -40,7 +37,6 @@ export function renderFacultyNameField (facultyControl, handler) {
 
 export function  getFacultyNameFromKey(facultyNameKey , faculties) {
   let facultyName   
-  console.log(faculties)
   Object.entries(faculties).forEach(faculty => {
     if(facultyNameKey === faculty[0]) {         
       facultyName = Object.keys(faculty[1])[0]

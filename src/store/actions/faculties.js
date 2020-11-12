@@ -59,8 +59,7 @@ const specialityDefault = [
         try {
           const response = await axios.get(`/facultys/${id}.json`)     
           let faculty = response.data           
-          dispatch(fetchFacultySuccess(faculty))   
-          console.log(faculty)
+          dispatch(fetchFacultySuccess(faculty))            
           dispatch(getPrevFacultyData(Object.keys(faculty)))
           dispatch( checkIsFormValid(true)) 
           dispatch(updateSpecialities(Object.values(faculty)[0])) 
@@ -78,12 +77,14 @@ const specialityDefault = [
       facultyNameControl[0].value = Object.keys(faculty)[0]
       return facultyNameControl
     }
+
     export function checkIsFormValid(isFormValid) {
       return {
         type: CHECK_IS_FROM_VALID,
         isFormValid
       }
     }
+
     export function specialitiesToControls(faculty) {
         let specialitiesControls =[]
      
@@ -140,6 +141,7 @@ const specialityDefault = [
         prevSpecialityName,
       }
     }
+    
     export function updatefacultyNameControl(facultyNameControl, ){     
       return {
         type: UPDATE_FACULTY_NAME_CONTROL,
@@ -161,8 +163,7 @@ const specialityDefault = [
       }
     }
 
-    export function deleteFacultySucceess(facultiesWithoutDeleted) {
-      console.log(facultiesWithoutDeleted)
+    export function deleteFacultySucceess(facultiesWithoutDeleted) {    
       return {
         type:DELETE_FACULTY_SUCCESS,
         facultiesLinks:facultiesWithoutDeleted

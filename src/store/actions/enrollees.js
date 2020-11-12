@@ -68,9 +68,7 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
               if(enrollee[1].name.toLowerCase() === name){
                 foundEnrollees.push(enrollee)            
               }
-            })
-            
-            console.log(foundEnrollees)
+            }) 
             dispatch(updateEnrollees(Object.fromEntries(foundEnrollees)))
           }
         })

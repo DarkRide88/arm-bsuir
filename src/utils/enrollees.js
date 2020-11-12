@@ -18,8 +18,6 @@ export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, sp
 })  
 }
 
-
-
 export function getFacultyNameKey  (facultyName, props)  {
   let FacultyKey 
   Object.entries(props.facultiesFromRespoense).forEach(faculty => {   
@@ -38,7 +36,6 @@ export function getFacultyNameKey  (facultyName, props)  {
   })
   return specialityKey
  }
-
 
 export function selectChangeHandler (event, props) { 
   const enrollee = {...props.enrollee}

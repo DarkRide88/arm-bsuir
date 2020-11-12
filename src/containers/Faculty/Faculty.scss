@@ -45,13 +45,11 @@
   }
 }
 
-
 .specialities {
   display: flex;
   flex-wrap: wrap;
   width: 1000px;
-  input {
-    // width: 100%;
+  input {   
     max-width: 400px;
     width: 400px;
   }

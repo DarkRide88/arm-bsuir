@@ -40,7 +40,6 @@ class CreateEnrolle extends React.Component {
       const formControls = [...controls];
       const control = formControls[controlName]
       control.touched = true
-      console.log(value)
       control.value = value
       control.valid = validate(control.value, control.validation)
       enrollee.name=controls[0].value
@@ -49,8 +48,7 @@ class CreateEnrolle extends React.Component {
       enrollee.phoneNumber=controls[3].value
       enrollee.passNumber=controls[4].value
       this.props.updateEnrolleeData(enrollee)  
-      this.setState({          
-        // isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
+      this.setState({                
       })
   }
 
@@ -77,8 +75,7 @@ class CreateEnrolle extends React.Component {
       enrollee.сertificate.historyWorld = controls[12].value
       enrollee.сertificate.computerScince = controls[13].value
       this.props.updateEnrolleeData(enrollee)
-      this.setState({          
-        // isFormValid: validateForm(this.state.formControls.enrollerControls, this.state.formControls.subjectsControls)
+      this.setState({           
       })
   } 
   
@@ -126,8 +123,7 @@ class CreateEnrolle extends React.Component {
       <Auxillary>   
         {  this.props.faculties !== null && this.props.faculties !== 'undefined'  ?   
                
-           <div className={styles['create-enrolle']}>         
-           {/* {this.getSpecialityNameKey()}       */}
+           <div className={styles['create-enrolle']}>     
                 <form onSubmit={this.submitHandler}> 
                   <div className={styles['create-enrolle__item1']}>
                   <h2>Данные абитуриента:</h2>           

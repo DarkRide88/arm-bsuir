@@ -14,9 +14,7 @@ class Exams extends React.Component {
 
   onChange =  async (value, controlName, examName) => {   
     const enrollees = {...this.props.enrollees } 
-    console.log(enrollees)
-    enrollees[controlName].exams[examName].mark = value
-   
+    enrollees[controlName].exams[examName].mark = value   
     this.props.updateEnrollees(enrollees)
     this.updateIsUreadyToResult()
     this.calcAvgMark()
@@ -77,8 +75,7 @@ class Exams extends React.Component {
 
   renderExams = () => {  
     
-    return Object.entries(this.props.enrollees).map((enrolle, index) => { 
-      console.log(enrolle[1])
+    return Object.entries(this.props.enrollees).map((enrolle, index) => {     
        return(
         <tr  key={index}>
           <td>{enrolle[1].name}</td>
@@ -114,8 +111,6 @@ class Exams extends React.Component {
   }
 
   async componentDidMount() {
-   
-    // this.props.fetchFacultys()
     if(this.props.enrollees === null) {
       this.props.fetchEnrollees()
     }

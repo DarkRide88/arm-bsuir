@@ -14,12 +14,6 @@ const Search = props => {
         onChange={props.onChange}
         placeholder={props.placeholder}
       />
-
-      {/* {
-        isInvalid(props)
-          ? <span className={styles['error-message']}>{props.errorMessage || 'Введите верное значение'}</span>
-          : null
-      } */}
     </div>
   )
 }

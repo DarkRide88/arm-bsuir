@@ -36,29 +36,6 @@ class AddNewFaculty extends React.Component {
     specialities :[]      
   }
 
-  // renderFacultyNameField = (facultyControl, handler) => {
- 
-  //   let control = this.state.controls.faculty[0]  
-    
-  //   return (
-  //     <Input
-  //     maxlength={control.maxlength}
-  //     type={control.type}
-  //     label={control.label}
-  //     value={control.value}
-  //     valid={control.valid}
-  //     shouldValidate={!!control.validation}
-  //     touched={control.touched}
-  //     placeholder={control.placeholder}
-  //     errorMessage={control.errorMessage}
-  //     onChange={event => {this.onChangeFacultyHandler(event.target.value, event.target)}
-  //     }
-  //   />
-  //   )
-  // }
-
-
-
   submitHandler = event => {
     event.preventDefault()  
   }
@@ -76,13 +53,8 @@ class AddNewFaculty extends React.Component {
     this.setState({
       facultyName: newFacultyName,
       isFacultyNameEmpty:flag
-    }) 
-    // this.props.checkIsFormValid(flag)
-  
+    })   
   }
-
-
-
 
   onChangeSpecialityHandler = (value,index, controlName, control, controlIndex) => { 
 
@@ -105,9 +77,7 @@ class AddNewFaculty extends React.Component {
       specialities,
     }) 
     let IsValid = validateForm(this.state.controls.specialities)
-    console.log(IsValid)
     this.props.checkIsFormValid(IsValid)
-    // console.log(this.state.specialities)
   }
  
   renderSpecialities = () => {
@@ -161,13 +131,9 @@ class AddNewFaculty extends React.Component {
 
   addFacultyToBase = async (event) => {    
     let faculty = {}   
-    // faculty['facultyName'] = this.state.facultyName
-    // faculty['specialities'] = this.state.specialities 
     faculty[this.state.facultyName] = this.state.specialities   
     event.preventDefault()
     await firebase.database().ref('facultys').push(faculty);
- 
-    // await firebase.database().ref('facultiesControls').push({...this.state.controls.specialities});
     this.props.history.push('/faculty-list');
   }
 
@@ -179,8 +145,7 @@ class AddNewFaculty extends React.Component {
     return (
       <div className={styles['add-new-faculty']}>           
         <form onSubmit={this.submitHandler}> 
-             <div className={styles['facultyName']}>
-             {/* {console.log(renderFacultyNameField())} */}
+             <div className={styles['facultyName']}>        
                 { renderFacultyNameField(this.state.controls.faculty[0] , this.onChangeFacultyHandler)}
              </div>            
             

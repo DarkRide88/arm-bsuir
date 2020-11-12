@@ -1,7 +1,3 @@
-import React from 'react'
-
-
-
 export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, specialityNameKey, props)  {    
 
   props.faculties[facultyName].forEach(faculty => {        
@@ -24,7 +20,7 @@ export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, sp
 
 export function getFacultyNameKey  (facultyName, props)  {
   let FacultyKey 
-  Object.entries(props.facultiesFromRespoense).filter(faculty => {   
+  Object.entries(props.facultiesFromRespoense).forEach(faculty => {   
     if(Object.keys(faculty[1])[0] === facultyName) {
       FacultyKey = faculty[0]        
     }

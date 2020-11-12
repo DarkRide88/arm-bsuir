@@ -18,16 +18,29 @@ class Results extends React.Component {
       }
     })  
     return numberOfPlaces
+  } 
+
+  getFacultyDataFromKeys(enrollee) {
+    let facultyName
+    let specialtyName 
+    Object.entries(this.props.facultiesFromRespoense).forEach(faculty => {
+      if(enrollee.facultyName === faculty[0]) {
+        specialtyName = Object.values(faculty[1])[0][enrollee.specialtyName].name      
+        facultyName = Object.keys(faculty[1])[0]
+      }
+    })
+    return [specialtyName, facultyName]
   }
+
 
   renderenrollee() {
     let numberOfPlaces = this.getNumberOfPlaces()
     let count = []  
     if(this.props.enrollees) {
       return Object.values(this.props.enrollees).sort((a, b) => a.avgMark < b.avgMark ?  1 : -1).map((enroll, index) => {             
-    
-        
-        if(enroll.specialtyName === this.props.specialtyName && enroll.readyToResults === true && this.props.faculties[this.props.facultyName] ) {     
+        // console.log(enroll)
+        let [specialityName] = this.getFacultyDataFromKeys(enroll)
+        if(specialityName === this.props.specialtyName && enroll.readyToResults === true && this.props.faculties[this.props.facultyName] ) {     
                  
           count.push(index)
           if(count.length <= numberOfPlaces ){
@@ -88,7 +101,8 @@ function mapStateToProps(state) {
     faculties: state.faculties.faculties,
     specialtyName: state.faculties.specialtyName,
     facultyName: state.faculties.facultyName,
-    loading: state.enrollees.loading
+    loading: state.enrollees.loading,
+    facultiesFromRespoense: state.faculties.facultiesFromRespoense
   }
 }
 function mapDispatchToProps(dispatch) {

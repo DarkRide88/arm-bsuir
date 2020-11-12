@@ -9,7 +9,7 @@ export function createControl(config, validation) {
 }
 
 export function validate(value, validation = null) {  
-  
+  console.log('hi')
   if (!validation) {
     return true
   }
@@ -28,6 +28,7 @@ export function validateForm(controls) {
     console.log(controls)
     Object.values(controls).forEach(control => 
       {
+        console.log(control)
         control.forEach(contolField => {
           if(contolField.valid !== true && contolField.type !== 'hidden') {
             console.log(contolField)
@@ -41,3 +42,14 @@ export function validateForm(controls) {
   return isValid
 }
 
+export function validateEnrollee (controls) {
+  let isValid = true  
+    Object.values(controls).forEach(control => 
+      { 
+          if(control.valid !== true && control.type !== 'hidden') {    
+            return isValid = false
+          }
+      })
+
+  return isValid
+}

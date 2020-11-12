@@ -21,7 +21,7 @@ const speciality = [
   ['Экзамен 3','text','exam3'], ['Дата консультации','date','exam3ConsDate'],['Дата сдачи','date','exam3ExamDate'],
   ['Время консультации','text','exam3ConsTime'],['Время сдачи','text','exam3ExamTime'],
 ] 
-
+ 
 
 class AddNewFaculty extends React.Component {
 

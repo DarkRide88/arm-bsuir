@@ -2,12 +2,12 @@ import React from 'react'
 import styles from '../CreateEnrolle/CreateEnrolle.scss'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
-import { validate, validateForm} from '../../form/formFramework'
+import { validate,  validateEnrollee} from '../../form/formFramework'
 import {renderControls} from '../../utils/formControlsUtils'
 import * as firebase from 'firebase'
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
-import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
+import { checkIsFormValid, fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import { connect } from 'react-redux'
 import { fetchEnrollee, resetEnrollee, updateEnrolleeData, updateEnrolleFormcontrols, updateShoudUpdateEnrolleeStatus } from '../../store/actions/enrollees'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/enrollees'
@@ -19,6 +19,7 @@ class Enrollee extends React.Component {
     const formControls = [...controls];   
     formControls[controlName].touched = true
     formControls[controlName].value = value   
+    formControls[controlName].valid = validate(value,   formControls[controlName].validation)
     const enrollee = this.props.enrollee
     enrollee.name=controls[0].value
     enrollee.age=controls[1].value
@@ -27,13 +28,15 @@ class Enrollee extends React.Component {
     enrollee.passNumber=controls[4].value
     this.props.updateEnrolleeData(enrollee)
     this.props.updateEnrolleFormcontrols(formControls, this.props.subjectsControls)
-
+    let IsValid = validateEnrollee(this.props.enrollerControls)
+    this.props.checkIsFormValid(IsValid)
   }
 
   changeCertificate = (value, controlName, controls) => { 
     const formControls = [...controls]; 
     formControls[controlName].touched = true
     formControls[controlName].value = value    
+    formControls[controlName].valid = validate(value,   formControls[controlName].validation)
     const enrollee = this.props.enrollee
     enrollee.сertificate.math = controls[0].value
     enrollee.сertificate.physics = controls[1].value
@@ -49,8 +52,12 @@ class Enrollee extends React.Component {
     enrollee.сertificate.historyBel = controls[11].value
     enrollee.сertificate.historyWorld = controls[12].value
     enrollee.сertificate.computerScince = controls[13].value
+    let IsValid = validateEnrollee(this.props.subjectsControls)
+    console.log(IsValid)
+    this.props.checkIsFormValid(IsValid)
     this.props.updateEnrolleFormcontrols(this.props.enrollerControls, formControls )
     this.props.updateEnrolleeData(enrollee)
+
 
 
 
@@ -65,6 +72,7 @@ class Enrollee extends React.Component {
 
 
   async componentDidMount() {    
+    this.props.checkIsFormValid(true)
     this.props.resetEnrollee()
     if(this.props.faculties === null) {   
       this.props.fetchFacultys()
@@ -130,7 +138,7 @@ class Enrollee extends React.Component {
                 <Button
                   type="success"
                   onClick={this.updateEnroller}
-                  
+                  disabled={this.props.isFormValid === false}
                 >
                   Сохранить изменения
               </Button>
@@ -157,6 +165,7 @@ function mapStateToProps(state) {
     facultyNameKey: state.faculties.facultyNameKey,
     specialityNameKey: state.faculties.specialityNameKey,
     isFirstLoad: state.faculties.isFirstLoad,
+    isFormValid: state.faculties.isFormValid
   }
 }
 
@@ -169,7 +178,8 @@ function mapDispatchToProps(dispatch) {
     updateFacultyData:(facultyName, specialtyName, facultyNameKey,specialityNameKey ) => dispatch(updateFacultyData(facultyName, specialtyName, facultyNameKey, specialityNameKey)),
     updateSpecialityName:(specialtyName, specialtyNameKey) => dispatch(updateSpecialityName(specialtyName, specialtyNameKey)),
     updateEnrolleFormcontrols: (enrollerControls, subjectsControls) => dispatch( updateEnrolleFormcontrols (enrollerControls, subjectsControls)),
-    updateShoudUpdateEnrolleeStatus:(shouldUpdate) => dispatch(updateShoudUpdateEnrolleeStatus(shouldUpdate)) 
+    updateShoudUpdateEnrolleeStatus:(shouldUpdate) => dispatch(updateShoudUpdateEnrolleeStatus(shouldUpdate)) ,
+    checkIsFormValid: (isFormValid) => dispatch(checkIsFormValid(isFormValid)),
   }
 }
 

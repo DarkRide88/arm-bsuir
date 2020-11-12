@@ -86,7 +86,7 @@ export default function faculties (state = initialState, action) {
       }
     case DELETE_FACULTY_SUCCESS: 
     return {
-      ...state, facultiesLinks: action.facultiesLinks
+      ...state, facultiesFromRespoense: action.facultiesFromRespoense
     }
     case GET_PREV_FACULTY_NAME:
       return {

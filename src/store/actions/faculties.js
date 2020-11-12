@@ -48,8 +48,8 @@ const specialityDefault = [
           } 
           return null
         }))
-        await firebase.database().ref('facultys').child(facultyToDelteId).remove();    
-        dispatch(deleteFacultySucceess(facultiesWithoutDeleted))
+        await firebase.database().ref('facultys').child(facultyToDelteId).remove();      
+        dispatch(fetchFacultys())
       }
     }
 
@@ -70,7 +70,6 @@ const specialityDefault = [
         }      
       }
     }
-
 
     export function facultyNameToControl(faculty) {           
       let facultyNameControl = createFormControls(facultyDefault)
@@ -166,7 +165,7 @@ const specialityDefault = [
     export function deleteFacultySucceess(facultiesWithoutDeleted) {    
       return {
         type:DELETE_FACULTY_SUCCESS,
-        facultiesLinks:facultiesWithoutDeleted
+        facultiesFromRespoense:facultiesWithoutDeleted
       }
     }  
 

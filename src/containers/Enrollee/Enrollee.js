@@ -53,7 +53,6 @@ class Enrollee extends React.Component {
     enrollee.сertificate.historyWorld = controls[12].value
     enrollee.сertificate.computerScince = controls[13].value
     let IsValid = validateEnrollee(this.props.subjectsControls)
-    console.log(IsValid)
     this.props.checkIsFormValid(IsValid)
     this.props.updateEnrolleFormcontrols(this.props.enrollerControls, formControls )
     this.props.updateEnrolleeData(enrollee)

@@ -40,8 +40,7 @@ class CreateEnrolle extends React.Component {
       const formControls = [...controls];
       const control = formControls[controlName]
       control.touched = true
-      control.value = value
-      console.log(control)
+      control.value = value    
       control.valid = validate(value, control.validation)
       enrollee.name=controls[0].value
       enrollee.age=controls[1].value

@@ -5,6 +5,7 @@ export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, sp
     let enrollee = {...props.enrollee}      
     enrollee.facultyName = facultyNameKey
     enrollee.specialtyName = specialityNameKey
+    enrollee.readyToResults = false
     enrollee.exams = {
       exam1: {name:faculty['exam1'],mark: ''},
       exam2: {name:faculty['exam2'],mark: ''},
@@ -16,6 +17,7 @@ export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, sp
   }
 })  
 }
+
 
 
 export function getFacultyNameKey  (facultyName, props)  {

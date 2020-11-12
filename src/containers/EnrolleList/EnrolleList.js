@@ -9,7 +9,7 @@ import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable
 import PopUp from '../../components/PopUp/PopUp'
 
 import { connect } from 'react-redux'
-import { deleteEnrollee, fetchEnrollees, findEnrollee, hidePopUp, showPopUp } from '../../store/actions/enrollees'
+import { deleteEnrollee, fetchEnrollees, findEnrollee, hidePopUp, showPopUp, updateShoudUpdateEnrolleeStatus } from '../../store/actions/enrollees'
 import { fetchFacultys } from '../../store/actions/faculties'
 import {getFacultyNameFromKey} from '../../utils/facultiesHandlers'
 class EnrolleList extends React.Component {
@@ -41,8 +41,14 @@ class EnrolleList extends React.Component {
   }
   
  componentDidMount() { 
-    this.props.fetchEnrollees()
-    this.props.fetchFacultys()
+    if(this.props.facultiesFromRespoense === null) {       
+      this.props.fetchFacultys()
+    }
+    if(this.props.enrollees === null || this.props.shouldUpdateEnrollee === true) {
+      this.props.fetchEnrollees()
+      this.props.updateShoudUpdateEnrolleeStatus(false)
+    }
+ 
   }
 
   render() {  
@@ -88,6 +94,7 @@ function mapStateToProps(state) {
     popUp: state.enrollees.popUp,
     userToDelteId: state.enrollees.userToDelteId,
     facultiesFromRespoense: state.faculties.facultiesFromRespoense,
+    shouldUpdateEnrollee: state.enrollees.shouldUpdateEnrollee,
   }
 }
 
@@ -98,7 +105,8 @@ function mapDispatchToProps(dispatch) {
     hidePopUp: () => dispatch(hidePopUp()),
     showPopUp: (enrollee) => dispatch(showPopUp(enrollee)),
     deleteEnrollee: (enrollees, userToDelteId) => dispatch(deleteEnrollee(enrollees, userToDelteId)),
-    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))   
+    findEnrollee: ( event, enrollees ) => dispatch(findEnrollee(event, enrollees ))  ,
+    updateShoudUpdateEnrolleeStatus:(shouldUpdate) => dispatch(updateShoudUpdateEnrolleeStatus(shouldUpdate)) 
      
   }
 }

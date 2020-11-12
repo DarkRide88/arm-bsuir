@@ -1,4 +1,4 @@
-import { CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, FETCH_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_DATA, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, UPDATE_SPECIALITY_NAME } from "../actions/actionTypes"
+import { CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, FETCH_FACULTYS_ERROR, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, FETCH_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_DATA, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, UPDATE_SPECIALITY_NAME, UPDATE_SHOUD_UPDATE_FACULTYS_STATUS } from "../actions/actionTypes"
 
 const initialState = {
   faculties: null,  
@@ -7,7 +7,6 @@ const initialState = {
   specialtyName: null,
   specialityNameKey: null,
   facultiesError: null,
-  facultiesLinks: null,
   facultyToDeleteId: null,
   facultiesFromRespoense: null,
   popUpFaculty:false,
@@ -19,12 +18,18 @@ const initialState = {
   prevFacultyName: null,
   prevSpecialityName: null,
   isFirstLoad: true,
+  shouldUpdateFaculties: false,
 }
 
 export default function faculties (state = initialState, action) {
   switch(action.type) { 
     default: 
       return state
+
+    case UPDATE_SHOUD_UPDATE_FACULTYS_STATUS:
+      return {
+        ...state, shouldUpdateFaculties:action.shouldUpdateFaculties
+      }
     case FETCH_FACULTYS_START:
       return {
         ...state, loading:true, 
@@ -45,10 +50,6 @@ export default function faculties (state = initialState, action) {
     case UPDATE_SPECIALITY_NAME: 
       return {
         ...state, specialtyName: action.specialtyName, specialityNameKey: action.specialityNameKey
-      }    
-    case FETCH_FACULTYS_LINKS: 
-      return {
-        ...state, facultiesLinks: action.facultiesLinks
       }    
     case SHOW_POPUP_FACULTY: 
       return {

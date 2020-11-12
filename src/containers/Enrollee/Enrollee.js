@@ -9,7 +9,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import { connect } from 'react-redux'
-import { fetchEnrollee, resetEnrollee, updateEnrolleeData, updateEnrolleFormcontrols } from '../../store/actions/enrollees'
+import { fetchEnrollee, resetEnrollee, updateEnrolleeData, updateEnrolleFormcontrols, updateShoudUpdateEnrolleeStatus } from '../../store/actions/enrollees'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/enrollees'
 
 
@@ -65,11 +65,13 @@ class Enrollee extends React.Component {
   }
 
 
-  async componentDidMount() {      
+  async componentDidMount() {    
     this.props.resetEnrollee()
-    this.props.fetchFacultys()
+    if(this.props.faculties === null) {   
+      this.props.fetchFacultys()
+    }
+    this.props.updateShoudUpdateEnrolleeStatus(true)
     this.props.fetchEnrollee(this.props.match.params.id)
-
   }
 
 
@@ -167,7 +169,8 @@ function mapDispatchToProps(dispatch) {
     resetEnrollee: () => dispatch(resetEnrollee()),
     updateFacultyData:(facultyName, specialtyName, facultyNameKey,specialityNameKey ) => dispatch(updateFacultyData(facultyName, specialtyName, facultyNameKey, specialityNameKey)),
     updateSpecialityName:(specialtyName, specialtyNameKey) => dispatch(updateSpecialityName(specialtyName, specialtyNameKey)),
-    updateEnrolleFormcontrols: (enrollerControls, subjectsControls) => dispatch( updateEnrolleFormcontrols (enrollerControls, subjectsControls))
+    updateEnrolleFormcontrols: (enrollerControls, subjectsControls) => dispatch( updateEnrolleFormcontrols (enrollerControls, subjectsControls)),
+    updateShoudUpdateEnrolleeStatus:(shouldUpdate) => dispatch(updateShoudUpdateEnrolleeStatus(shouldUpdate)) 
   }
 }
 

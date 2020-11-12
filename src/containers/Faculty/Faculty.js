@@ -1,7 +1,7 @@
 import styles from './Faculty.scss'
 import React from 'react'
 import { connect } from 'react-redux'
-import { checkIsFormValid, fetchFaculty, updatefacultyNameControl, updateSpecialities, updateSpecialitiesControls } from '../../store/actions/faculties'
+import { checkIsFormValid, fetchFaculty, updatefacultyNameControl, updateShoudUpdateFacultiesStatus, updateSpecialities, updateSpecialitiesControls } from '../../store/actions/faculties'
 import Loader from '../../components/UI/Loader/Loader'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import Button from '../../components/UI/Button/Button'
@@ -156,6 +156,7 @@ class Faculty extends React.Component {
   //   })
   // }
   componentDidMount() {
+    this.props.updateShoudUpdateFacultiesStatus(true)
     this.props.fetchFaculty(this.props.match.params.id)
     this.props.fetchEnrollees()
   }
@@ -240,7 +241,8 @@ function mapDispatchToProps(dispatch) {
     updateSpecialities: (specialities) => dispatch(updateSpecialities(specialities)),
     updateSpecialitiesControls: (specialitiesControls) => dispatch(updateSpecialitiesControls(specialitiesControls)),
     checkIsFormValid: (isFormValid) => dispatch(checkIsFormValid(isFormValid)),
-    updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees))
+    updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees)),
+    updateShoudUpdateFacultiesStatus: (shouldUpdate) => dispatch(updateShoudUpdateFacultiesStatus(shouldUpdate))
   }
 }
 

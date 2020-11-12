@@ -9,7 +9,7 @@ import {renderFacultyNameField} from '../../utils/facultiesHandlers'
 import * as firebase from 'firebase'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { checkIsFormValid } from '../../store/actions/faculties'
+import { checkIsFormValid, updateShoudUpdateFacultiesStatus } from '../../store/actions/faculties'
 
 const faculty = [['', 'text','facultyName', '', 'Введите название факультета']]
 const speciality = [
@@ -171,6 +171,10 @@ class AddNewFaculty extends React.Component {
     this.props.history.push('/faculty-list');
   }
 
+  componentDidMount() {
+    this.props.updateShoudUpdateFacultiesStatus(true)
+  }
+
   render() {
     return (
       <div className={styles['add-new-faculty']}>           
@@ -214,7 +218,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    checkIsFormValid: (isFormValid) => dispatch(checkIsFormValid(isFormValid))
+    checkIsFormValid: (isFormValid) => dispatch(checkIsFormValid(isFormValid)),
+    updateShoudUpdateFacultiesStatus: (shouldUpdate) => dispatch(updateShoudUpdateFacultiesStatus(shouldUpdate))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewFaculty)

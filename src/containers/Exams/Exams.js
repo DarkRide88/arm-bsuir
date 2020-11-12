@@ -114,8 +114,14 @@ class Exams extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.fetchEnrollees()
-    this.props.fetchFacultys()
+   
+    // this.props.fetchFacultys()
+    if(this.props.enrollees === null) {
+      this.props.fetchEnrollees()
+    }
+    if(this.props.facultiesFromRespoense === null) {   
+      this.props.fetchFacultys()
+    }
     
   }
 

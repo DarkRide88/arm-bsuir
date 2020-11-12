@@ -9,9 +9,10 @@ import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/faculties
 
 class Schedule extends React.Component{
 
-  async componentDidMount() {
-    this.props.fetchFacultys()
-  
+  async componentDidMount() { 
+    if(this.props.faculties === null) {   
+      this.props.fetchFacultys()
+    }  
   }
 
   chekCurrentSpeciality = () => {
@@ -72,16 +73,10 @@ class Schedule extends React.Component{
                     <td>{speciality.exam3ExamTime}</td> 
                   </tr>
               </FetchedDataTable>  
-          </Auxillary>
-     
-        
-        )
-        
-      }
-      console.log(speciality)
-   
+          </Auxillary>             
+        )        
+      }   
     })
-
     return schedule
   }
 

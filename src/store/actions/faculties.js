@@ -1,4 +1,4 @@
-import { FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_DATA, UPDATE_SPECIALITY_NAME , FETCH_FACULTY_SUCCESS, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME} from "./actionTypes"
+import { FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_DATA, UPDATE_SPECIALITY_NAME , FETCH_FACULTY_SUCCESS, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME, UPDATE_SHOUD_UPDATE_FACULTYS_STATUS} from "./actionTypes"
 import {createFormControls} from '../../utils/formControlsUtils'
 
 import axios from '../../axios/axios-arm'
@@ -32,8 +32,7 @@ const specialityDefault = [
           const specialityNameKey = 0
           const facultiesFromRespoense = facultiesResponse.data
          
-          dispatch(fetchFacultysSuccess(faculties,facultyName,specialtyName,facultyNameKey,specialityNameKey,facultiesFromRespoense))
-          dispatch(fetchFacultysLinks(facultiesResponse.data))
+          dispatch(fetchFacultysSuccess(faculties,facultyName,specialtyName,facultyNameKey,specialityNameKey,facultiesFromRespoense))         
         }  catch (e) {
           dispatch(fetchFacultysErrors(e))
         }      
@@ -126,6 +125,14 @@ const specialityDefault = [
         
       }
     }
+
+    export function updateShoudUpdateFacultiesStatus (shouldUpdateFaculties){
+      return {
+        type: UPDATE_SHOUD_UPDATE_FACULTYS_STATUS,
+        shouldUpdateFaculties,
+      }
+    }
+
     export function getPrevFacultyData(prevFacultyName,prevSpecialityName) {
       return {
         type: GET_PREV_FACULTY_NAME,
@@ -160,15 +167,8 @@ const specialityDefault = [
         type:DELETE_FACULTY_SUCCESS,
         facultiesLinks:facultiesWithoutDeleted
       }
-    }
-    
-    export function fetchFacultysLinks (facultiesLinks) {
-      return {
-        type: FETCH_FACULTYS_LINKS,
-        facultiesLinks,
-      }
-    }
-    
+    }  
+
     export function updateSpecialityName (specialtyName,specialityNameKey) {
       return {
         type: UPDATE_SPECIALITY_NAME,

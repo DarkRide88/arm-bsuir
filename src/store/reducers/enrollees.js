@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_ENROLLEE_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE } from "../actions/actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_ENROLLEE_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE, UPDATE_SHOUD_UPDATE_ENROLLEES_STATUS } from "../actions/actionTypes"
 
 
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
   enrolleesError:null,
   enrollerControls:null,
   subjectsControls: null,
+  shouldUpdateEnrollee: false,
   enrollee: {
     сertificate: {
       math:{},physics:{},chemistry:{},biology:{},geography:{},russianLang:{},belLang:{},belLitr:{},russianLitr:{},physicalEduc:{},english:{},historyBel:{},historyWorld:{},computerScince:{}  
@@ -45,6 +46,10 @@ export default function enrollees (state = initialState, action) {
   switch(action.type) {
     default: 
       return state
+    case UPDATE_SHOUD_UPDATE_ENROLLEES_STATUS:
+      return {
+        ...state, shouldUpdateEnrollee: action.shouldUpdateEnrollee
+      }
     case FETCH_ENROLLEES_START:
       return {
         ...state, loading:true, 

@@ -5,7 +5,7 @@ import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable
 import Loader from '../../components/UI/Loader/Loader'
 import FacultyList from '../../components/FacultyList/FacultyList'
 import { connect } from 'react-redux'
-import { fetchEnrolledEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
+import { fetchEnrolledEnrollees,  fetchEnrollees,  updateEnrollees } from '../../store/actions/enrollees'
 import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/facultiesHandlers'
 class Results extends React.Component {
@@ -58,8 +58,12 @@ class Results extends React.Component {
  }
  
   componentDidMount(){
-     this.props.fetchEnrolledEnrollees() 
-     this.props.fetchFacultys()
+     if(this.props.enrollees === null) {
+      this.props.fetchEnrollees()
+    }
+     if(this.props.faculties === null) {   
+      this.props.fetchFacultys()
+    }
   }
 
   render() {
@@ -107,7 +111,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    fetchEnrolledEnrollees: () => dispatch(fetchEnrolledEnrollees()),
+    fetchEnrollees: () => dispatch(fetchEnrollees()),
     updateEnrollees: (enrollees) => dispatch(updateEnrollees(enrollees)),
     fetchFacultys: () => dispatch(fetchFacultys()),
     updateFacultyData:(facultyName, specialtyName ) => dispatch(updateFacultyData(facultyName, specialtyName)),

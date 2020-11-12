@@ -1,7 +1,7 @@
 import styles from './FacultyList.scss'
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteFaculty, fetchFacultys, hidePopUpFaculty, showPopUpFaculty } from '../../store/actions/faculties'
+import { deleteFaculty, fetchFacultys, hidePopUpFaculty, showPopUpFaculty, updateShoudUpdateFacultiesStatus } from '../../store/actions/faculties'
 import Loader from '../../components/UI/Loader/Loader'
 import Auxillary from '../../hoc/Auxiliary/Auxiliary'
 import FetchedDataTable from '../../components/FetchedDataTable/FetchedDataTable'
@@ -12,7 +12,7 @@ import Button from '../../components/UI/Button/Button'
 class FacultyList extends React.Component {
 
 renderFacultyList () {
-  return Object.entries(this.props.facultiesLinks).map((faculty, index) => {     
+  return Object.entries(this.props.facultiesFromRespoense).map((faculty, index) => {     
     return(
     
     <tr  key={faculty[0] + index}>
@@ -29,7 +29,11 @@ renderFacultyList () {
 }
 
 componentDidMount() {
-  this.props.fetchFacultys()
+  if(this.props.facultiesFromRespoense === null || this.props.shouldUpdateFaculties === true) {       
+    this.props.fetchFacultys()
+    this.props.updateShoudUpdateFacultiesStatus(false)
+  }
+
 }
 
 render() {
@@ -37,11 +41,11 @@ render() {
       
       <div className={styles['faculty-list']}> 
       {        
-        this.props.loading === false &&  this.props.facultiesLinks !== null ?       
+        this.props.loading === false &&  this.props.facultiesFromRespoense !== null ?       
           <Auxillary>
             {this.props.popUpFaculty === false ? null : 
               <PopUp         
-                onAccept = {() => {this.props.deleteFaculty(this.props.facultiesLinks, this.props.facultyToDeleteId)}}  
+                onAccept = {() => {this.props.deleteFaculty(this.props.facultiesFromRespoense, this.props.facultyToDeleteId)}}  
                 onRefuse = {this.props.hidePopUpFaculty}
                 text = 'Вы уверены, что хотите удалить данного абитуриента?'  
               />
@@ -65,9 +69,11 @@ function mapStateToProps(state) {
   return {
     faculties: state.faculties.faculties,
     loading: state.faculties.loading,
-    facultiesLinks: state.faculties.facultiesLinks,
+    // facultiesFromRespoense: state.faculties.facultiesFromRespoense,
+    facultiesFromRespoense: state.faculties.facultiesFromRespoense,
     popUpFaculty: state.faculties.popUpFaculty,
     facultyToDeleteId: state.faculties.facultyToDeleteId,
+    shouldUpdateFaculties: state.faculties.shouldUpdateFaculties,
   }
 }
 function mapDispatchToProps(dispatch) {
@@ -76,6 +82,7 @@ function mapDispatchToProps(dispatch) {
     hidePopUpFaculty: () => dispatch(hidePopUpFaculty()),
     showPopUpFaculty: (faculty) => dispatch(showPopUpFaculty(faculty)),
     deleteFaculty: (faculties,facultyToDelteId ) => dispatch(deleteFaculty(faculties,facultyToDelteId)),
+    updateShoudUpdateFacultiesStatus: (shouldUpdate) => dispatch(updateShoudUpdateFacultiesStatus(shouldUpdate))
   }
 }
 

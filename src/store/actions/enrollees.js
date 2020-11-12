@@ -1,4 +1,4 @@
-import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_ENROLLEE_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE } from "./actionTypes"
+import { FETCH_ENROLLEES_SUCCESS, FETCH_ENROLLEES_START,FETCH_ENROLLEES_ERROR, HIDE_POPUP, SHOW_POPUP, DELETE_ENROLLEE_SUCCESS, RESET_SEARCH_FIELD, SET_SEARCHED_INPUT_VALUE, UPDATE_ENROLLEES, UPDATE_ENROLLE_DATA, FETCH_ENROLLEE_SUCCESS, UPDATE_ENROLLEE_FROM_CONTROLS, RESET_ENROLLEE, UPDATE_SHOUD_UPDATE_ENROLLEES_STATUS } from "./actionTypes"
 import {enrolleeControlsData,certificateControlsData} from '../../containers/CreateEnrolle/DataToEnrolle'
 import * as firebase from 'firebase'
 import axios from '../../axios/axios-arm'
@@ -47,22 +47,10 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
       }
     }
 
-    export function fetchEnrolledEnrollees() {
-     
-      return async dispatch => {        
-        dispatch(fetchEnrolleesStart())           
-        try {
-          const response = await axios.get('/enrolls.json')  
-          const enrollees =   Object.fromEntries(Object.entries(response.data  ).filter(enrollee => {
-            if(enrollee[1].readyToResults) {
-              return enrollee
-            }
-            return null
-          }))       
-          dispatch(fetchEnrolleesSuccess(enrollees))
-        }  catch (e) {
-          dispatch(fetchEnrolleesErrors(e))
-        }      
+    export function updateShoudUpdateEnrolleeStatus (shouldUpdateEnrollee){
+      return {
+        type: UPDATE_SHOUD_UPDATE_ENROLLEES_STATUS,
+        shouldUpdateEnrollee,
       }
     }
 

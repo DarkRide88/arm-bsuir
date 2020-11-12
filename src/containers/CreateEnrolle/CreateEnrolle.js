@@ -11,7 +11,7 @@ import FacultyList from '../../components/FacultyList/FacultyList'
 import Loader from '../../components/UI/Loader/Loader'
 import { connect } from 'react-redux'
 import { fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
-import { updateEnrolleeData } from '../../store/actions/enrollees'
+import { updateEnrolleeData, updateShoudUpdateEnrolleeStatus } from '../../store/actions/enrollees'
 import {selectChangeHandler,selectSpecialtyHandler,updateExamsNames } from '../../utils/enrollees'
 class CreateEnrolle extends React.Component {
 
@@ -30,66 +30,10 @@ class CreateEnrolle extends React.Component {
    registerEnrollee = async (event) => {
     event.preventDefault()
     await firebase.database().ref('enrolls').push(this.props.enrollee);
-    this.props.history.push('/');
+    this.props.history.push('/');  
+   
   }
 
-  //   updateExamsNames = (speaciality, facultyName) => {    
-
-  //     this.props.faculties[facultyName].forEach(faculty => {        
-  //     if(faculty.name=== speaciality){       
-  //       let enrollee = this.props.enrollee      
-  //       enrollee.facultyName = this.props.facultyNameKey
-  //       enrollee.specialtyName = this.props.specialityNameKey
-  //       enrollee.exams = {
-  //         exam1: {name:faculty['exam1'],mark: ''},
-  //         exam2: {name:faculty['exam2'],mark: ''},
-  //         exam3: {name:faculty['exam3'],mark: ''}
-  //       }     
-  //       this.props.updateEnrolleeData(enrollee)
-      
-  //     }
-  //   })  
-  //  }
-   
-  //  getFacultyNameKey = (facultyName) => {
-  //   let FacultyKey 
-  //   Object.entries(this.props.facultiesFromRespoense).filter(faculty => {
-  //     // console.log((faculty))
-  //     if(Object.keys(faculty[1])[0] === facultyName) {
-  //       FacultyKey = faculty[0]        
-  //     }
-  //   })
-  //   return FacultyKey
-  //  }
-
-  //  getSpecialityNameKey = (specialityName) => {
-  //   let specialityKey 
-  //   this.props.faculties[this.props.facultyName].forEach((speciality, index) => {    
-  //     if(speciality.name === specialityName)
-  //     specialityKey = index
-  //   })
-  //   return specialityKey
-  //  }
-
-
-  //   selectChangeHandler = (event) => { 
-  //   const enrollee = {...this.props.enrollee}
-  //   enrollee.facultyName = this.getFacultyNameKey( event.target.value)
-  //   enrollee.specialtyName =  0; 
-  //   const porpsFacultyName =   event.target.value
-  //   const poropsSpecialtyName = this.props.faculties[event.target.value][0]["name"]
-  //   this.props.updateFacultyData( porpsFacultyName,poropsSpecialtyName, enrollee.facultyName, enrollee.specialtyName) 
-  //   this.props.updateEnrolleeData(enrollee)  
-  //   this.updateExamsNames(poropsSpecialtyName,  porpsFacultyName)  
-  // }  
-  
-  //   selectSpecialtyHandler = (event) => {      
-  //   const enrollee = {...this.props.enrollee}
-  //   enrollee.specialtyName =   this.getSpecialityNameKey(event.target.value) 
-  //   this.props.updateEnrolleeData(enrollee)
-  //   this.props.updateSpecialityName(event.target.value,  enrollee.specialtyName  )  
-  //   this.updateExamsNames(event.target.value, this.props.facultyName)
-  // }
   
     changeEnrolleHandler = (value, controlName, controls) => {  
       const enrollee = this.props.enrollee
@@ -171,7 +115,10 @@ class CreateEnrolle extends React.Component {
   }
 
   componentDidMount() {     
-    this.props.fetchFacultys()
+    if(this.props.faculties === null) {        
+      this.props.fetchFacultys()
+    }
+    this.props.updateShoudUpdateEnrolleeStatus(true)
   }  
 
   render() { 
@@ -222,15 +169,18 @@ function mapStateToProps(state) {
     facultiesFromRespoense: state.faculties.facultiesFromRespoense,
     facultyNameKey: state.faculties.facultyNameKey,
     specialityNameKey: state.faculties.specialityNameKey,
+
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    fetchEnrollees: () => {dispatch(fetchFacultys())},
     fetchFacultys: () => {dispatch(fetchFacultys())},
     updateEnrolleeData: (enrollee) => {dispatch(updateEnrolleeData(enrollee))},
     updateFacultyData:(facultyName, specialtyName, facultyNameKey,specialityNameKey ) => dispatch(updateFacultyData(facultyName, specialtyName, facultyNameKey, specialityNameKey)),
-    updateSpecialityName:(specialtyName, specialtyNameKey) => dispatch(updateSpecialityName(specialtyName, specialtyNameKey))
+    updateSpecialityName:(specialtyName, specialtyNameKey) => dispatch(updateSpecialityName(specialtyName, specialtyNameKey)),
+    updateShoudUpdateEnrolleeStatus:(shouldUpdate) => dispatch(updateShoudUpdateEnrolleeStatus(shouldUpdate))
   }
 }
 

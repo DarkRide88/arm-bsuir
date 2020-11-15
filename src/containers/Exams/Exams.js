@@ -133,7 +133,7 @@ class Exams extends React.Component {
             <FetchedDataTable
               tableHeads = {[
                 {name: 'Имя', colspan: ''},{name: 'Факультет', colspan: ''},{name: '', colspan: ''},
-                {name: '', colspan: ''},{name: 'Оценки за экзамены', colspan: ''},{name: '', colspan: ''}
+                {name: '', colspan: ''},{name: 'Оценки за экзамены', colspan: '2'},{name: '', colspan: ''}
               ]}
             >
               {this.props.enrollees !== null ? this.renderExams(): null}

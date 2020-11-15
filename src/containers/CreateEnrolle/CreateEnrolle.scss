@@ -1,36 +1,42 @@
-
+@import '../../assets/scss/app.scss';
 .create-enrolle {
   display: flex;
   justify-content: center;
   width: 100%;
   flex-direction: column;
   margin-top: 1rem;
-
+  font-family: $defaultFont;
   select {
-    height: 2rem!important;
+    height: rem(34)!important;
     background-color: white!important;
     color: black;
-    appearance: none;;
+    appearance: none;
+    font-size: .8rem
   }
   div {
     margin-left: .2rem;
   }
-  form{
+  form{  
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;   
-    align-items: flex-start;
-
+    align-items: flex-start;      
     input, select,label {
-      max-width:30rem;  
-      font-size: .8rem;
+      // max-width:30rem;      
     }  
-    input {
-    
+    select {
+      font-size: .9rem;
+    }
+    input {    
+      width: 100%;
+      font-size: 1rem;
       &:active,  &:focus {
         background-color: #bfc2c27c;
         color: white;
       }
+    }
+    input[type="date"] {
+      font-size: .9rem;
     }
     hr{
       width: 100%;
@@ -39,34 +45,88 @@
 
   h2 {
     font-size: 1.2rem;
+    text-align: center;
   }
   &__item1 {
-    width: 30rem;
+    max-width: 30rem;
+    width: 100%;
+    height: 42.5rem;
+    // @media screen and (max-width: $smDesktopWidth) {      
+    //   height: 46rem    
+    // } 
   }
   &__item1,&__item2{
     padding: .9rem;
-    border: 1px solid #267373;
-    background-color:  #267373;
+    border: 1px solid $default-color;
+    background-color:  $default-color;
     border-radius: 3px;
     color: white;
     display:flex;
     flex-direction: column;  
+    margin-top: 1rem
   }
  
   &__item2{
     flex-grow: 0.7;
     display:flex;
     flex-direction: wrap;
-    flex-wrap: wrap;       
+    flex-wrap: wrap;   
+
     
   }
   &__certificate {
-    height: 32rem;
+    height: 38rem;
     display:flex;
     flex-wrap: wrap; 
-    flex-direction: column
+    flex-direction: column;
+ 
+    // @media screen and (max-width: $smDesktopWidth) {      
+    //   height: 41.5rem
+    // } 
+
   }
  
 }
 
 
+
+@media screen and (max-width: $hdDesktop) { 
+  .create-enrolle__certificate {
+    height: 38.8rem
+  }
+  .create-enrolle__item1 {
+    height: 43.5rem    
+  }
+}
+
+@media screen and (max-width: $smDesktopWidth) {      
+  .create-enrolle__certificate {
+    height: 41.5rem ;
+    
+  }
+  .create-enrolle__item1 {
+    height: 46rem    
+  } 
+  .create-enrolle__item2 {
+    // height: 46rem    
+  }
+} 
+
+@media screen and (max-width: $tableWidth) {
+  .create-enrolle__certificate {
+    height: 40.3rem;
+    max-width: 60rem;
+    width: 100%;     
+  }
+  .create-enrolle__item1 {
+    max-width:60rem;
+    height: 44.5rem;
+  }   
+  .create-enrolle__item2 {
+    flex-grow: 0.99;   
+    max-width: 60rem;
+    input {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@import './variables.scss';
+@import './mixins.scss';
+@import './reset.scss';
+@import './fonts.scss';
+html {
+  font-size: $mainFontSize;
+  color: $mainFontColor;
+  height: 100%;
+ 
+  @media screen and (max-width: $wideDesktop) {
+    font-size: 14.5px;
+  }
+
+  @media screen and (max-width: $hdDesktop) {
+    font-size: 13px;
+  }
+
+  @media screen and (max-width: $smDesktopWidth) {
+    font-size: 12px;
+  }
+  @media screen and (max-width: $tableWidth) {
+    font-size: 12px;
+    line-height: 14px;
+    vertical-align: middle;
+  }
+  @media screen and (max-width: $phoneWidth) {
+    font-size: 30px;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: $mainFontSize;
+  overflow-x:hidden;
+}

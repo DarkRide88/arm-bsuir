@@ -1,10 +1,10 @@
+@import '../../assets/scss/app.scss';
 .faculty {
   margin: 0 auto;
   text-align: center;
   margin: 0 auto;
   margin-top: 1rem; 
-  width: 60rem;
-  
+  max-width: 60rem;  
   text-align: center;
 
   hr {
@@ -17,27 +17,30 @@
   }
   input {
    width: 100%;
+   height: rem(33);
+   font-size: rem(14);
   }
   input:nth-child(1) {
     padding: 20px;
     border: 1px solid green;
   }
+  input
   form {    
     margin: 0 auto;
     position: relative;
   }
-
+  input[type="date"] {
+    height: rem(33);
+  }
   button {    
     font-size: .6rem;
     font-style: normal;
     margin: 0;;
-    height: 2.2rem;
-   
+    height: 2.2rem;   
   }
 }
 
-.facultyName {
-  
+.facultyName {  
   input {
     padding: 1rem;
     margin-bottom: 1rem;
@@ -48,18 +51,16 @@
 .specialities {
   display: flex;
   flex-wrap: wrap;
-  width: 1000px;
+  max-width: rem(1000);
   input {   
-    max-width: 400px;
-    width: 400px;
+    max-width: 100%;  
   }
-
 }
+
 .schedule-input {
-  font-size: .8rem;
- 
-  input {
-    width: 200px!important;
+  font-size: .8rem; 
+  input {    
+    width: rem(200);
     &:invalid {
       color: red;
     }
@@ -69,5 +70,5 @@
 }
 
 .speciality-container {
-  max-width: 400px;
+  max-width: rem(400); 
 }

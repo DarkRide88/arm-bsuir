@@ -11,6 +11,7 @@ import Faculties from './components/Faculties/Faculties'
 import FacultyList from './containers/FacultyList/FacultyList';
 import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';
 import Facuclty from './containers/Faculty/Faculty'
+
 function App() {
   return (
     <Layout>

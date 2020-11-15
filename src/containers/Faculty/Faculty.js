@@ -27,7 +27,7 @@ const specialityDefault = [
 class Faculty extends React.Component {
 
   changeFacultyNameInEnrollees = () => {  
-    let enrollees = {... this.props.enrollees}
+    let enrollees = {...this.props.enrollees}
     Object.values(enrollees).forEach(enrollee => {
       if(enrollee.facultyName === this.props.prevFacultyName) {     
         enrollee.facultyName = this.props.facultyNameControl[0].value

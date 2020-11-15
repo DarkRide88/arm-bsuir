@@ -1,3 +1,5 @@
+@import '../../assets/scss/app.scss';
+
 .schedule-table {
   max-width: 100%;
   table {    
@@ -17,7 +19,7 @@
       padding: 1rem;        
     }
     tbody tr {
-      background-color: rgba(187, 187, 187, 0.397);
+      background-color: $primary-color;
     }
     tbody tr:hover {
       box-shadow: -9px 10px 17px -8px rgba(0, 0, 0, 0.767);

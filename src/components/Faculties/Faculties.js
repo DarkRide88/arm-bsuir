@@ -4,7 +4,7 @@ import {renderLinks} from '../../form/links'
 
 
 const links = [
-  {to: '/add-new-faculty', label: 'Добавить новый факультет', exact:true},
+  {to: '/add-new-faculty', label: 'Добавить  факультет', exact:true},
   {to: '/faculty-list', label: 'Список факультетов', exact:true},
 ]
 

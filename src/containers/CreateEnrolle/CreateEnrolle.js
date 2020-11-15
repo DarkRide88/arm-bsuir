@@ -12,7 +12,8 @@ import Loader from '../../components/UI/Loader/Loader'
 import { connect } from 'react-redux'
 import { checkIsFormValid, fetchFacultys, updateFacultyData, updateSpecialityName } from '../../store/actions/faculties'
 import { updateEnrolleeData, updateShoudUpdateEnrolleeStatus } from '../../store/actions/enrollees'
-import {selectChangeHandler,selectSpecialtyHandler,updateExamsNames } from '../../utils/enrollees'
+import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/enrollees'
+
 class CreateEnrolle extends React.Component {
 
   state = {
@@ -131,12 +132,14 @@ class CreateEnrolle extends React.Component {
            <div className={styles['create-enrolle']}>     
                 <form onSubmit={this.submitHandler}> 
                   <div className={styles['create-enrolle__item1']}>
-                  <h2>Данные абитуриента:</h2>           
+                  <h2>Данные абитуриента:</h2>  
+                  <hr/>         
                     {renderControls(this.state.formControls.enrollerControls, this.changeEnrolleHandler)}                    
                     {this.renderFacultyList()}                       
                   </div>  
                   <div  className={styles['create-enrolle__item2']}>         
                     <h2>Аттестат:</h2>
+                    <hr/>
                     <div className={styles['create-enrolle__certificate']}>
                     {renderControls(this.state.formControls.subjectsControls, this.changeCertificate)}</div>   
                   </div>

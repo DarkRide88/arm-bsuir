@@ -485,6 +485,7 @@ module.exports = function(webpackEnv) {
                   modules: {
                     getLocalIdent: getCSSModuleLocalIdent,
                   },
+               
                 },
                 'sass-loader'
               ),

@@ -1,13 +1,13 @@
+@import '../../../assets/scss/app.scss';
 .button {
   display: inline-block;
-  padding: 10px 20px;
- 
+  padding: 10px 20px; 
   border: 1px solid #ccc;
   color: white;
   margin-right: 1rem;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: .7rem;
+  font-size: .85rem;
   cursor: pointer;
   &:focus {
     outline: none;
@@ -23,9 +23,9 @@
 }
 
 .success {
-  background: #267373;
+  background: $default-color;
   &:hover {
-    background: #1d6b6b;
+    background: $default-color-hover;
   }
 }
 
@@ -45,7 +45,7 @@
   background: none;
   border: none;
   font-size: .8rem;
-  color: #267373;
+  color: $default-color;
   &:hover {
     color: rgb(212, 85, 85);   
   }

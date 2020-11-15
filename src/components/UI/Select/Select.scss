@@ -6,8 +6,9 @@
     font-weight: bold;
     display: block;
     transition: box-shadow .3s; 
+
   }
-  select {
+  select {  
     display: block;
     box-sizing: border-box;
     border: 1px solid #bebebe;
@@ -19,7 +20,7 @@
     box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
     transition: border-color .3s;
     font-family: sans-serif;
-    font-size: .9rem;
+    font-size: 1.2rem;
     padding-left: .1rem;  
     transition: border-color .3s;
     background-color: rgba(187, 187, 187, 0.199);;

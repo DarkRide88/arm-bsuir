@@ -1,11 +1,11 @@
+@import '../../assets/scss/app.scss';
 .enrolle-list { 
   margin: 0 auto;
   width: 100%;
   justify-content: center;
-  max-width: 70rem;
-  h1 {
-    color: green;
-  }  
+  max-width: 90rem;
+  font-size: 1.2rem;
+  padding: 1rem;
   tbody {
     width: 100%;
   }
@@ -24,8 +24,9 @@
       }
     }
   }
-  
+
   a {
+    font-size: 1.2rem;
     text-decoration: none;
     color: black;
     &i:hover {

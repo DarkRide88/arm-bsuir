@@ -72,6 +72,7 @@ class Schedule extends React.Component{
           </Auxillary>             
         )        
       }   
+      return true
     })
     return schedule
   }

@@ -1,6 +1,8 @@
+@import '../../assets/scss/app.scss';
 .nav {
-  background-color: #267373;
+  background-color: $default-color ;
   display: flex;
+
   ul {
     list-style: none;
     margin:0 auto;
@@ -9,14 +11,11 @@
     padding: 0;
     max-width: 100rem;
     width: 60rem;
-    
-
   }
-  li {
-  
-    height: 3rem;
+  li {  
+    height: 4rem;
     padding: {
-      top: 1.5rem; 
+      top: 1.2rem; 
       left: .2rem;
       right: .2rem;
     };   
@@ -28,35 +27,39 @@
       position: absolute;
     }    
   }
-
-  a{
+    a{
     text-decoration: none;
     color: white;
     position: relative;
+    font-size: 1.2rem;
+    font-family:  $defaultFont;
+    font-weight: 100;
     div {
       width: 0%;
       transition: width .3s;
-      top: 2.6rem;
+      top: 2.4rem;
     }
-    &:hover, &:active {
-     
-    
+    @media screen and (max-width: $hdDesktop) {
+      top: -.2rem;
     }
-  }
-  
+    @media screen and (max-width: $smDesktopWidth) {
+      top: -.35rem;
+    }
+    @media screen and (max-width: $tableWidth) {
+      top: -.1rem;
+    }
+  }  
 }
+
 .active {
   color: red;
   position: relative;
-
   div {
-
     border-bottom: 6px solid #c5c7c9!important ;
     width: 100%!important;
     position: absolute!important;
     left:0;
     bottom:0;
-  } 
-
- 
+  }  
 }
+

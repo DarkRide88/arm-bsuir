@@ -68,7 +68,7 @@ class Results extends React.Component {
   render() {
     return (
       <div className={styles.results}>    
-      {this.props.loading === false &&  this.props.faculties !== null && this.props.faculties !== undefined  ?
+      {this.props.faculties !== null && this.props.faculties !== undefined  ?
       <Auxillary>    
      
         {this.props.faculties === null ? null : 

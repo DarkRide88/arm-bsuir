@@ -1,4 +1,4 @@
-import { FETCH_FACULTYS_ERROR, FETCH_FACULTYS_LINKS, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_DATA, UPDATE_SPECIALITY_NAME , FETCH_FACULTY_SUCCESS, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, CHECK_IS_FROM_VALID, DELETE_FACULTY_SUCCESS, GET_PREV_FACULTY_NAME, UPDATE_SHOUD_UPDATE_FACULTYS_STATUS} from "./actionTypes"
+import { FETCH_FACULTYS_ERROR, FETCH_FACULTYS_START, FETCH_FACULTYS_SUCCESS, HIDE_POPUP_FACULTY, SHOW_POPUP_FACULTY, UPDATE_FACULTY_DATA, UPDATE_SPECIALITY_NAME , FETCH_FACULTY_SUCCESS, UPDATE_FACULTY_FROM_CONTROLS, UPDATE_FACULTY_NAME_CONTROL, UPDATE_SPECIALITIES, UPDATE_SPECIALITIES_CONTROLS, CHECK_IS_FROM_VALID, GET_PREV_FACULTY_NAME, UPDATE_SHOUD_UPDATE_FACULTYS_STATUS} from "./actionTypes"
 import {createFormControls} from '../../utils/formControlsUtils'
 
 import axios from '../../axios/axios-arm'
@@ -42,12 +42,12 @@ const specialityDefault = [
     export function deleteFaculty (faculties,facultyToDelteId ) {
       return async dispatch => {        
         dispatch(hidePopUpFaculty())
-        let facultiesWithoutDeleted =  Object.fromEntries(Object.entries(faculties).filter((faculty, index) => {  
-          if(faculty[0] !== facultyToDelteId) {          
-            return  faculty[0]
-          } 
-          return null
-        }))
+        // let facultiesWithoutDeleted =  Object.fromEntries(Object.entries(faculties).filter((faculty, index) => {  
+        //   if(faculty[0] !== facultyToDelteId) {          
+        //     return  faculty[0]
+        //   } 
+        //   return null
+        // }))
         await firebase.database().ref('facultys').child(facultyToDelteId).remove();      
         dispatch(fetchFacultys())
       }
@@ -98,6 +98,7 @@ const specialityDefault = [
               control.value = speciality[specialityName]  
               arr1.push(control)              
             }           
+            return 1
           })             
          })
          let numberOfPlace = arr1.pop()      
@@ -161,13 +162,6 @@ const specialityDefault = [
         faculty,
       }
     }
-
-    export function deleteFacultySucceess(facultiesWithoutDeleted) {    
-      return {
-        type:DELETE_FACULTY_SUCCESS,
-        facultiesFromRespoense:facultiesWithoutDeleted
-      }
-    }  
 
     export function updateSpecialityName (specialtyName,specialityNameKey) {
       return {

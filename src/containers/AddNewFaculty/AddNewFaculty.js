@@ -20,11 +20,9 @@ const speciality = [
   ['Время консультации','text','exam2ConsTime'],['Время сдачи','text','exam2ExamTime'],
   ['Экзамен 3','text','exam3'], ['Дата консультации','date','exam3ConsDate'],['Дата сдачи','date','exam3ExamDate'],
   ['Время консультации','text','exam3ConsTime'],['Время сдачи','text','exam3ExamTime'],
-] 
- 
+]  
 
 class AddNewFaculty extends React.Component {
-
   state = {
     isFacultyNameEmpty:true,
     isSpecialityEmpty:true,
@@ -40,39 +38,41 @@ class AddNewFaculty extends React.Component {
     event.preventDefault()  
   }
 
-  onChangeFacultyHandler = (value, control) => { 
+  onChangeFacultyHandler = (inputValue, changedInput) => { 
     let flag = true 
-    if(value !== '') {
+    if(inputValue !== '') {
       flag = false
     }   
+    console.log(inputValue)
     let controll = this.state.controls.faculty[0]
+    console.log(controll)
     controll.touched = true
-    controll.value = value
-    controll.valid = validate(control.value, control.validation)
-    let newFacultyName = value
+    controll.value = inputValue
+    controll.valid = validate(changedInput.value, changedInput.validation)
+    let newFacultyName = inputValue
     this.setState({
       facultyName: newFacultyName,
       isFacultyNameEmpty:flag
     })   
   }
 
-  onChangeSpecialityHandler = (value,index, controlName, control, controlIndex) => { 
-
+  onChangeSpecialityHandler = (inputValue, specialityIndex, controlName, controls, controlIndex) => { 
     let specialities = this.state.specialities 
     let speciality    
-    let controll = this.state.controls.specialities[index][controlIndex]    
+    console.log(inputValue, specialityIndex, controlName, controls,controlIndex )
+    let controll = this.state.controls.specialities[specialityIndex][controlIndex]    
     controll.touched = true
-    controll.value = value
-    controll.valid = validate(value, control[index].validation)
-    if(specialities[index]){
-       speciality = specialities[index]           
+    controll.value = inputValue
+    controll.valid = validate(inputValue, controls[specialityIndex].validation)
+    if(specialities[specialityIndex]){
+       speciality = specialities[specialityIndex]           
     } 
     else {
-      specialities[index] = {}      
-       speciality = specialities[index]  
+      specialities[specialityIndex] = {}      
+       speciality = specialities[specialityIndex]  
     }
-    speciality[controlName] = value
-    specialities[index] = speciality
+    speciality[controlName] = inputValue
+    specialities[specialityIndex] = speciality
     this.setState({
       specialities,
     }) 
@@ -128,7 +128,6 @@ class AddNewFaculty extends React.Component {
     })   
   }
 
-
   addFacultyToBase = async (event) => {    
     let faculty = {}   
     faculty[this.state.facultyName] = this.state.specialities   
@@ -145,19 +144,17 @@ class AddNewFaculty extends React.Component {
     return (
       <div className={styles['add-new-faculty']}>           
         <form onSubmit={this.submitHandler}> 
-             <div className={styles['facultyName']}>        
-                { renderFacultyNameField(this.state.controls.faculty[0] , this.onChangeFacultyHandler)}
-             </div>            
-            
-             <div className={styles['specialities']}>
-                 {this.renderSpecialities(this.onChangeHandler)}
-             </div>
-           
+          <div className={styles['facultyName']}>        
+            { renderFacultyNameField(this.state.controls.faculty[0] , this.onChangeFacultyHandler)}
+          </div>   
+          <div className={styles['specialities']}>
+            {this.renderSpecialities(this.onChangeHandler)}
+          </div>           
           <hr/>
           <Button 
-              type="success"
-              onClick={this.addSpecialityHandler}
-              disabled={this.state.isFormValid === false}
+            type="success"
+            onClick={this.addSpecialityHandler}
+            disabled={this.state.isFormValid === false}
           >
             Добавить специальность
           </Button>
@@ -168,23 +165,25 @@ class AddNewFaculty extends React.Component {
               disabled={this.props.isFormValid === false}
             >
               Добавить факультет в базу
-           </Button>       
-            </NavLink>
-
+            </Button>       
+          </NavLink>
         </form>
       </div>
     )
   }
 }
+
 function mapStateToProps(state) {
   return {
     isFormValid: state.faculties.isFormValid
   }
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     checkIsFormValid: (isFormValid) => dispatch(checkIsFormValid(isFormValid)),
     updateShoudUpdateFacultiesStatus: (shouldUpdate) => dispatch(updateShoudUpdateFacultiesStatus(shouldUpdate))
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(AddNewFaculty)

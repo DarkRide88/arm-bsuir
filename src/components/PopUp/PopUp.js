@@ -20,13 +20,11 @@ class PopUp extends React.Component {
           >
             Нет
           </Button>
-          </div>
-   
+        </div>   
       </div>
     )
    
   }
-}
-
+} 
 
 export default PopUp

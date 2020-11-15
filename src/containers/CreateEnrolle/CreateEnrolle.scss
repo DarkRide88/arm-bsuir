@@ -20,10 +20,7 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;   
-    align-items: flex-start;      
-    input, select,label {
-      // max-width:30rem;      
-    }  
+    align-items: flex-start;  
     select {
       font-size: .9rem;
     }
@@ -42,7 +39,6 @@
       width: 100%;
     }     
   }
-
   h2 {
     font-size: 1.2rem;
     text-align: center;
@@ -51,9 +47,6 @@
     max-width: 30rem;
     width: 100%;
     height: 42.5rem;
-    // @media screen and (max-width: $smDesktopWidth) {      
-    //   height: 46rem    
-    // } 
   }
   &__item1,&__item2{
     padding: .9rem;
@@ -64,14 +57,12 @@
     display:flex;
     flex-direction: column;  
     margin-top: 1rem
-  }
- 
+  } 
   &__item2{
     flex-grow: 0.7;
     display:flex;
     flex-direction: wrap;
     flex-wrap: wrap;   
-
     
   }
   &__certificate {
@@ -79,17 +70,8 @@
     display:flex;
     flex-wrap: wrap; 
     flex-direction: column;
- 
-    // @media screen and (max-width: $smDesktopWidth) {      
-    //   height: 41.5rem
-    // } 
-
-  }
- 
+  } 
 }
-
-
-
 @media screen and (max-width: $hdDesktop) { 
   .create-enrolle__certificate {
     height: 38.8rem
@@ -98,7 +80,6 @@
     height: 43.5rem    
   }
 }
-
 @media screen and (max-width: $smDesktopWidth) {      
   .create-enrolle__certificate {
     height: 41.5rem ;
@@ -107,11 +88,7 @@
   .create-enrolle__item1 {
     height: 46rem    
   } 
-  .create-enrolle__item2 {
-    // height: 46rem    
-  }
 } 
-
 @media screen and (max-width: $tableWidth) {
   .create-enrolle__certificate {
     height: 40.3rem;

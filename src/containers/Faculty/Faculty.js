@@ -23,7 +23,6 @@ const specialityDefault = [
   ['Время консультации','text','exam3ConsTime'],['Время сдачи','text','exam3ExamTime'],
 ] 
 
-
 class Faculty extends React.Component {
 
   changeFacultyNameInEnrollees = () => {  
@@ -35,7 +34,6 @@ class Faculty extends React.Component {
     })    
     this.props.updateEnrollees(enrollees)  
   }
-
 
   renderSpecialities = () => { 
     const controll = this.props.specialitiesControls; 
@@ -50,19 +48,19 @@ class Faculty extends React.Component {
                 }
                 return(
                   <Auxillary key={i}>                  
-                      <Input
-                        maxlength={control.maxlength}
-                        type={control.type}
-                        label={control.label}
-                        value={control.value}
-                        valid={control.valid}
-                        shouldValidate={!!control.validation}
-                        touched={control.touched}
-                        errorMessage={control.errorMessage}
-                        onChange={(event) => {this.onChangeSpecialityHandler(event.target.value, index, control.name, controls, i)}}   
-                        placeholder={control.placeholder}   
-                        className={styles[className]}
-                      />           
+                    <Input
+                      maxlength={control.maxlength}
+                      type={control.type}
+                      label={control.label}
+                      value={control.value}
+                      valid={control.valid}
+                      shouldValidate={!!control.validation}
+                      touched={control.touched}
+                      errorMessage={control.errorMessage}
+                      onChange={(event) => {this.onChangeSpecialityHandler(event.target.value, index, control.name, controls, i)}}   
+                      placeholder={control.placeholder}   
+                      className={styles[className]}
+                    />           
                   </Auxillary>
                 )
               })            
@@ -90,10 +88,8 @@ class Faculty extends React.Component {
     this.props.updateSpecialities(specialities)
     this.props.updateSpecialitiesControls(specialitiesControls)
     let IsValid = validateForm(specialitiesControls)
-    this.props.checkIsFormValid(IsValid)
-  
+    this.props.checkIsFormValid(IsValid)  
   }
-
 
   renderFacultyNameField = () => {       
     let control = this.props.facultyNameControl[0]
@@ -114,7 +110,6 @@ class Faculty extends React.Component {
     )
   }  
 
-
   onChangeFacultyHandler = (value, control) => {      
     let flag = false 
     if(value !== '') {
@@ -127,7 +122,6 @@ class Faculty extends React.Component {
     this.props.updatefacultyNameControl(facultyNameControll)       
     this.props.checkIsFormValid(flag) 
   }
-
 
   addSpecialityHandler = () => {
     let specialitiesControls = [...this.props.specialitiesControls] 
@@ -157,41 +151,38 @@ class Faculty extends React.Component {
     this.props.history.push('/faculty-list');
   }
 
-
   render() {
     return (
       <div className={styles['faculty']}>
-        {this.props.faculty !== null && this.props.facultyNameControl !==null  && this.props.specialitiesControls !== null?     
-          <Auxillary>
-          <form onSubmit={this.submitHandler}> 
-            <div className={styles['facultyName']}>
-               
+        {
+          this.props.faculty !== null && this.props.facultyNameControl !==null  && this.props.specialitiesControls !== null?     
+            <Auxillary>
+              <form onSubmit={this.submitHandler}> 
+                <div className={styles['facultyName']}>                  
                   {renderFacultyNameField(this.props.facultyNameControl[0],this.onChangeFacultyHandler)}
-              </div>            
-              
-              <div className={styles['specialities']}>
+                </div>                              
+                <div className={styles['specialities']}>
                   {this.renderSpecialities() }
-              </div>
-            
-            <hr/>
-            <Button 
-                type="success"
-                onClick={this.addSpecialityHandler}              
-            >
-              Добавить специальность
-            </Button>
-            <NavLink to='/'>
-              <Button
-                type="success"
-                onClick={this.updateFacultyInDatabase}
-                disabled={this.props.isFormValid === false}
-              >
-                Сохранить изменения
-            </Button>       
-              </NavLink>
-          </form>       
-          </Auxillary>   
-        : <Loader/>
+                </div>                
+                <hr/>
+                <Button 
+                  type="success"
+                  onClick={this.addSpecialityHandler}              
+                >
+                  Добавить специальность
+                </Button>
+                <NavLink to='/'>
+                  <Button
+                    type="success"
+                    onClick={this.updateFacultyInDatabase}
+                    disabled={this.props.isFormValid === false}
+                  >
+                    Сохранить изменения
+                  </Button>       
+                </NavLink>
+              </form>       
+            </Auxillary>   
+          :<Loader/>
         }
       </div>
     )

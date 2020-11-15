@@ -10,8 +10,8 @@ import { connect } from 'react-redux'
 import { fetchEnrollees, findEnrollee, updateEnrollees } from '../../store/actions/enrollees'
 import {getFacultyNameFromKey} from '../../utils/facultiesHandlers'
 import { fetchFacultys } from '../../store/actions/faculties'
-class Exams extends React.Component {
 
+class Exams extends React.Component {
   onChange =  async (value, controlName, examName) => {   
     const enrollees = {...this.props.enrollees } 
     enrollees[controlName].exams[examName].mark = value   
@@ -25,7 +25,6 @@ class Exams extends React.Component {
     let avgMark = 0
     let marksCount = 1
     let avgStudMark = 0
-
     Object.values(enrollee.exams).forEach(exam =>{   
       avgMark += +exam.mark  
       marksCount += 1
@@ -47,66 +46,65 @@ class Exams extends React.Component {
       })
       avgMark = Math.round(avgMark/marksCount *10)/10    
       this.getAvgMarkExam(avgMark, enrollee[1], enrollee[0])
-    })
-    
+    })    
   }
 
   updateIsUreadyToResult = () => {
     let obj = {}
     Object.entries(this.props.enrollees).forEach(enrollee => {          
-         obj = Object.entries(enrollee[1].exams).filter(exam => {      
-          if(exam[1].mark !== '' && +exam[1].mark>= 4){               
-           return exam
-          }
-         return null
-        })       
-        if(obj.length === 3) {
-          const enrollees = {...this.props.enrollees } 
-          enrollees[enrollee[0]].readyToResults = true
-          this.props.updateEnrollees(enrollees)
-        } else {
-          const enrollees = {...this.props.enrollees } 
-          enrollees[enrollee[0]].readyToResults = false
-          this.props.updateEnrollees(enrollees)
-        
-        }
+      obj = Object.entries(enrollee[1].exams).filter(exam => {      
+        if(exam[1].mark !== '' && +exam[1].mark>= 4){               
+        return exam
+      }
+      return null
+    })       
+    if(obj.length === 3) {
+      const enrollees = {...this.props.enrollees } 
+      enrollees[enrollee[0]].readyToResults = true
+      this.props.updateEnrollees(enrollees)
+    } else {
+      const enrollees = {...this.props.enrollees } 
+      enrollees[enrollee[0]].readyToResults = false
+      this.props.updateEnrollees(enrollees)        
+    }
     });
   }
 
-  renderExams = () => {  
-    
+  renderExams = () => {      
     return Object.entries(this.props.enrollees).map((enrolle, index) => {     
-       return(
-        <tr  key={index}>
+      return(
+        <tr key={index}>
           <td>{enrolle[1].name}</td>
           <td>{getFacultyNameFromKey(enrolle[1].facultyName,this.props.facultiesFromRespoense)}</td>
           <td>{`${enrolle[1].exams.exam1.name}:`}</td>
           <td>
-          <Input 
-            label = 'exam1'
-            value = {enrolle[1].exams.exam1.mark}
-            maxLength = '1'
-            onChange = {(event) => {this.onChange(event.target.value,enrolle[0],'exam1')}}
-          /></td>
+            <Input 
+              label = 'exam1'
+              value = {enrolle[1].exams.exam1.mark}
+              maxLength = '1'
+              onChange = {(event) => {this.onChange(event.target.value,enrolle[0],'exam1')}}
+            />
+          </td>
           <td>{`${enrolle[1].exams.exam2.name}:`}</td>
           <td>
-          <Input 
-          
-            label = 'exam2'
-            value = {enrolle[1].exams.exam2.mark}
-            maxLength = '1'
-            onChange = {(event) => {this.onChange(event.target.value,enrolle[0],'exam2')}}
-          /></td> 
+            <Input           
+              label = 'exam2'
+              value = {enrolle[1].exams.exam2.mark}
+              maxLength = '1'
+              onChange = {(event) => {this.onChange(event.target.value,enrolle[0],'exam2')}}
+            />
+          </td> 
           <td>{`${enrolle[1].exams.exam3.name}:`}</td>
           <td>
-          <Input 
-            label = 'exam3'
-            value = {enrolle[1].exams.exam3.mark}
-            maxLength = '1'
-            onChange = {(event) => {this.onChange(event.target.value,enrolle[0],'exam3')}}
-          /></td>  
+            <Input 
+              label = 'exam3'
+              value = {enrolle[1].exams.exam3.mark}
+              maxLength = '1'
+              onChange = {(event) => {this.onChange(event.target.value,enrolle[0],'exam3')}}
+            />
+          </td>  
         </tr>
-       )    
+      )    
     })   
   }
 
@@ -123,29 +121,27 @@ class Exams extends React.Component {
   render() {
     return(     
       <div className={styles.exams}>
-        {this.props.enrollees !== null && this.props.facultiesFromRespoense !== null ?
-          <Auxillary>
-            <Search            
-              type='search'
-              placeholder='Найти абитуриента'  
-              onChange={(event) => {this.props.findEnrollee(event, this.props.enrollees) }}
-            />
-            <FetchedDataTable
-              tableHeads = {[
-                {name: 'Имя', colspan: ''},{name: 'Факультет', colspan: ''},{name: '', colspan: ''},
-                {name: '', colspan: ''},{name: 'Оценки за экзамены', colspan: '2'},{name: '', colspan: ''}
-              ]}
-            >
+        { this.props.enrollees !== null && this.props.facultiesFromRespoense !== null ?
+            <Auxillary>
+              <Search            
+                type='search'
+                placeholder='Найти абитуриента'  
+                onChange={(event) => {this.props.findEnrollee(event, this.props.enrollees) }}
+              />
+              <FetchedDataTable
+                tableHeads = {[
+                  {name: 'Имя', colspan: ''},{name: 'Факультет', colspan: ''},{name: '', colspan: ''},
+                  {name: '', colspan: ''},{name: 'Оценки за экзамены', colspan: '2'},{name: '', colspan: ''}
+                ]}
+              >
               {this.props.enrollees !== null ? this.renderExams(): null}
-            </FetchedDataTable>  
-          </Auxillary>
-          
+              </FetchedDataTable>  
+            </Auxillary>          
         : <Loader/>}      
       </div>
     )
   }
 }
-
 
 function mapStateToProps(state) {
   return {

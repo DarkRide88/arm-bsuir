@@ -15,23 +15,21 @@ export function selectSpecialtyHandler(event, props){
   props.updateSpecialityName(specialtyName) 
 }  
 
-
 export function renderFacultyNameField (facultyControl, handler) {  
   let control = facultyControl   
   return (
     <Input
-    maxlength={control.maxlength}
-    type={control.type}
-    label={control.label}
-    value={control.value}
-    valid={control.valid}
-    shouldValidate={!!control.validation}
-    touched={control.touched}
-    placeholder={control.placeholder}
-    errorMessage={control.errorMessage}
-    onChange={event => handler(event.target.value, event.target)}
-    
-  />
+      maxlength={control.maxlength}
+      type={control.type}
+      label={control.label}
+      value={control.value}
+      valid={control.valid}
+      shouldValidate={!!control.validation}
+      touched={control.touched}
+      placeholder={control.placeholder}
+      errorMessage={control.errorMessage}
+      onChange={event => handler(event.target.value, event.target)}    
+    />
   )
 }
 

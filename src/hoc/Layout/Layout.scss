@@ -1,17 +1,14 @@
 @import '../../assets/scss/app.scss';
 .layout {
-
   display: flex;
   flex-direction: column;
 }
-
 .main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
 }
-
 a {
   font-size: rem(16); 
 }

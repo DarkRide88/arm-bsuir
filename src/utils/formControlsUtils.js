@@ -3,10 +3,6 @@ import {createControl} from '../form/formFramework'
 import Auxillary from '../hoc/Auxiliary/Auxiliary'
 import Input from '../components/UI/Input/Input'
 
-
-
-
-
 export const createFormControls = (controlNames) =>{   
   let form = controlNames.map(control => {   
    return createControl({
@@ -23,21 +19,20 @@ export const createFormControls = (controlNames) =>{
 
 export function  renderControls (controls, handler) { 
   const controll = [...controls]; 
-
   return controll.map((control,index) => {     
     return(
       <Auxillary key={index}>
         <Input
-        maxlength={control.maxlength}
-        type={control.type}
-        label={control.label}
-        value={control.value}
-        valid={control.valid}
-        shouldValidate={!!control.validation}
-        touched={control.touched}
-        errorMessage={control.errorMessage}
-        onChange={event => handler(event.target.value, index, controll, control)}
-      />
+          maxlength={control.maxlength}
+          type={control.type}
+          label={control.label}
+          value={control.value}
+          valid={control.valid}
+          shouldValidate={!!control.validation}
+          touched={control.touched}
+          errorMessage={control.errorMessage}
+          onChange={event => handler(event.target.value, index, controll, control)}
+        />
      </Auxillary>
     )
   }) 

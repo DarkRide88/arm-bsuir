@@ -13,8 +13,6 @@ const links = [
 
 class Navigation extends React.Component {
 
-
-
  renderLinks(links) {
   return links.map((link,index) => {
     return (
@@ -27,24 +25,21 @@ class Navigation extends React.Component {
       >
         {link.label}
         <div></div>
-      </NavLink>
-     
+      </NavLink>     
       </li>
     )
   })
 }
+
   render () {
     return (
       <nav className={styles['nav']}>
         <ul>
-          { this.renderLinks(links) }
-          
+          { this.renderLinks(links) }          
         </ul>
       </nav>
-    )
-   
+    )   
   }
 }
-
 
 export default Navigation

@@ -1,24 +1,21 @@
-export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, specialityNameKey, props)  {    
-
+export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, specialityNameKey, props)  { 
   props.faculties[facultyName].forEach(faculty => {        
-  if(faculty.name=== speaciality){       
-    let enrollee = {...props.enrollee}      
-    enrollee.facultyName = facultyNameKey
-    enrollee.specialtyName = specialityNameKey
-    enrollee.readyToResults = false
-    enrollee.exams = {
-      exam1: {name:faculty['exam1'],mark: ''},
-      exam2: {name:faculty['exam2'],mark: ''},
-      exam3: {name:faculty['exam3'],mark: ''}
-    }     
-    console.log(enrollee.facultyName)
-    props.updateEnrolleeData(enrollee)
-    console.log(enrollee.facultyName)
-  }
-})  
+    if(faculty.name=== speaciality){       
+      let enrollee = {...props.enrollee}      
+      enrollee.facultyName = facultyNameKey
+      enrollee.specialtyName = specialityNameKey
+      enrollee.readyToResults = false
+      enrollee.exams = {
+        exam1: {name:faculty['exam1'],mark: ''},
+        exam2: {name:faculty['exam2'],mark: ''},
+        exam3: {name:faculty['exam3'],mark: ''}
+      }         
+      props.updateEnrolleeData(enrollee)     
+    }
+  })  
 }
 
-export function getFacultyNameKey  (facultyName, props)  {
+export function getFacultyNameKey  (facultyName, props) {
   let FacultyKey 
   Object.entries(props.facultiesFromRespoense).forEach(faculty => {   
     if(Object.keys(faculty[1])[0] === facultyName) {
@@ -28,14 +25,14 @@ export function getFacultyNameKey  (facultyName, props)  {
   return FacultyKey
  }
 
- export function getSpecialityNameKey  (specialityName, props)  {
+export function getSpecialityNameKey  (specialityName, props)  {
   let specialityKey 
   props.faculties[props.facultyName].forEach((speciality, index) => {    
     if(speciality.name === specialityName)
     specialityKey = index
   })
   return specialityKey
- }
+}
 
 export function selectChangeHandler (event, props) { 
   const enrollee = {...props.enrollee}

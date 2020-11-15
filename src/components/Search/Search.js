@@ -1,8 +1,6 @@
 import React from 'react'
 import styles from './Search.scss'
 
-
-
 const Search = props => {
   const inputType = props.type || 'text'
   const classes = [styles.search]

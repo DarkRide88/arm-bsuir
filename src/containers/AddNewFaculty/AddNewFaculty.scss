@@ -8,8 +8,7 @@
     width: 500px;
   }
   div {
-    margin: 0 auto;
-    
+    margin: 0 auto;    
     text-align: left;
   }
   input {
@@ -23,22 +22,18 @@
     margin: 0 auto;
     position: relative;
   }
-
   button {    
     font-size: .7rem;
     font-style: normal;
     margin: 0;;
-    height: 2.2rem;
-   
+    height: 2.2rem;   
   }
 }
-
 .facultyName {  
   input {
     padding: 1rem;     
   }
 }
-
 .specialities {
   display: flex;
   flex-wrap: wrap;
@@ -48,10 +43,8 @@
     width: 400px;
   }
 }
-
 .schedule-input {
-  font-size: .85rem;
- 
+  font-size: .85rem; 
   input {
     width: 200px!important;
     &:invalid {
@@ -61,7 +54,6 @@
   display: inline-block;
   margin-right: 1rem;
 }
-
 .speciality-container {
   max-width: 400px;
 }

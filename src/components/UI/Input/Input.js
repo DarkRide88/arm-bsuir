@@ -16,18 +16,14 @@ const Input = props => {
   return (
     <div className={classes.join(' ') }>
       <label htmlFor={htmlFor} >{props.label}</label>
-      <input
-        
+      <input        
         maxLength={props.maxlength}
         type={inputType}
         id={htmlFor}
         value={props.value}
         onChange={props.onChange}
-        placeholder={props.placeholder}
-   
-       
+        placeholder={props.placeholder}       
       />
-
       {
         isInvalid(props)
           ? <span className={styles['error-message']}>{props.errorMessage || 'Введите верное значение'}</span>

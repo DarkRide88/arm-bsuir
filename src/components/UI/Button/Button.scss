@@ -21,25 +21,19 @@
     cursor:not-allowed
   }
 }
-
 .success {
   background: $default-color;
   &:hover {
     background: $default-color-hover;
   }
 }
-
 .error {
-  background: rgba(250, 87, 108, 1);
-  
+  background: rgba(250, 87, 108, 1);  
 }
-
-
 .primary {
   background: #2884f6;
   color: #fff;
 }
-
 .delete {
   padding: 10px;
   background: none;
@@ -49,7 +43,6 @@
   &:hover {
     color: rgb(212, 85, 85);   
   }
-
 }
 
 

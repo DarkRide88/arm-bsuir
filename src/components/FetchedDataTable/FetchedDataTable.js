@@ -4,7 +4,6 @@ import styles from './FetchedDataTable.scss'
 class FetchedDataTable extends React.Component {
 
   renderTableRows = () => {
-
     return this.props.tableHeads.map((head,index) => {     
       return (
         <th key={index} colSpan={head.colspan}>{head.name}</th>
@@ -16,9 +15,9 @@ class FetchedDataTable extends React.Component {
       <div className={styles['schedule-table']}>
         <table >
           <thead>
-              <tr>
-              {this.renderTableRows()}              
-              </tr>
+            <tr>
+            {this.renderTableRows()}              
+            </tr>
           </thead>        
           <tbody>
             {this.props.children}

@@ -56,30 +56,7 @@ class Enrollee extends React.Component {
     this.props.checkIsFormValid(IsValid)
     this.props.updateEnrolleFormcontrols(this.props.enrollerControls, formControls )
     this.props.updateEnrolleeData(enrollee)
-
-
-
-
   }
-
-  updateEnroller = async (event) =>{
-    event.preventDefault()  
-    this.props.resetEnrollee()
-    await firebase.database().ref('enrolls').child(this.props.match.params.id).set(this.props.enrollee);
-    this.props.history.push('/');
-  }
-
-
-  async componentDidMount() {    
-    this.props.checkIsFormValid(true)
-    this.props.resetEnrollee()
-    if(this.props.faculties === null) {   
-      this.props.fetchFacultys()
-    }
-    this.props.updateShoudUpdateEnrolleeStatus(true)
-    this.props.fetchEnrollee(this.props.match.params.id)
-  }
-
 
   getFacultyDataFromKeys() {
     let facultyName
@@ -109,28 +86,41 @@ class Enrollee extends React.Component {
       />    
       )
   }
+  updateEnroller = async (event) =>{
+    event.preventDefault()  
+    this.props.resetEnrollee()
+    await firebase.database().ref('enrolls').child(this.props.match.params.id).set(this.props.enrollee);
+    this.props.history.push('/');
+  }
 
-
+  async componentDidMount() {    
+    this.props.checkIsFormValid(true)
+    this.props.resetEnrollee()
+    if(this.props.faculties === null) {   
+      this.props.fetchFacultys()
+    }
+    this.props.updateShoudUpdateEnrolleeStatus(true)
+    this.props.fetchEnrollee(this.props.match.params.id)
+  }
 
   render() {  
     return (      
-      <Auxillary>  
-    
-      {this.props.faculties === null || this.props.enrollee.address === '' || this.props.enrollerControls === null
-      ? <Loader/> 
-      : <div className={styles['create-enrolle']}>   
-      {
-        this.props.enrollerControls !== null ?
-          <form onSubmit={this.submitHandler}> 
+      <Auxillary>      
+        { this.props.faculties === null || this.props.enrollee.address === '' || this.props.enrollerControls === null
+          ? <Loader/> 
+          : <div className={styles['create-enrolle']}>   
+          {
+            this.props.enrollerControls !== null ?
+              <form onSubmit={this.submitHandler}> 
                 <div className={styles['create-enrolle__item1']}>
-                <h2>Данные абитуриента:</h2>            
-                {renderControls(this.props.enrollerControls, this.changeEnrolleHandler)} 
-                {this.renderFacultyList()}
+                  <h2>Данные абитуриента:</h2>            
+                  {renderControls(this.props.enrollerControls, this.changeEnrolleHandler)} 
+                  {this.renderFacultyList()}
                 </div>  
                 <div  className={styles['create-enrolle__item2']}>         
                   <h2>Аттестат</h2>
                   <div className={styles['create-enrolle__certificate']}>
-                  {renderControls(this.props.subjectsControls, this.changeCertificate)}
+                    {renderControls(this.props.subjectsControls, this.changeCertificate)}
                   </div>   
                 </div>            
                 <hr/>            
@@ -140,12 +130,12 @@ class Enrollee extends React.Component {
                   disabled={this.props.isFormValid === false}
                 >
                   Сохранить изменения
-              </Button>
+                </Button>
               </form>
-        : <Loader/> }
-            
-        </div>
-      } 
+            : <Loader/> 
+          }            
+            </div>
+        } 
       </Auxillary>      
     )
   }

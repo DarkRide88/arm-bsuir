@@ -4,8 +4,6 @@ import Navigation from '../../components/Navigation/Navigation'
 
 class Layout extends Component {
 
-
-
   render() {
     return (
       <div className={styles.layout}> 
@@ -18,7 +16,5 @@ class Layout extends Component {
     )
   }
 }
-
-
 
 export default Layout

@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { fetchEnrollees, findEnrollee, updateEnrollees } from '../../store/actions/enrollees'
 import {getFacultyNameFromKey} from '../../utils/facultiesHandlers'
 import { fetchFacultys } from '../../store/actions/faculties'
+import { NavLink } from 'react-router-dom'
 
 class Exams extends React.Component {
   onChange =  async (value, controlName, examName) => {   
@@ -119,9 +120,17 @@ class Exams extends React.Component {
   }
 
   render() {
+    if(this.props.enrollees === null && this.props.loading === false ) {
+      console.log('thete')
+      return(
+        <h1 style={{textAlign:'center', marginTop:'1rem'}}>
+          Зарегистрируйте хотябы одного абитуриента на <NavLink to="/create-enrolle"> данной </NavLink> странице
+        </h1>
+      )
+    }
     return(     
       <div className={styles.exams}>
-        { this.props.enrollees !== null && this.props.facultiesFromRespoense !== null ?
+        { this.props.enrollees !== null && this.props.facultiesFromRespoense !== null && this.props.loading === false ?
             <Auxillary>
               <Search            
                 type='search'
@@ -148,6 +157,7 @@ function mapStateToProps(state) {
     enrollees: state.enrollees.enrollees,
     searchInputValue: state.enrollees.searchInputValue,
     facultiesFromRespoense: state.faculties.facultiesFromRespoense,
+    loading: state.enrollees.loading,
   }
 }
 

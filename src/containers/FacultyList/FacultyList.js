@@ -52,7 +52,7 @@ componentDidMount() {
                 <PopUp         
                   onAccept = {() => {this.props.deleteFaculty(this.props.facultiesFromRespoense, this.props.facultyToDeleteId)}}  
                   onRefuse = {this.props.hidePopUpFaculty}
-                  text = 'Вы уверены, что хотите удалить данного абитуриента?'  
+                  text = 'Вы уверены, что хотите удалить данный факультет?'  
                 />
               } 
               <FetchedDataTable tableHeads = {[{name:'Название факультета', colspan:'2'},]}>

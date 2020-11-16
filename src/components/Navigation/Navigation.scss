@@ -36,16 +36,16 @@
     div {
       width: 0%;
       transition: width .3s;
-      top: 2.4rem;
+      top: 2.3rem;
     }
     @media screen and (max-width: $hdDesktop) {
-      top: -.2rem;
+      top: -.1rem;
     }
     @media screen and (max-width: $smDesktopWidth) {
-      top: -.35rem;
+      top: -.22rem;
     }
     @media screen and (max-width: $tableWidth) {
-      top: -.1rem;
+      top: .03rem;
     }
   }  
 }

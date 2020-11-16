@@ -48,7 +48,7 @@ class EnrolleList extends React.Component {
 
   render() {  
     let content = 
-      this.props.enrollees !== null  && this.props.facultiesFromRespoense!== null?
+      this.props.enrollees !== null  && this.props.facultiesFromRespoense!== null &&   this.props.enrollees !== {}?
         <Auxillary>     
           <Search            
            type='search'
@@ -67,12 +67,15 @@ class EnrolleList extends React.Component {
             </FetchedDataTable>
            }   
         </Auxillary>
-     : <h1 style={{textAlign:'center'}}>
-        Нет зарегистрированных абитуриентов
-       </h1>         
+     :  <h1 style={{textAlign:'center', marginTop:'1rem'}}>
+          Зарегистрируйте хотябы одного абитуриента
+        </h1>         
    
-    if (!this.props.enrollees) {
-      content = <Loader/>
+    if (this.props.enrollees === null || this.props.enrollees === {}) {
+      content = 
+      <h1 style={{textAlign:'center', marginTop:'1rem'}}>
+        Зарегистрируйте хотябы одного абитуриента на <NavLink to="/create-enrolle"> данной </NavLink> странице
+      </h1>  
     }
 
     return (

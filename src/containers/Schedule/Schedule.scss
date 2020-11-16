@@ -4,6 +4,9 @@
   margin: 0 auto;
   text-align: center;
   padding: .5rem;
+  select {
+    font-size: 1.1rem;
+  }
   div:nth-child(n+3) {
     display: inline-block;
     margin-right: 2rem;

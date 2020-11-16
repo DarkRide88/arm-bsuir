@@ -1,7 +1,10 @@
 @import '../../assets/scss/app.scss';
 .layout {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
+  h1 {
+    font-size: 1.2rem;
+  }
 }
 .main {
   display: flex;
@@ -11,4 +14,10 @@
 }
 a {
   font-size: rem(16); 
+}
+a { 
+  color: $default-color;
+  &:active, &:visited, &:hover,  &:link {
+    color: $default-color;
+  }
 }

@@ -47,7 +47,8 @@ class CreateEnrolle extends React.Component {
     enrollee.phoneNumber=controls[3].value
     enrollee.passNumber=controls[4].value
     this.props.updateEnrolleeData(enrollee)  
-    let IsValid = validateEnrollee(this.state.formControls.enrollerControls)
+    let controlsToValidate = Object.assign({...this.state.formControls.enrollerControls},{...this.state.formControls.subjectsControls})
+    let IsValid = validateEnrollee(controlsToValidate)
     this.props.checkIsFormValid(IsValid)
     this.setState({                
     })
@@ -75,9 +76,11 @@ class CreateEnrolle extends React.Component {
     enrollee.сertificate.historyBel = controls[11].value
     enrollee.сertificate.historyWorld = controls[12].value
     enrollee.сertificate.computerScince = controls[13].value
-    let IsValid = validateEnrollee(this.state.formControls.subjectsControls)
-    this.props.checkIsFormValid(IsValid)
     this.props.updateEnrolleeData(enrollee)
+    let controlsToValidate = Object.assign({...this.state.formControls.enrollerControls},{...this.state.formControls.subjectsControls})
+    let IsValid = validateEnrollee(controlsToValidate)
+    this.props.checkIsFormValid(IsValid)
+
     this.setState({           
     })
   } 
@@ -120,6 +123,13 @@ class CreateEnrolle extends React.Component {
   }  
 
   render() { 
+    if(this.props.faculties === null && this.props.loading === false ) {
+      return(
+        <h1 style={{textAlign:'center', marginTop:'1rem'}}>
+          Создайте хотябы один факультет на <NavLink to="/add-new-faculty"> данной </NavLink> странице
+        </h1>  
+      )
+    }
     return (         
       <Auxillary>   
         { this.props.faculties !== null && this.props.faculties !== 'undefined'  ?                  
@@ -159,7 +169,7 @@ class CreateEnrolle extends React.Component {
 function mapStateToProps(state) {
   return {
     faculties: state.faculties.faculties,
-    loading: state.enrollees.loading,
+    loading: state.faculties.loading,
     enrollee: state.enrollees.enrollee,
     specialtyName: state.faculties.specialtyName,
     facultyName:  state.faculties.facultyName,

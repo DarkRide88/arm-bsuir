@@ -11,12 +11,14 @@ import Faculties from './components/Faculties/Faculties'
 import FacultyList from './containers/FacultyList/FacultyList';
 import AddNewFaculty from './containers/AddNewFaculty/AddNewFaculty';
 import Facuclty from './containers/Faculty/Faculty'
+import Auth from './containers/Auth/Auth';
 
 function App() {
   return (
     <Layout>
       <Switch>          
           <Route path='/' exact component={EnrolleList}/> 
+          <Route path='/auth' exact component={Auth}/> 
           <Route path='/create-enrolle' exact component={CreateEnrolle}/>
           <Route path='/schedule' exact component={Schedule}/>
           <Route path='/exams' exact component={Exams}/>

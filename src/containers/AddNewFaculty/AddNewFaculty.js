@@ -11,15 +11,15 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { checkIsFormValid, updateShoudUpdateFacultiesStatus } from '../../store/actions/faculties'
 
-const faculty = [['', 'text','facultyName', '', 'Введите название факультета']]
+const faculty = [{label:'', type:'text',name:'facultyName', maxlength:'', placeholder:'Введите название факультета'}]
 const speciality = [
-  ['Название специальности','text','name'],['Количество мест','text','numberOfPlaces'],
-  ['Экзамен 1','text','exam1'], ['Дата консультации','date','exam1ConsDate'],['Дата сдачи','date','exam1ExamDate'],
-  ['Время консультации','text','exam1ConsTime'],['Время сдачи','text','exam1ExamTime'],
-  ['Экзамен 2','text','exam2'],  ['Дата консультации','date','exam2ConsDate'],['Дата сдачи','date','exam2ExamDate'],
-  ['Время консультации','text','exam2ConsTime'],['Время сдачи','text','exam2ExamTime'],
-  ['Экзамен 3','text','exam3'], ['Дата консультации','date','exam3ConsDate'],['Дата сдачи','date','exam3ExamDate'],
-  ['Время консультации','text','exam3ConsTime'],['Время сдачи','text','exam3ExamTime'],
+  {label:'Название специальности', type:'text',name:'name'},{label:'Количество мест',type:'text',name:'numberOfPlaces'},
+  {label:'Экзамен 1',type:'text',name:'exam1'}, {label:'Дата консультации',type:'date',name:'exam1ConsDate'},{label:'Дата сдачи',type:'date',name:'exam1ExamDate'},
+  {label:'Время консультации',type:'text',name:'exam1ConsTime'},{label:'Время сдачи',type:'text',name:'exam1ExamTime'},
+  {label:'Экзамен 2',type:'text',name:'exam2'},  {label:'Дата консультации',type:'date',name:'exam2ConsDate'},{label:'Дата сдачи',type:'date',name:'exam2ExamDate'},
+  {label:'Время консультации',type:'text',name:'exam2ConsTime'},{label:'Время сдачи',type:'text',name:'exam2ExamTime'},
+  {label:'Экзамен 3',type:'text',name:'exam3'}, {label:'Дата консультации',type:'date',name:'exam3ConsDate'},{label:'Дата сдачи',type:'date',name:'exam3ExamDate'},
+  {label:'Время консультации',type:'text',name:'exam3ConsTime'},{label:'Время сдачи',type:'text',name:'exam3ExamTime'},
 ]  
 
 class AddNewFaculty extends React.Component {

@@ -9,7 +9,7 @@ import {createEnrolleeFormControls} from '../../utils/formControlsUtils'
         dispatch(fetchEnrolleesStart())            
         try {
           const response = await axios.get('/enrolls.json') 
-          const enrollees   = response.data              
+          const enrollees   = response.data                    
           dispatch(fetchEnrolleesSuccess(enrollees))
         }  catch (e) {
           dispatch(fetchEnrolleesErrors(e))

@@ -3,51 +3,75 @@ import {createControl} from '../form/formFramework'
 import Auxillary from '../hoc/Auxiliary/Auxiliary'
 import Input from '../components/UI/Input/Input'
 
-export const createFormControls = (controlNames) =>{   
-  let form = controlNames.map(control => {   
+export const createFormControls = (controlNames, validation) =>{   
+  let form = controlNames.map(control => {      
    return createControl({
-      maxlength:control[3],
-      name: control[2],
-      label: control[0],
-      type: control[1],
-      errorMessage: 'Заполните поле',
-      placeholder: control[4],      
-    }, {required: true})    
+      maxlength:control.maxlength,
+      name: control.name,
+      label: control.label,
+      type: control.type,
+      errorMessage: control.errorMessage | 'Заполните поле',
+      placeholder: control.placeholder,      
+    }, {...validation, required: true})    
   })  
   return form 
 }
 
-export function  renderControls (controls, handler) { 
-  const controll = [...controls]; 
-  return controll.map((control,index) => {     
-    return(
-      <Auxillary key={index}>
-        <Input
-          maxlength={control.maxlength}
-          type={control.type}
-          label={control.label}
-          value={control.value}
-          valid={control.valid}
-          shouldValidate={!!control.validation}
-          touched={control.touched}
-          errorMessage={control.errorMessage}
-          onChange={event => handler(event.target.value, index, controll, control)}
-        />
-     </Auxillary>
+export function  renderControls (controls, handler) {
+
+  return Object.values(controls).map((targetControl,i) => {    
+     
+    return (
+    <Auxillary key={i}>
+      <Input
+        maxlength={targetControl.maxlength}
+        type={targetControl.type}
+        label={targetControl.label}
+        value={targetControl.value}
+        valid={targetControl.valid}
+        placeholder={targetControl.placeholder}
+        shouldValidate={!!targetControl.validation}
+        touched={targetControl.touched}
+        errorMessage={targetControl.errorMessage}
+        onChange={event => handler(event.target.value, targetControl ,i)}
+      />
+   </Auxillary>
     )
-  }) 
+  })
+
+  
+
+  // const gettedControls = [...controls]; 
+  // return gettedControls.map((targetControl,index) => {     
+  //   return(
+  //     <Auxillary key={index}>
+  //       <Input
+  //         maxlength={targetControl.maxlength}
+  //         type={targetControl.type}
+  //         label={targetControl.label}
+  //         value={targetControl.value}
+  //         valid={targetControl.valid}
+  //         placeholder={targetControl.placeholder}
+  //         shouldValidate={!!targetControl.validation}
+  //         touched={targetControl.touched}
+  //         errorMessage={targetControl.errorMessage}
+  //         onChange={event => handler(event.target.value, index, gettedControls, targetControl)}
+  //       />
+  //    </Auxillary>
+  //   )
+  // }) 
 }
 
 export function  createEnrolleeFormControls (controlsName,state) { 
   let form =[]
   controlsName.forEach(control => {   
    Object.entries(state).forEach(enrollee => {     
-      if(enrollee[0] === control[2] ){    
+      if(enrollee[0] === control.name ){    
         form.push({
-          maxlength:control[3],
-          name: control[2],
-          label: control[0],
-          type: control[1],
+          maxlength:control.maxlength,
+          name: control.name,
+          label: control.label,
+          type: control.type,
           value: enrollee[1],
           errorMessage: 'Неверные данные',         
           required: true,
@@ -58,5 +82,6 @@ export function  createEnrolleeFormControls (controlsName,state) {
       } 
     }) 
   })
+ 
   return form   
 }

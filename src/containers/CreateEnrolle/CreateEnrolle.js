@@ -14,6 +14,22 @@ import { checkIsFormValid, fetchFacultys, updateFacultyData, updateSpecialityNam
 import { updateEnrolleeData, updateShoudUpdateEnrolleeStatus } from '../../store/actions/enrollees'
 import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/enrollees'
 
+// For Test CreatEnrolle
+const names = ['Артем','Егор','Павел','Сергей','Никита','Максим','Олег','Степан','Иван','Роман','Алексей']
+const surnames = ['Иванов','Петров','Смирнов','Соболев','Добровольский','Фурс','Федоров','Семенов','Волков','Соловьев','Морозов']
+const addresses = ['Скрипникова', 'Победителей', 'Независимости', 'Шамякина','Одинцова','Кирова','Байкальская','Азовская','Академическая','Братская','Беды']
+const phoneNumbers = ['+375 44']
+
+
+function random(min, max) {  
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+}
+
+ 
+
+
+
 class CreateEnrolle extends React.Component {
 
   state = {
@@ -23,6 +39,58 @@ class CreateEnrolle extends React.Component {
       subjectsControls:[...createFormControls(certificateControlsData)],   
     },     
   }
+
+
+   testCreateEnrolle  ()  {  
+    const enrollee = this.props.enrollee
+ 
+    let enrollerControls = [...this.state.formControls.enrollerControls]
+  
+    let name = `${names[random(0,10)]}  ${surnames[random(0,10)]}`
+    enrollerControls[0].value = name
+    enrollee.name= name
+
+    let age = `2020-07-${random(15,31)}`
+    console.log(age)
+    enrollerControls[1].value = age
+    enrollee.age=age
+
+    let address = `${addresses[Math.random(1).toFixed(1) * 10]} ${Math.random(1).toFixed(2) * 100}`
+    enrollerControls[2].value = address
+    enrollee.address=address
+
+    let phoneNumber = `${phoneNumbers} ${Math.round(Math.random().toFixed(7)*1000000)}`
+    enrollerControls[3].value = phoneNumber
+    enrollee.phoneNumber= phoneNumber
+
+    let passNumber = Math.round(Math.random().toFixed(8)*100000000)
+    enrollerControls[4].value = passNumber
+    enrollee.passNumber= passNumber
+
+    this.props.updateEnrolleeData(enrollee)  
+  
+    this.props.checkIsFormValid(true)
+    this.setState({                
+    })
+  }
+  
+  testCreateCertificate  () { 
+    const enrollee = this.props.enrollee    
+    let subjectsControls = [...this.state.formControls.subjectsControls]
+
+    subjectsControls.map((mark) => {     
+        let randomMark = random(6,10) 
+        mark.value =  randomMark
+        enrollee.сertificate[mark.name]  =  randomMark
+        
+    })    
+    this.setState({         
+    })     
+    this.props.updateEnrolleeData(enrollee)
+
+  } 
+
+
 
   submitHandler = event => {
     event.preventDefault()  
@@ -122,6 +190,7 @@ class CreateEnrolle extends React.Component {
     this.props.updateShoudUpdateEnrolleeStatus(true)
   }  
 
+
   render() { 
     if(this.props.faculties === null && this.props.loading === false ) {
       return(
@@ -156,7 +225,14 @@ class CreateEnrolle extends React.Component {
                   >
                     Зарегистрировать
                   </Button>       
-                </NavLink>                  
+                </NavLink>                 
+                <Button
+                    type="success"
+                    onClick={() => { this.testCreateCertificate(this.state.formControls.subjectsControls);
+                                    this.testCreateEnrolle(this.state.formControls.subjectsControls)}}                   
+                  >
+                    Тестовое заполнение поля
+                  </Button>        
               </form>        
             </div>
           :<Loader/>  

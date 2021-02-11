@@ -36,12 +36,13 @@ class Faculty extends React.Component {
   }
 
   renderSpecialities = () => { 
-    const controll = this.props.specialitiesControls; 
+    const controll = this.props.specialitiesControls;       
     return controll.map((controls,index) => {     
       return (
         <div key={index} className={styles['speciality-container']}>
             {
-              controls.map((control,i) => {                
+              controls.map((control,i) => {     
+                  
                 let className 
                 if(control.name.length > 5 && control.name !== 'numberOfPlaces') {              
                   className = 'schedule-input'                  

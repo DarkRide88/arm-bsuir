@@ -15,43 +15,34 @@ import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/enrollees
 
 class Enrollee extends React.Component {
 
-  changeEnrolleHandler = (value, controlName, controls) => {  
-    const formControls = [...controls];   
-    formControls[controlName].touched = true
-    formControls[controlName].value = value   
-    formControls[controlName].valid = validate(value,   formControls[controlName].validation)
-    const enrollee = this.props.enrollee
-    enrollee.name=controls[0].value
-    enrollee.age=controls[1].value
-    enrollee.address=controls[2].value
-    enrollee.phoneNumber=controls[3].value
-    enrollee.passNumber=controls[4].value
+  changeEnrolleHandler = (value, targetControl, controlId) => {    
+    console.log() 
+    const formControls = [...this.props.enrollerControls];         
+    const control = formControls[controlId]   
+
+    control.touched = true
+    control.value = value   
+    control.valid = validate(value,   control.validation)
+    const enrollee = {...this.props.enrollee}
+    enrollee[targetControl.name]=targetControl.value
+    formControls[controlId] = control
     this.props.updateEnrolleeData(enrollee)
     this.props.updateEnrolleFormcontrols(formControls, this.props.subjectsControls)
     let IsValid = validateEnrollee(this.props.enrollerControls)
     this.props.checkIsFormValid(IsValid)
   }
 
-  changeCertificate = (value, controlName, controls) => { 
-    const formControls = [...controls]; 
-    formControls[controlName].touched = true
-    formControls[controlName].value = value    
-    formControls[controlName].valid = validate(value,   formControls[controlName].validation)
-    const enrollee = this.props.enrollee
-    enrollee.сertificate.math = controls[0].value
-    enrollee.сertificate.physics = controls[1].value
-    enrollee.сertificate.chemistry = controls[2].value
-    enrollee.сertificate.biology = controls[3].value
-    enrollee.сertificate.geography = controls[4].value
-    enrollee.сertificate.russianLang = controls[5].value
-    enrollee.сertificate.belLang = controls[6].value
-    enrollee.сertificate.belLitr = controls[7].value
-    enrollee.сertificate.russianLitr = controls[8].value
-    enrollee.сertificate.physicalEduc = controls[9].value
-    enrollee.сertificate.english = controls[10].value
-    enrollee.сertificate.historyBel = controls[11].value
-    enrollee.сertificate.historyWorld = controls[12].value
-    enrollee.сertificate.computerScince = controls[13].value
+  changeCertificate = (value, targetControl, controlId) => { 
+    const formControls = [...this.props.subjectsControls];         
+    const control = formControls[controlId] 
+
+    control.touched = true
+    control.value = value    
+    control.valid = validate(value,  control.validation)
+
+    const enrollee = {...this.props.enrollee} 
+    enrollee.сertificate[targetControl.name] = targetControl.value
+    formControls[controlId] = control
     let IsValid = validateEnrollee(this.props.subjectsControls)
     this.props.checkIsFormValid(IsValid)
     this.props.updateEnrolleFormcontrols(this.props.enrollerControls, formControls )
@@ -87,7 +78,7 @@ class Enrollee extends React.Component {
       )
   }
   updateEnroller = async (event) =>{
-    event.preventDefault()  
+    event.preventDefault()     
     this.props.resetEnrollee()
     await firebase.database().ref('enrolls').child(this.props.match.params.id).set(this.props.enrollee);
     this.props.history.push('/');

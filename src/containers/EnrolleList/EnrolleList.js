@@ -63,7 +63,7 @@ class EnrolleList extends React.Component {
               {name: 'Адрес', colspan: ''},
               {name: 'Факультет', colspan: ''}]}
             >
-              {this.renderEnrollers()}         
+              {this.renderEnrollers()}       
             </FetchedDataTable>
            }   
         </Auxillary>

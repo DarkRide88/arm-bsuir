@@ -2,7 +2,7 @@ export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, sp
   props.faculties[facultyName].forEach(faculty => {        
     if(faculty.name=== speaciality){       
       let enrollee = {...props.enrollee}      
-      enrollee.facultyName = facultyNameKey
+      enrollee.facultyName = facultyNameKey    
       enrollee.specialtyName = specialityNameKey
       enrollee.readyToResults = false
       enrollee.exams = {
@@ -10,6 +10,7 @@ export function updateEnrolleData  (speaciality, facultyName, facultyNameKey, sp
         exam2: {name:faculty['exam2'],mark: ''},
         exam3: {name:faculty['exam3'],mark: ''}
       }         
+      console.log(enrollee)
       props.updateEnrolleeData(enrollee)     
     }
   })  
@@ -35,11 +36,16 @@ export function getSpecialityNameKey  (specialityName, props)  {
 }
 
 export function selectChangeHandler (event, props) { 
+  
   const enrollee = {...props.enrollee}
   enrollee.facultyName = getFacultyNameKey( event.target.value, props)
+ 
   enrollee.specialtyName =  0; 
   const porpsFacultyName =   event.target.value
+  
   const poropsSpecialtyName = props.faculties[event.target.value][0]["name"]
+  console.log(porpsFacultyName)
+  console.log(poropsSpecialtyName)
   props.updateFacultyData( porpsFacultyName,poropsSpecialtyName, enrollee.facultyName, enrollee.specialtyName) 
   updateEnrolleData(poropsSpecialtyName,  porpsFacultyName,  enrollee.facultyName, enrollee.specialtyName,  props)  
 }  

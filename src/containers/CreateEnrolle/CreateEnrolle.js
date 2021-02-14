@@ -78,7 +78,7 @@ class CreateEnrolle extends React.Component {
     const enrollee = this.props.enrollee    
     let subjectsControls = [...this.state.formControls.subjectsControls]
 
-    subjectsControls.map((mark) => {     
+    subjectsControls.forEach((mark) => {     
         let randomMark = random(6,10) 
         mark.value =  randomMark
         enrollee.сertificate[mark.name]  =  randomMark

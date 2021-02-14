@@ -48,7 +48,7 @@ class Schedule extends React.Component{
               tableHeads= {[{name: 'Экзамен', colspan: '3'}] }
             >  
               <tr>
-                <td></td>
+                <td>Предмет</td>
                 <td>Дата</td>
                 <td>Время</td> 
               </tr>

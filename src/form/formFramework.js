@@ -7,17 +7,27 @@ export function createControl(config, validation) {
     value: '',
   }
 }
-
+ 
 export function validate(value, validation = null) {  
-  if (!validation) {
+  if (!validation) {   
     return true
   }
   let isValid = true
   if(validation.required) {  
+
     isValid = value.trim() !== '' && isValid      
   }   
+  if(validation.login) {
+   
+    if(value.length < 6){
+      console.log('val login')
+      isValid = false
+    }
+  }
   return isValid 
 }
+
+
 
 export function validateForm(controls) {
   let isValid = true   

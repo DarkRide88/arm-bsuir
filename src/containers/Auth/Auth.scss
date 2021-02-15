@@ -8,6 +8,65 @@
   width: 100%;  
   height: calc(100vh - 52px);
   overflow-y: hidden;
+
+ form {
+   background-color: white;
+   font-family: $defaultFont;
+
+  div{
+    display: flex;
+    flex-flow: row-reverse;
+  }
+
+   h1 {
+     color: $default-color;
+     margin-bottom: 2rem;
+   }  
+
+   button {
+    width: 100%;
+    height: 3.5rem; 
+
+    span {      
+    }
+  }
+
+  label {
+    position: absolute;
+    left: .9rem;
+    bottom: 3px;
+    font-size: 1.5rem;
+    transition: all .3s;
+  }
+
+
+    
+
+  input {
+   border: none;
+   background-color: white;
+   border-bottom: 2px solid $default-color;
+   font-size: 1.3rem;
+   position: relative;
+
+   &:hover {
+    border: none;
+    background-color: white;
+    border-bottom: 2px solid rgb(243, 17, 17);
+    box-shadow: none;
+   }
+  }
+  input::placeholder {
+    position: absolute;
+  }
+  input:focus::placeholder  {
+    color: $default-color;  
+    left: 1px;
+    top: 10px;
+  }
+ }
+
+
 }
 
 .Auth > div {
@@ -17,7 +76,6 @@
 }
 
 .Auth h1 {
-  // font-weight: bold;
   color: black;
   text-align: center;
   font-size: rem(25);
@@ -33,6 +91,3 @@
   box-shadow: -9px 10px 17px -8px rgba(0, 0, 0, 0.55);
 }
 
-button {
-  color: black;
-}

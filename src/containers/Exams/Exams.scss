@@ -30,7 +30,7 @@
       text-align: center;
     }
     tr:nth-child(2n) {
-      background-color: rgba(236, 235, 235, 0.418);
+      background-color:white;
     }
     input {
       font-size: 1rem;
@@ -40,6 +40,11 @@
       height: 1.5rem;
       margin-top: 0.2rem;
       vertical-align: middle;
+      background-color: white;
+      border: 1px solid #ff9f9f;
+      &:hover{
+        border: none;
+      }
     }
   }
 }

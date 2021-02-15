@@ -14,17 +14,25 @@
       user-select: none;  
       width: 100%;     
     }
+    th {
+      font-family: "Bebas-Light";
+      letter-spacing: 2px;
+    }
     td,th {
       padding: 1rem;        
     }
     tbody tr {
-      background-color: $primary-color;
+      background-color: #ff9f9f  ;
+      
     }
     tbody tr:hover {
-      box-shadow: -9px 10px 17px -8px rgba(0, 0, 0, 0.767);    
+      box-shadow: -9px 10px 17px -8px rgba(0, 0, 0, 0.767);   
+     
+    
     }  
     tbody tr:nth-child(2n) {
-      background-color: rgba(233, 225, 225, 0.075);     
+      background-color: rgba(233, 225, 225, 0.075);  
+     
     }
   }
 }

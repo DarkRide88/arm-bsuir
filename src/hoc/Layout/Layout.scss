@@ -1,4 +1,7 @@
 @import '../../assets/scss/app.scss';
+body {
+  background-color: white;
+}
 .layout {
   display: flex;
   flex-direction: column; 

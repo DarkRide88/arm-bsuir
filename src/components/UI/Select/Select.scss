@@ -1,9 +1,12 @@
+@import '../../../assets//scss/app.scss';
 .select {
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   label {
     margin:0 0 3px 0;
     padding: 0;
-    font-weight: bold;
+    // font-family: 'bebas-Bold';
+    font-weight: normal;
     display: block;
     transition: box-shadow .3s; 
 
@@ -16,23 +19,27 @@
     height: 2.8rem;
     width: 100%;
     outline: none; 
-    border: 2px solid rgba(220,220,220,1);  
+    border: 1px solid black;  
     box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
     transition: border-color .3s;
     font-family: sans-serif;
     font-size: 1.2rem;
     padding-left: .1rem;  
     transition: border-color .3s;
-    background-color: rgba(187, 187, 187, 0.199);;
+    background-color: white;
     &:focus{
       outline: none;
     }
     &:hover {
-      border-color: #26737398;
+      border-color: $default-color;
     }  
   }
   option {
-    background-color:rgb(255, 255, 255);
+    // background-color:#ff9f9f;
+    background: transparent;
     border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+
   }
 }

@@ -25,12 +25,11 @@ class App extends React.Component {
 
   render() {
     let routes = (
-      <Switch>          
-            
+      <Switch>                      
             <Route path='/auth' exact component={Auth}/>            
             <Route path='/schedule' exact component={Schedule}/>         
             <Route path='/results' exact component={Results}/>      
-            <Redirect to='/results' />
+            <Redirect to='/auth' />
       </Switch>
     )
     if(this.props.isAuthentificated) {

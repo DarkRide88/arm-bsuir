@@ -23,9 +23,9 @@
   a {
     font-size: 1.2rem;
     text-decoration: none;
-    color: $default-color;
+    color: black;
     &:active, &:visited, &:hover,  &:link {
-      color: $default-color;
+      color: black;
     }
     &i:hover {
       color: #17179b;

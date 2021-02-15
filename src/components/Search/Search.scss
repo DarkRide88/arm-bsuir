@@ -1,26 +1,27 @@
+@import '../../assets/scss/app.scss';
 .search {
   margin: 0 auto;
   padding: {
     top: 5px;
   }
   input {
-    border-radius: 2px;
-    border: 2px solid rgba(187, 187, 187, 0.801);
+    border-radius: 1px;
+    border-bottom: 1px solid black;
     width: 100%;
-    box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
+    // box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
     transition: border-color .3s;
-    background-color: #ECEFF1;
+    background-color: white;
     font-size: 1rem;
     &:focus{
       outline: none;
     }
     &:hover {
-      border-color: #26737398;;
+      border-color: $default-color-hover;
     }
   }   
   input[placeholder]{
     padding: 1rem;
-    color: gray;
+    color: #ff9f9f;
     font-family: Verdana;
     &:focus::-webkit-input-placeholder {
       opacity: 0; 

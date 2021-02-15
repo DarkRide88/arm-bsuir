@@ -10,3 +10,25 @@
   font-weight: 100;
   font-style: normal;
  }
+
+
+ @font-face {
+  font-family: Bebas-Bold; /* Имя шрифта */
+  src: url(../fonts/BebasNeue-Bold.ttf); /* Путь к файлу со шрифтом */
+  font-weight: 100;
+  font-style: normal;
+ }
+
+ @font-face {
+  font-family: Bebas-Regular; /* Имя шрифта */
+  src: url(../fonts/BebasNeue-Regular.ttf); /* Путь к файлу со шрифтом */
+  font-weight: 100;
+  font-style: normal;
+ }
+
+ @font-face {
+  font-family: Bebas-Light; /* Имя шрифта */
+  src: url(../fonts/BebasNeue-Light.ttf); /* Путь к файлу со шрифтом */
+  font-weight: 100;
+  font-style: normal;
+ }

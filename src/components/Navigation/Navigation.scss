@@ -1,6 +1,7 @@
 @import '../../assets/scss/app.scss';
 .nav {
-  background-color: $default-color ;
+  // background-color: $default-color ;
+  border-bottom: 1px solid black;
   display: flex;
   ul {
     list-style: none;
@@ -21,21 +22,27 @@
   }
   li:hover {
     div {
-      border-bottom: 6px solid #c5c7c9 ;
-      width: 100%;
+      // border-bottom: 1px solid black;
+      width: 120%!important;
       position: absolute;
+      left: -10%;
+      top:-60%!important;
+      height: 2rem;
+      background-color: $default-color;   
+    
     }    
   }
     a {
     text-decoration: none;
-    color: white;
+    color: black;
     position: relative;
-    font-size: 1.2rem;
-    font-family:  $defaultFont;
+    font-size: 1.2rem;    
+    font-family: $navigationFont;
     font-weight: 100;
+    z-index: 5;
     div {
       width: 0%;
-      transition: width .3s;
+      transition: width .5s;
       top: 2.3rem;
     }
     @media screen and (max-width: $hdDesktop) {
@@ -52,12 +59,15 @@
 
 .active { 
   position: relative;
+
   div {
-    border-bottom: 6px solid #c5c7c9!important ;
-    width: 100%!important;
+    height: 2rem;
+    background-color: $default-color;  
+    width: 120%!important;
     position: absolute!important;
-    left:0;
-    bottom:0;
+    left:-10%;
+    top:-60%!important;
+    z-index: -1;
   }  
 }
 

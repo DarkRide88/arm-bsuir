@@ -1,3 +1,4 @@
+@import '../../assets/scss/app.scss';
 .faculty {
   color: green;
   ul {
@@ -14,7 +15,9 @@
     padding: 40px;
     width: 26rem;
     max-width: 22rem;
-    background-color: rgb(209, 206, 206);
+    background-color: $default-color;
+  
+    
     transition: all .1s;
     transition: box-shadow .3s; 
     &:hover {
@@ -22,7 +25,8 @@
     }
   }
    a{
-    color: black;
+    color: white;
+    font-family: "bebas-Bold";
     text-decoration: none;
     font-size: 1.6rem;
     &:hover {

@@ -12,11 +12,13 @@ $phoneWidth              : 480px;
 $smPhoneWidth            : 320px;
 
 $defaultFont : "Subdex-Bold";
+$navigationFont: 'bebas-Bold';
 
 // Main color
-$default-color           : #267373;
-$primary-color           : rgba(187, 187, 187, 0.397);
-$default-color-hover     : #1d6b6b;
+// $default-color           : #267373;
+$default-color           : rgb(241, 115, 115);
+$primary-color           : #ff9292;
+$default-color-hover     : rgb(247, 149, 149);
 $danger-color            : #fc5c65;
 $warning-color           : #fed330;
 $light-color             : #999999;

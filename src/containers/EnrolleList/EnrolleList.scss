@@ -25,7 +25,7 @@
     text-decoration: none;
     color: black;
     &:active, &:visited, &:hover,  &:link {
-      color: black;
+      color: var(--default-text-color);
     }
     &i:hover {
       color: #17179b;

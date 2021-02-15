@@ -1,0 +1,47 @@
+@import '../../assets/scss/app.scss';
+.DarkenMode {
+  background-image: url(./icon.png);
+  background-size: 2rem 2rem;
+  height: 2rem;
+  width: 2rem;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: .8rem;
+ 
+    &:hover::before {
+      content: attr(data-title);
+      position: absolute;
+      color: var(--default-text-color);
+      bottom: -1.1rem;
+      width:8rem;
+      left: -15px;
+      font-size: .7rem;  
+    }
+}
+
+.toggle {
+  background-image: url(./icon_white.png)!important;
+  
+}
+
+.animToggle {
+  height: 4rem;
+  width: 4rem;
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  transition: all .9s;
+  z-index: -2;
+}
+
+.activeDarken {
+  transform: scale(100);
+  background-color: #3e3e44;
+}
+
+.activeWhite {
+  transform: scale(100);
+  background-color: white;
+}
+

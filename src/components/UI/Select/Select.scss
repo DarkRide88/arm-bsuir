@@ -4,11 +4,11 @@
   margin-top: 1rem;
   label {
     margin:0 0 3px 0;
-    padding: 0;
-    // font-family: 'bebas-Bold';
+    padding: 0;   
     font-weight: normal;
     display: block;
     transition: box-shadow .3s; 
+    color: var(--default-text-color);
 
   }
   select {  
@@ -34,12 +34,12 @@
       border-color: $default-color;
     }  
   }
-  option {
-    // background-color:#ff9f9f;
+  option {    
     background: transparent;
     border-radius: 2px;
     cursor: pointer;
-    text-decoration: none;
+    text-decoration: none; 
 
   }
 }
+

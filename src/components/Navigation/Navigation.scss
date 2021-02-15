@@ -1,8 +1,9 @@
 @import '../../assets/scss/app.scss';
 .nav {
   // background-color: $default-color ;
-  border-bottom: 1px solid black;
+  border-bottom:1px solid var(--main-nav-color);
   display: flex;
+  width: 100%;
   ul {
     list-style: none;
     margin:0 auto;
@@ -26,7 +27,7 @@
       width: 120%!important;
       position: absolute;
       left: -10%;
-      top:-60%!important;
+      top:-30%!important;
       height: 2rem;
       background-color: $default-color;   
     
@@ -34,7 +35,7 @@
   }
     a {
     text-decoration: none;
-    color: black;
+    color: var(--main-nav-color);
     position: relative;
     font-size: 1.2rem;    
     font-family: $navigationFont;
@@ -66,7 +67,7 @@
     width: 120%!important;
     position: absolute!important;
     left:-10%;
-    top:-60%!important;
+    top:-30%!important;
     z-index: -1;
   }  
 }

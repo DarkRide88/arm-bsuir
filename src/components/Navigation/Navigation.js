@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './Navigation.scss'
 import {NavLink} from 'react-router-dom'
 import { connect } from 'react-redux'
+import  DarkenMode  from '../DarkenMode/DarkenMode'
 
 
 
@@ -45,6 +46,7 @@ class Navigation extends React.Component {
         <ul>
           { this.renderLinks(links) }          
         </ul>
+        <DarkenMode></DarkenMode>
       </nav>
     )   
   }

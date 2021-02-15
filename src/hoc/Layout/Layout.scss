@@ -1,6 +1,6 @@
 @import '../../assets/scss/app.scss';
 body {
-  background-color: white;
+  background-color: var(--maing-bg-color)
 }
 .layout {
   display: flex;
@@ -19,8 +19,8 @@ a {
   font-size: rem(16); 
 }
 a { 
-  color: $default-color;
+  color: var(--main-nav-color);
   &:active, &:visited, &:hover,  &:link {
-    color: $default-color;
+    color: var(--default-color);
   }
 }

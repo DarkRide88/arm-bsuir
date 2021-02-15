@@ -9,6 +9,7 @@ const links = [
 ]
 
 const Faculties = () => {
+  document.title = 'Факультеты'
 return (
   <div className={styles['faculty']}>
       <ul>

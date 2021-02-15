@@ -133,6 +133,7 @@ class Faculty extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Факультет'
     this.props.updateShoudUpdateFacultiesStatus(true)
     this.props.fetchFaculty(this.props.match.params.id)
     this.props.fetchEnrollees()

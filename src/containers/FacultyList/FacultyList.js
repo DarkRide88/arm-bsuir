@@ -36,6 +36,7 @@ renderFacultyList () {
 }
 
 componentDidMount() {
+  document.title = 'Список факультетов'
   if(this.props.facultiesFromRespoense === null || this.props.shouldUpdateFaculties === true) {       
     this.props.fetchFacultys()
     this.props.updateShoudUpdateFacultiesStatus(false)

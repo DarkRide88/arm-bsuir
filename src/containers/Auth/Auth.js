@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import Button from '../../components/UI/Button/Button'
 import { renderControls} from '../../utils/formControlsUtils'
 import { createControl, validate } from '../../form/formFramework'
-// import * as firebase from 'firebase'
 import { connect } from 'react-redux'
 import { auth } from '../../store/actions/auth'
 import { Redirect } from 'react-router-dom'
@@ -18,16 +17,16 @@ class Auth extends Component {
         {   
           placeholder:'Логин',       
           name:'login',         
-          type:'text',
-          errorMessage:'Введите логин',                
+          type:'email',
+          errorMessage:'Некорректный email',                
         },
-        {required:true, login:true}),
+        {required:true, email:true}),
       password: createControl(
         {        
           placeholder:'Пароль',  
           name:'password',          
           type:'password',
-          errorMessage:'Введите пароль',             
+          errorMessage:'Пароль должен содержать минимум 5 символов',             
         }
       , {required:true, password:true})       
     }
@@ -82,30 +81,33 @@ class Auth extends Component {
       return renderControls(control, this.inputChangeHandler)
     })
   }
-
+  componentDidMount() {
+    document.title = 'Вход'
+  }
 
 
   render() {
     return(
       <div className={styles.Auth}>
         <div>
-          <h1>Авторизация</h1>
+         
           <form action="" onSubmit={this.submitHandler} className={styles.AuthForm}>         
+            <h1>Вход в АРМ</h1>
             {renderControls(this.state.formControls,this.inputChangeHandler)}                   
             <Button 
-              type="primary" 
+              type="signIn" 
               onClick={this.loginHangler}
               disabled={!this.state.isFormValid}
             >
-            Войти
+            <span>Войти</span>
             </Button>
-            <Button 
+            {/* <Button 
               type="primary" 
               onClick={this.registerHangler}
               disabled={!this.state.isFormValid}
             >
             Зарегистрироваться
-            </Button>
+            </Button> */}
           </form>
         </div>
       </div>

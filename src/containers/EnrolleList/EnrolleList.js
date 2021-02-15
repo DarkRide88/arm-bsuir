@@ -37,6 +37,7 @@ class EnrolleList extends React.Component {
   }
   
  componentDidMount() { 
+  document.title = 'Список абитуриентов'
     if(this.props.facultiesFromRespoense === null) {       
       this.props.fetchFacultys()
     }

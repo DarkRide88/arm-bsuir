@@ -85,6 +85,7 @@ class Enrollee extends React.Component {
   }
 
   async componentDidMount() {    
+    document.title = 'Абитуриент'
     this.props.checkIsFormValid(true)
     this.props.resetEnrollee()
     if(this.props.faculties === null) {   

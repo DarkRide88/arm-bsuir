@@ -10,6 +10,7 @@ import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/faculties
 class Schedule extends React.Component{
 
   async componentDidMount() { 
+    document.title = 'Расписание'
     if(this.props.faculties === null) {   
       this.props.fetchFacultys()
     }  

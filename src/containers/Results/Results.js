@@ -56,6 +56,7 @@ class Results extends React.Component {
  }
  
   componentDidMount(){
+    document.title = 'Результаты экзаменов'
      if(this.props.enrollees === null) {
       this.props.fetchEnrollees()
     }

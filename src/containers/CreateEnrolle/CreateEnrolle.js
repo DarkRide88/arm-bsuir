@@ -184,6 +184,7 @@ class CreateEnrolle extends React.Component {
   }
 
   componentDidMount() {     
+    document.title = 'Зарегистрировать'
     if(this.props.faculties === null) {        
       this.props.fetchFacultys()
     }
@@ -219,19 +220,20 @@ class CreateEnrolle extends React.Component {
                 <hr/>     
                 <NavLink to='/'>
                   <Button
-                    type="success"
+                    type="closing-button"
                     onClick={this.registerEnrollee}
                     disabled={this.props.isFormValid === false}
                   >
-                    Зарегистрировать
+                    <span>Зарегистрировать</span>
                   </Button>       
                 </NavLink>                 
                 <Button
-                    type="success"
+                    type="closing-button"
                     onClick={() => { this.testCreateCertificate(this.state.formControls.subjectsControls);
                                     this.testCreateEnrolle(this.state.formControls.subjectsControls)}}                   
-                  >
-                    Тестовое заполнение поля
+                  > 
+                    <span>Тестовое заполнение поля</span>
+                 
                   </Button>        
               </form>        
             </div>

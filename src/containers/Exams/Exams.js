@@ -110,6 +110,7 @@ class Exams extends React.Component {
   }
 
   async componentDidMount() {
+    document.title = 'Экзамены'
     if(this.props.enrollees === null) {
       this.props.fetchEnrollees()
     }

@@ -1,3 +1,4 @@
+import is from 'is_js'
 export function createControl(config, validation) {
   return {
     ...config,
@@ -14,16 +15,21 @@ export function validate(value, validation = null) {
   }
   let isValid = true
   if(validation.required) {  
-
     isValid = value.trim() !== '' && isValid      
   }   
-  if(validation.login) {
-   
-    if(value.length < 6){
-      console.log('val login')
+  if(validation.password) {
+    if(value.length < 5){    
       isValid = false
     }
   }
+  if(validation.email) {  
+    if(!is.email(value)){
+      isValid = false
+    }
+
+  }
+ 
+  console.log('result isvalid', isValid)
   return isValid 
 }
 

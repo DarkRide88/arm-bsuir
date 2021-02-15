@@ -10,8 +10,8 @@ class Layout extends Component {
       <div className={styles.layout}> 
         <Navigation
           isAuthentificated = {this.props.isAuthentificated}
-        >          
-        </Navigation>
+        >                  
+        </Navigation>        
         <main className={styles.main}>
           { this.props.children }
         </main>

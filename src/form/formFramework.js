@@ -28,8 +28,6 @@ export function validate(value, validation = null) {
     }
 
   }
- 
-  console.log('result isvalid', isValid)
   return isValid 
 }
 

@@ -14,7 +14,6 @@ import Facuclty from './containers/Faculty/Faculty'
 import Auth from './containers/Auth/Auth';
 import { connect } from 'react-redux';
 import Logout from './components/Logout/Logout';
-import { render } from '@testing-library/react';
 import { autoLogin } from './store/actions/auth';
 
 class App extends React.Component {

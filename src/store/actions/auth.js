@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {AUTH_SUCCESS, AUTH_LOGOUT} from './actionTypes'
+import {AUTH_SUCCESS, AUTH_LOGOUT, AUTH_FAILED} from './actionTypes'
 
 export function auth(email, password, isLogin) {
   return async dispatch => {
@@ -11,15 +11,27 @@ export function auth(email, password, isLogin) {
     if(isLogin) {
       url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAZZpOKmwiWcyMK9GjpODM4TwuSTQDDB9w'
     }
+    try {
       const {data} = await axios.post(url, authData)     
       const expirationDate = new Date(new Date().getTime() + data.expiresIn *1000)
-
+      console.log(data)
       localStorage.setItem('token', data.idToken)
       localStorage.setItem('userId', data.localId)
       localStorage.setItem('expirationDate', expirationDate)
       dispatch(authSuccess(data.idToken))
       dispatch(autoLogout(data.expiresIn))
+    } catch (e) {    
+      dispatch(authFailed(e))
+    } 
+     
       
+  }
+}
+
+export function authFailed(error) {
+  return {
+    type: AUTH_FAILED,
+    error
   }
 }
 

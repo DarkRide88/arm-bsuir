@@ -4,8 +4,7 @@ import Button from '../../components/UI/Button/Button'
 import { renderControls} from '../../utils/formControlsUtils'
 import { createControl, validate } from '../../form/formFramework'
 import { connect } from 'react-redux'
-import { auth } from '../../store/actions/auth'
-import { Redirect } from 'react-router-dom'
+import { auth, authFailed } from '../../store/actions/auth'
 
 
 class Auth extends Component {
@@ -54,6 +53,7 @@ class Auth extends Component {
   }
 
   inputChangeHandler = (value,targetControl) => {  
+    this.props.authFailed(null)
     const formControls = {...this.state.formControls}   
     const control = {...formControls[targetControl.name] }
 
@@ -81,7 +81,7 @@ class Auth extends Component {
       return renderControls(control, this.inputChangeHandler)
     })
   }
-  componentDidMount() {
+  componentDidMount() {  
     document.title = 'Вход'
   }
 
@@ -92,13 +92,14 @@ class Auth extends Component {
         <div>
          
           <form action="" onSubmit={this.submitHandler} className={styles.AuthForm}>         
-            <h1>Вход в АРМ</h1>
-            {renderControls(this.state.formControls,this.inputChangeHandler)}                   
+            <h1>Вход в АРМ</h1>         
+            {renderControls(this.state.formControls,this.inputChangeHandler)}    
+            {this.props.error != null ? <span className={styles.ErrorMessage}>Неверный логин или пароль</span> : null}               
             <Button 
               type="signIn" 
               onClick={this.loginHangler}
               disabled={!this.state.isFormValid}
-            >
+            >           
             <span>Войти</span>
             </Button>
             {/* <Button 
@@ -117,12 +118,13 @@ class Auth extends Component {
 
 function mapStateToProps(state) {
   return {
-
+    error: state.authReducer.error
   }
 }
 function mapDispatchToProps(dispatch) {
   return {
-    auth: (email,password,isLogin) => dispatch(auth(email, password, isLogin))
+    auth: (email,password,isLogin) => dispatch(auth(email, password, isLogin)),
+    authFailed: (error) => dispatch(authFailed(error))
   }
 }
 

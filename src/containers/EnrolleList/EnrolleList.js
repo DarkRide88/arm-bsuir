@@ -29,7 +29,7 @@ class EnrolleList extends React.Component {
             <td> {enroll[1].address}</td>
             <td>{getFacultyNameFromKey(enroll[1].facultyName,this.props.facultiesFromRespoense)}</td>
             <td>  <div><NavLink to={'/enrollee/' + enroll[0]}><i className={"fa fa-pencil fa-fw"}></i></NavLink></div></td>
-            <td><Button  onClick={()=> {this.props.showPopUp(enroll[0])}}  type="delete">X</Button></td>
+            <td><Button  onClick={()=> {this.props.showPopUp(enroll[0])}}  type="delete">X</Button><NavLink to={'/enrollee/' + enroll[0]}><div className={styles.pen}></div></NavLink></td>            
           </tr>
           )
       })
@@ -75,7 +75,7 @@ class EnrolleList extends React.Component {
     if (this.props.enrollees === null || this.props.enrollees === {}) {
       content = 
       <h1 style={{textAlign:'center', marginTop:'1rem'}}>
-        Зарегистрируйте хотябы одного абитуриента на <NavLink to="/create-enrolle"> данной </NavLink> странице
+        Зарегистрируйте хотябы одного абитуриента на <NavLink to="/create-enrolle" style={{color:'rgb(241, 115, 115)'}}> данной </NavLink> странице
       </h1>  
     }
 

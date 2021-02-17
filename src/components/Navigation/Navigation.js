@@ -27,16 +27,18 @@ class Navigation extends React.Component {
 }
 
   render () {
-    const links = [      
-      {to: '/schedule', label: 'Расписание', exact:true, className:styles['inactive'], activeClassName:styles['active']},     
-      {to: '/results', label: 'Результаты', exact:true, className:styles['inactive'], activeClassName:styles['active']},      
+    const links = [            
+      {to: '/results', label: 'Список зачисленных', exact:true, className:styles['inactive'], activeClassName:styles['active']},      
+      {to: '/schedule', label: 'Расписание', exact:true, className:styles['inactive'], activeClassName:styles['active']},    
     ]
     if(this.props.isAuthentificated) {    
-      links.push( {to: '/faculties', label: 'Факультеты', exact:true, className:styles['inactive'], activeClassName:styles['active']})
-      links.push({to: '/', label: 'Список абитуриентов', exact:true, className:styles['inactive'], activeClassName:styles['active']})
-      links.push( {to: '/create-enrolle', label: 'Зарегистрировать абитуриента', exact:true, className:styles['inactive'], activeClassName:styles['active']})
-      links.push({to: '/exams', label: 'Экзамены', exact:true, className:styles['inactive'], activeClassName:styles['active']})
-      links.push({to: '/logout', label: 'Выйти', exact:true, className:styles['inactive'], activeClassName:styles['active']})
+      links.unshift({to: '/', label: 'Список абитуриентов', exact:true, className:styles['inactive'], activeClassName:styles['active']})     
+      links.unshift({to: '/exams', label: 'Управление экзаменами', exact:true, className:styles['inactive'], activeClassName:styles['active']})
+      links.unshift( {to: '/create-enrolle', label: 'Зарегистрировать абитуриента', exact:true, className:styles['inactive'], activeClassName:styles['active']})
+      links.unshift( {to: '/faculties', label: 'Управление факультетами', exact:true, className:styles['inactive'], activeClassName:styles['active']})     
+
+      
+      links.push({to: '/logout', label: 'Выйти', exact:true, className:styles['inactive'], activeClassName:styles['active']})      
      
     } else {
       links.push({to: '/auth', label: 'Войти', exact:true, className:styles['inactive'], activeClassName:styles['active']})

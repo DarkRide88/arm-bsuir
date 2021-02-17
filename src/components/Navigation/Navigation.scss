@@ -1,6 +1,5 @@
 @import '../../assets/scss/app.scss';
-.nav {
-  // background-color: $default-color ;
+.nav { 
   border-bottom:1px solid var(--main-nav-color);
   display: flex;
   width: 100%;
@@ -11,9 +10,10 @@
     justify-content: space-between;
     padding: 0;
     max-width: 100rem;
-    width: 60rem;
+    width: 78rem;
   }
   li {  
+    position: relative;
     height: 4rem;
     padding: {
       top: 1.2rem; 
@@ -21,19 +21,7 @@
       right: .2rem;
     };   
   }
-  li:hover {
-    div {
-      // border-bottom: 1px solid black;
-      width: 120%!important;
-      position: absolute;
-      left: -10%;
-      top:-30%!important;
-      height: 2rem;
-      background-color: $default-color;   
-    
-    }    
-  }
-    a {
+  a {
     text-decoration: none;
     color: var(--main-nav-color);
     position: relative;
@@ -45,22 +33,24 @@
       width: 0%;
       transition: width .5s;
       top: 2.3rem;
+      position: absolute;
+      z-index: -1;
     }
-    @media screen and (max-width: $hdDesktop) {
-      top: -.1rem;
-    }
-    @media screen and (max-width: $smDesktopWidth) {
-      top: -.22rem;
-    }
-    @media screen and (max-width: $tableWidth) {
-      top: .03rem;
-    }
-  }  
+  } 
+  li:hover {    
+    div {  
+      width: 120%;
+      position: absolute;
+      left: -10%;
+      top:-30%!important;
+      height: 2rem;
+      background-color: $default-color;       
+    }        
+  } 
 }
 
 .active { 
   position: relative;
-
   div {
     height: 2rem;
     background-color: $default-color;  
@@ -71,4 +61,27 @@
     z-index: -1;
   }  
 }
+@media screen and (max-width: $hdDesktop) {
+ 
+}
+@media screen and (max-width: $smDesktopWidth) {
+     
+}
+@media screen and (max-width: $tableWidth) {
 
+  .active {   
+    div {    
+      width: 103%!important;     
+      left: -1%;      
+    }  
+  }
+  .nav {
+    li:hover {
+      div {  
+        width: 103%!important;        
+        left: -1%;           
+      }    
+    }
+  }
+
+}

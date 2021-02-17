@@ -33,33 +33,11 @@ export function  renderControls (controls, handler) {
         shouldValidate={!!targetControl.validation}
         touched={targetControl.touched}
         errorMessage={targetControl.errorMessage}
-        onChange={event => handler(event.target.value, targetControl ,i)}
+        onChange={event => handler(event.target.value, targetControl ,i, controls)}
       />
    </Auxillary>
     )
   })
-
-  
-
-  // const gettedControls = [...controls]; 
-  // return gettedControls.map((targetControl,index) => {     
-  //   return(
-  //     <Auxillary key={index}>
-  //       <Input
-  //         maxlength={targetControl.maxlength}
-  //         type={targetControl.type}
-  //         label={targetControl.label}
-  //         value={targetControl.value}
-  //         valid={targetControl.valid}
-  //         placeholder={targetControl.placeholder}
-  //         shouldValidate={!!targetControl.validation}
-  //         touched={targetControl.touched}
-  //         errorMessage={targetControl.errorMessage}
-  //         onChange={event => handler(event.target.value, index, gettedControls, targetControl)}
-  //       />
-  //    </Auxillary>
-  //   )
-  // }) 
 }
 
 export function  createEnrolleeFormControls (controlsName,state) { 

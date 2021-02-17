@@ -15,8 +15,7 @@ import {selectChangeHandler,selectSpecialtyHandler } from '../../utils/enrollees
 
 class Enrollee extends React.Component {
 
-  changeEnrolleHandler = (value, targetControl, controlId) => {    
-    console.log() 
+  changeEnrolleHandler = (value, targetControl, controlId) => {  
     const formControls = [...this.props.enrollerControls];         
     const control = formControls[controlId]   
 

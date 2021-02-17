@@ -10,12 +10,12 @@ class PopUp extends React.Component {
           <p>{this.props.text}</p>
           <Button
             onClick = {this.props.onAccept}
-            type="success"
+            type="signIn"
           >
             Да
           </Button>
           <Button
-            type="success"
+            type="signIn"
             onClick = {this.props.onRefuse}
           >
             Нет

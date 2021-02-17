@@ -2,6 +2,22 @@
 .select {
   margin-bottom: 1rem;
   margin-top: 1rem;
+  position: relative; 
+  &::after {
+    content: "▼";
+    padding: 0 8px;
+    font-size: 12px;
+    position: absolute;
+    right: -6px;
+    top: rem(35);
+    z-index: 1;
+    text-align: center;
+    width: 10%;
+    height: 100%;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+  
   label {
     margin:0 0 3px 0;
     padding: 0;   
@@ -9,7 +25,6 @@
     display: block;
     transition: box-shadow .3s; 
     color: var(--default-text-color);
-
   }
   select {  
     display: block;
@@ -27,13 +42,21 @@
     padding-left: .1rem;  
     transition: border-color .3s;
     background-color: white;
+    appearance: none;
+   
     &:focus{
       outline: none;
     }
     &:hover {
       border-color: $default-color;
     }  
+    // &::-ms-expand {
+    //   display: none;
+    //   background-color: white;
+    // }
+ 
   }
+  
   option {    
     background: transparent;
     border-radius: 2px;

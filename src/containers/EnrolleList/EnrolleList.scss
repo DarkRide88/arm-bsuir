@@ -33,3 +33,18 @@
     }
   }
 }
+
+.pen{
+  display: inline-block;
+  background-image: url(./images/pen.png);
+  background-size: 1.2rem 1.12rem;
+  height: 1.2rem;
+  width: 1.2rem;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: transform .3s;
+  &:hover {  
+    transform: scale(1.3);
+  }
+
+}

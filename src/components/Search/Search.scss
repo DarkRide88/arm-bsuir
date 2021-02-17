@@ -7,8 +7,7 @@
   input {
     border-radius: 1px;
     border-bottom: 1px solid black;
-    width: 100%;
-    // box-shadow: 1px 1px 3px 1px rgba(200,200,200, 0.2) inset;
+    width: 100%;    
     transition: border-color .3s;
     background-color: white;
     font-size: 1rem;
@@ -20,8 +19,7 @@
     }
   }   
   input[placeholder]{
-    padding: 1rem;
-    color: #ff9f9f;
+    padding: 1rem;   
     font-family: Verdana;
     &:focus::-webkit-input-placeholder {
       opacity: 0; 

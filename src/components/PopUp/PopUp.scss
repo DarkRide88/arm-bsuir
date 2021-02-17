@@ -1,3 +1,4 @@
+@import '../../assets/scss/app.scss';
 .popup {
   width: 100vw;
   height: 100vh;
@@ -10,13 +11,14 @@
     position: fixed;
     top: calc(50vh - 106px);
     left: calc(50vw - 195px);
-    background-color: #267373;
+    background-color: white;
     z-index: 100;
-    color: white;
+    color: var(--default-color);
     margin: 0 auto;
     text-align: center;
     p {
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
+      margin-top: .5rem;
     }
   }
 }

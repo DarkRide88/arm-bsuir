@@ -1,3 +1,4 @@
+@import '../../assets/scss/app.scss';
 .add-new-faculty {
   margin: 0 auto;
   margin-top: 1rem; 
@@ -10,15 +11,20 @@
   div {
     margin: 0 auto;    
     text-align: left;
+    
   }
   input {
-   width: 100%;
+   width: 60rem;
+   max-width: 100%;
+   background-color: white;  
   }
-  input[placeholder] {
-    padding: 1rem;
-    font-size: 1rem;
+
+  input[placeholder] {    
+   
+    font-size: .9rem;
     color: gray;
     font-family: Verdana;
+    margin: 0 auto;
   }
   input:nth-child(1) {
     padding: 20px;
@@ -29,13 +35,15 @@
     position: relative;
   }
   button {    
+    margin-top: 2rem;
     font-size: .7rem;
     font-style: normal;
     margin: 0;;
-    height: 2.2rem;   
+    
   }
 }
 .facultyName {  
+  margin-bottom: 2rem!important; 
   input {
     padding: 1rem;     
   }
@@ -43,7 +51,9 @@
 .specialities {
   display: flex;
   flex-wrap: wrap;
-  width: rem(1000);
+  max-width: rem(1000);
+  width: 100%;
+  justify-content: space-between;
   input {
     max-width: 400px;
     width: 400px;
@@ -60,6 +70,12 @@
   display: inline-block;
   margin-right: 1rem;
 }
-.speciality-container {
-  max-width: 400px;
+.speciality-container { 
+  margin-bottom: 1rem!important;
+  max-width: 430px;
+  background-color: $default-color;
+  padding: 1rem;
+  label {
+    color: white;
+  }
 }

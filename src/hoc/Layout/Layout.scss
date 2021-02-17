@@ -5,6 +5,9 @@ body {
 .layout {
   display: flex;
   flex-direction: column; 
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh );
   h1 {
     font-size: 1.2rem;
   }

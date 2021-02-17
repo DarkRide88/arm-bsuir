@@ -16,12 +16,10 @@
     box-shadow: inset 2px 2px 1px rgba(0,0,0,.3) ;
   }
   &:disabled {     
-    cursor:not-allowed;
-    // background: rgb(196, 191, 191);
+    cursor:not-allowed;   
   }
 }
-.success {
-  // background: $default-color;
+.success { 
   border-color: $default-color;
   color: $default-color;
   &:hover {
@@ -31,8 +29,7 @@
 .error {
   background: rgba(250, 87, 108, 1);  
 }
-.primary {
-  // background: $default-color;
+.primary { 
   border-color: $default-color;
   color: $default-color;
 }
@@ -43,20 +40,31 @@
   letter-spacing: 3px;
   position: relative;
   overflow: hidden;
+  transition: box-shadow .3s;
   &:after {
     background: $default-color;  
     transform: translateX(100%);
-    transition: transform .3s cubic-bezier(.16, .73, .58, .62) .3s;
+    transition: all .3s
+  }
+  &:hover {
+    box-shadow: -9px 10px 17px -8px rgba(0, 0, 0, 0.767);   
   }
 }
 .delete {
-  padding: 10px;
   background: none;
   border: none;
-  font-size: .8rem;
-  color: $default-color;
-  &:hover {
-    color: rgb(212, 85, 85);   
+  font-size: .87rem;
+  color:black;
+  transition: transform .2s;
+  padding: 0!important;
+  margin-left: 3px!important;
+  &:hover {  
+    transform: scale(1.3);
+  }
+  &:active {
+    border: none;
+    text-decoration: none;
+    box-shadow: none;
   }
 }
 

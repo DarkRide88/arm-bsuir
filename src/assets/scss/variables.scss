@@ -1,8 +1,9 @@
 :root {
   --maing-bg-color: white;
   --main-nav-color: black;
-  --default-color: rgb(241, 115, 115);
-  --default-text-color: black;
+  --default-color: #ff9f9f;
+  --default-text-color: black; 
+  --default-dataTr-color: rgb(241, 115, 115)
 }
 
 // Size
@@ -21,8 +22,6 @@ $defaultFont : "Subdex-Bold";
 $navigationFont: 'bebas-Bold';
 
 // Main color
-// $default-color           : #267373;
-
 $default-color           : rgb(241, 115, 115);
 $primary-color           : #ff9292;
 $default-color-hover     : rgb(247, 149, 149);
@@ -32,4 +31,3 @@ $light-color             : #999999;
 $purple-color            : #8854d0;
 
 
-$darkModColor            :#3e3e44

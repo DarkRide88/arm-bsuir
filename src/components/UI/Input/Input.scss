@@ -1,3 +1,4 @@
+@import '../../../assets/scss/app.scss';
 .input {
   margin-bottom: 15px;
   position: relative;
@@ -6,6 +7,7 @@
     padding: 0;
     display: block;
     font-weight: bold;
+    color: var(--default-text-color);
   }
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;

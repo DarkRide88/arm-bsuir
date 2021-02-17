@@ -23,7 +23,7 @@
       padding: 1rem;        
     }
     tbody tr {
-      background-color: #ff9f9f  ;
+      background-color: var(--default-dataTr-color)  ;
       
     }
     tbody tr:hover {

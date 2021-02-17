@@ -14,7 +14,8 @@ import styles from './DarkenMode.scss'
 
     if(this.state.toggleDarken) {   
       document.getElementById('animToggle').classList.remove(styles['activeWhite'])
-      document.getElementById('animToggle').classList.add(styles['activeDarken'])
+      document.getElementById('animToggle').classList.add(styles['activeDarken'])     
+
     } else {
       document.getElementById('animToggle').classList.remove(styles['activeDarken'])    
     }      
@@ -31,11 +32,15 @@ import styles from './DarkenMode.scss'
       let root = document.querySelector(':root')
       root.style.setProperty('--main-nav-color', 'white')      
       document.documentElement.style.setProperty("--main-nav-color", "white")
-      document.documentElement.style.setProperty("--default-text-color", "white")
-    } else {
-      document.documentElement.style.setProperty("--maing-bg-color", "white")
+      document.documentElement.style.setProperty("--default-text-color", "white")   
+     
+      document.documentElement.style.setProperty("--default-dataTr-color", "#64626b")
+    
+    
+    } else {  
       document.documentElement.style.setProperty("--main-nav-color", "black")
       document.documentElement.style.setProperty("--default-text-color", "black")
+      document.documentElement.style.setProperty("--default-dataTr-color", "rgb(241, 115, 115)")   
     }
    
   }

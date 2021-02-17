@@ -45,3 +45,14 @@
   background-color: white;
 }
 
+.white {
+  background-image: url(../../containers/EnrolleList/images/pen-white.png)!important;
+}
+
+@media screen and (max-width: $desktopWidth) { 
+  .DarkenMode {
+    top: calc(100vh - 6vh);
+    right: px
+  }
+
+}

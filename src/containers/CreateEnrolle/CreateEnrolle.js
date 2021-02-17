@@ -33,7 +33,7 @@ function random(min, max) {
 class CreateEnrolle extends React.Component {
 
   state = {
-    isFormValid: true,  
+    // isFormValid: true,  
     formControls: {
       enrollerControls:[...createFormControls(enrolleeControlsData)],
       subjectsControls:[...createFormControls(certificateControlsData)],   
@@ -51,7 +51,6 @@ class CreateEnrolle extends React.Component {
     enrollee.name= name
 
     let age = `2020-07-${random(15,31)}`
-    console.log(age)
     enrollerControls[1].value = age
     enrollee.age=age
 
@@ -70,8 +69,8 @@ class CreateEnrolle extends React.Component {
     this.props.updateEnrolleeData(enrollee)  
   
     this.props.checkIsFormValid(true)
-    this.setState({                
-    })
+    this.setState({})
+   
   }
   
   testCreateCertificate  () { 
@@ -84,10 +83,9 @@ class CreateEnrolle extends React.Component {
         enrollee.сertificate[mark.name]  =  randomMark
         
     })    
-    this.setState({         
-    })     
+   
     this.props.updateEnrolleeData(enrollee)
-
+    this.setState({})
   } 
 
 
@@ -102,55 +100,43 @@ class CreateEnrolle extends React.Component {
     this.props.history.push('/');     
   }
 
-  changeEnrolleHandler = (value, controlName, controls) => {  
-    const enrollee = this.props.enrollee
+  changeEnrolleHandler = (value, targetControl, controlId, controls) => {  
+    
+    
     const formControls = [...controls];
-    const control = formControls[controlName]
+    const control = formControls[controlId]
     control.touched = true
     control.value = value    
     control.valid = validate(value, control.validation)
-    enrollee.name=controls[0].value
-    enrollee.age=controls[1].value
-    enrollee.address=controls[2].value
-    enrollee.phoneNumber=controls[3].value
-    enrollee.passNumber=controls[4].value
+
+    const enrollee = {...this.props.enrollee}    
+    enrollee[targetControl.name] = targetControl.value 
+
+    formControls[controlId] = control
     this.props.updateEnrolleeData(enrollee)  
     let controlsToValidate = Object.assign({...this.state.formControls.enrollerControls},{...this.state.formControls.subjectsControls})
     let IsValid = validateEnrollee(controlsToValidate)
     this.props.checkIsFormValid(IsValid)
-    this.setState({                
-    })
+
+
+  
   }
 
-  changeCertificate = (value, controlName, controls) => { 
-    const enrollee = this.props.enrollee
+  changeCertificate = (value, targetControl, controlId, controls) => { 
+   
     const formControls = [...controls];
-    const control = formControls[controlName]
+    const control = formControls[controlId]
     control.touched = true
-    control.value = value     
-    formControls[controlName] = control  
+    control.value = value        
     control.valid = validate(value, control.validation)
-    enrollee.сertificate.math = controls[0].value
-    enrollee.сertificate.physics = controls[1].value
-    enrollee.сertificate.chemistry = controls[2].value
-    enrollee.сertificate.biology = controls[3].value
-    enrollee.сertificate.geography = controls[4].value
-    enrollee.сertificate.russianLang = controls[5].value
-    enrollee.сertificate.belLang = controls[6].value
-    enrollee.сertificate.belLitr = controls[7].value
-    enrollee.сertificate.russianLitr = controls[8].value
-    enrollee.сertificate.physicalEduc = controls[9].value
-    enrollee.сertificate.english = controls[10].value
-    enrollee.сertificate.historyBel = controls[11].value
-    enrollee.сertificate.historyWorld = controls[12].value
-    enrollee.сertificate.computerScince = controls[13].value
+  
+    const enrollee = {...this.props.enrollee}
+    enrollee.сertificate[targetControl.name] = targetControl.value
     this.props.updateEnrolleeData(enrollee)
+
     let controlsToValidate = Object.assign({...this.state.formControls.enrollerControls},{...this.state.formControls.subjectsControls})
     let IsValid = validateEnrollee(controlsToValidate)
     this.props.checkIsFormValid(IsValid)
-
-    this.setState({           
-    })
   } 
 
   setStartedFacultyData = (facultyName, speaciality) => {

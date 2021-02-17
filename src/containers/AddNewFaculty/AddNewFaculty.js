@@ -7,19 +7,18 @@ import {validate,validateForm} from '../../form/formFramework'
 import {createFormControls} from '../../utils/formControlsUtils'
 import {renderFacultyNameField} from '../../utils/facultiesHandlers'
 import * as firebase from 'firebase'
-import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { checkIsFormValid, updateShoudUpdateFacultiesStatus } from '../../store/actions/faculties'
 
 const faculty = [{label:'', type:'text',name:'facultyName', maxlength:'', placeholder:'Введите название факультета'}]
-const speciality = [
+const speciality = [ 
   {label:'Название специальности', type:'text',name:'name'},{label:'Количество мест',type:'text',name:'numberOfPlaces'},
-  {label:'Экзамен 1',type:'text',name:'exam1'}, {label:'Дата консультации',type:'date',name:'exam1ConsDate'},{label:'Дата сдачи',type:'date',name:'exam1ExamDate'},
-  {label:'Время консультации',type:'text',name:'exam1ConsTime'},{label:'Время сдачи',type:'text',name:'exam1ExamTime'},
-  {label:'Экзамен 2',type:'text',name:'exam2'},  {label:'Дата консультации',type:'date',name:'exam2ConsDate'},{label:'Дата сдачи',type:'date',name:'exam2ExamDate'},
-  {label:'Время консультации',type:'text',name:'exam2ConsTime'},{label:'Время сдачи',type:'text',name:'exam2ExamTime'},
-  {label:'Экзамен 3',type:'text',name:'exam3'}, {label:'Дата консультации',type:'date',name:'exam3ConsDate'},{label:'Дата сдачи',type:'date',name:'exam3ExamDate'},
-  {label:'Время консультации',type:'text',name:'exam3ConsTime'},{label:'Время сдачи',type:'text',name:'exam3ExamTime'},
+  {label:'Экзамен 1',type:'text',name:'exam1'}, {label:'Дата консультации',type:'date',name:'exam1DateCons'},{label:'Дата сдачи',type:'date',name:'exam1DateExam'},
+  {label:'Время консультации',type:'text',name:'exam1TimeCons', placeholder:'чч:мм'},{label:'Время сдачи',type:'text',name:'exam1TimeExam', placeholder:'чч:мм'},
+  {label:'Экзамен 2',type:'text',name:'exam2'},  {label:'Дата консультации',type:'date',name:'exam2DateCons'},{label:'Дата сдачи',type:'date',name:'exam2DateExam'},
+  {label:'Время консультации',type:'text',name:'exam2TimeCons', placeholder:'чч:мм'},{label:'Время сдачи',type:'text',name:'exam2TimeExam', placeholder:'чч:мм'},
+  {label:'Экзамен 3',type:'text',name:'exam3'}, {label:'Дата консультации',type:'date',name:'exam3DateCons'},{label:'Дата сдачи',type:'date',name:'exam3DateExam'},
+  {label:'Время консультации',type:'text',name:'exam3TimeCons', placeholder:'чч:мм'},{label:'Время сдачи',type:'text',name:'exam3TimeExam', placeholder:'чч:мм'},
 ]  
 
 class AddNewFaculty extends React.Component {
@@ -90,10 +89,9 @@ class AddNewFaculty extends React.Component {
                 let className 
                 if(control.name.length > 5 && control.name !== 'numberOfPlaces') {             
                   className = 'schedule-input'                  
-                }
+                }               
                 return(
-                  <Auxillary key={i}>
-                  
+                  <Auxillary key={i}>                  
                       <Input
                         maxlength={control.maxlength}
                         type={control.type}
@@ -152,21 +150,21 @@ class AddNewFaculty extends React.Component {
           </div>           
           <hr/>
           <Button 
-            type="success"
+            type="closing-button"
             onClick={this.addSpecialityHandler}
             disabled={this.state.isFormValid === false}
           >
-            Добавить специальность
+            <span>Добавить специальность</span>
           </Button>
-          <NavLink to='/'>
+          {/* <NavLink to='/'> */}
             <Button
-              type="success"
+              type="closing-button"
               onClick={this.addFacultyToBase}
               disabled={this.props.isFormValid === false}
             >
-              Добавить факультет в базу
+              <span>Добавить факультет в базу</span>
             </Button>       
-          </NavLink>
+          {/* </NavLink> */}
         </form>
       </div>
     )

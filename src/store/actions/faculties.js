@@ -6,13 +6,13 @@ import * as firebase from 'firebase'
 
 const facultyDefault = [['', 'text','facultyName', '', 'Введите название факультета']]   
 const specialityDefault = [
-  {label:'Название специальности',type:'text',name:'name'},{label:'Количество мест',type:'text',name:'numberOfPlaces'},
-  {label:'Экзамен 1',type:'text',name:'exam1'}, {label:'Дата консультации',type:'date',name:'exam1ConsDate'},{label:'Дата сдачи',type:'date',name:'exam1ExamDate'},
-  {label:'Время консультации',type:'text',name:'exam1ConsTime'},{label:'Время сдачи',type:'text',name:'exam1ExamTime'},
-  {label:'Экзамен 2',type:'text',name:'exam2'},  {label:'Дата консультации',type:'date',name:'exam2ConsDate'},{label:'Дата сдачи',type:'date',name:'exam2ExamDate'},
-  {label:'Время консультации',type:'text',name:'exam2ConsTime'},{label:'Время сдачи',type:'text',name:'exam2ExamTime'},
-  {label:'Экзамен 3',type:'text',name:'exam3'}, {label:'Дата консультации',type:'date',name:'exam3ConsDate'},{label:'Дата сдачи',type:'date',name:'exam3ExamDate'},
-  {label:'Время консультации',type:'text',name:'exam3ConsTime'},{label:'Время сдачи',type:'text',name:'exam3ExamTime'},
+  {label:'Название специальности', type:'text',name:'name'},{label:'Количество мест',type:'text',name:'numberOfPlaces'},
+  {label:'Экзамен 1',type:'text',name:'exam1'}, {label:'Дата консультации',type:'date',name:'exam1DateCons'},{label:'Дата сдачи',type:'date',name:'exam1DateExam'},
+  {label:'Время консультации',type:'text',name:'exam1TimeCons', placeholder:'чч:мм'},{label:'Время сдачи',type:'text',name:'exam1TimeExam', placeholder:'чч:мм'},
+  {label:'Экзамен 2',type:'text',name:'exam2'},  {label:'Дата консультации',type:'date',name:'exam2DateCons'},{label:'Дата сдачи',type:'date',name:'exam2DateExam'},
+  {label:'Время консультации',type:'text',name:'exam2TimeCons', placeholder:'чч:мм'},{label:'Время сдачи',type:'text',name:'exam2TimeExam', placeholder:'чч:мм'},
+  {label:'Экзамен 3',type:'text',name:'exam3'}, {label:'Дата консультации',type:'date',name:'exam3DateCons'},{label:'Дата сдачи',type:'date',name:'exam3DateExam'},
+  {label:'Время консультации',type:'text',name:'exam3TimeCons', placeholder:'чч:мм'},{label:'Время сдачи',type:'text',name:'exam3TimeExam', placeholder:'чч:мм'},
 ] 
    
     export function fetchFacultys() {     
@@ -87,12 +87,13 @@ const specialityDefault = [
          Object.keys(speciality).forEach(specialityName => {
         
           let specialityControl = createFormControls(specialityDefault)     
-         
+        
           specialityControl.map(control => {  
-            if(control.name === specialityName){            
+            if(control.name === specialityName){     
+              console.log(speciality[specialityName] )              
               control.valid = true
               control.touched = true
-              control.value = speciality[specialityName]  
+              control.value = speciality[specialityName]                
               arr1.push(control)       
             }           
             return 1

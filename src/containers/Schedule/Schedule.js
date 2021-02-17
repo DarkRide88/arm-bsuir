@@ -31,18 +31,18 @@ class Schedule extends React.Component{
               </tr>
               <tr>                      
                 <td>{speciality.exam1}</td>                                      
-                <td> {speciality.exam1ConsDate }</td>
-                <td> {speciality.exam1ConsTime}</td>                      
+                <td> {speciality.exam1DateCons }</td>
+                <td> {speciality.exam1TimeCons}</td>                      
               </tr>
               <tr>
                 <td>{speciality.exam2}</td>                     
-                <td>{speciality.exam2ConsDate }</td> 
-                <td>{speciality.exam2ConsTime}</td>        
+                <td>{speciality.exam2DateCons }</td> 
+                <td>{speciality.exam2TimeCons}</td>        
               </tr>
               <tr>
                 <td>{speciality.exam3}</td>                 
-                <td>{speciality.exam3ConsDate}</td> 
-                <td>{speciality.exam3ConsTime}</td>                     
+                <td>{speciality.exam3DateCons}</td> 
+                <td>{speciality.exam3TimeCons}</td>                     
               </tr>                       
             </FetchedDataTable>
             <FetchedDataTable
@@ -55,18 +55,18 @@ class Schedule extends React.Component{
               </tr>
               <tr>
                 <td>{speciality.exam1}</td>
-                <td>{speciality.exam1ExamDate }</td>
-                <td> {speciality.exam1ExamTime}</td>  
+                <td>{speciality.exam1DateExam }</td>
+                <td> {speciality.exam1TimeExam}</td>  
               </tr>
               <tr>
                 <td>{speciality.exam2}</td>
-                <td>{speciality.exam2ExamDate }</td>    
-                <td> {speciality.exam2ExamTime}</td>
+                <td>{speciality.exam2DateExam }</td>    
+                <td> {speciality.exam2TimeExam}</td>
               </tr>
               <tr>
                 <td>{speciality.exam3}</td>
-                <td>{speciality.exam3ExamDate }</td>  
-                <td>{speciality.exam3ExamTime}</td> 
+                <td>{speciality.exam3DateExam }</td>  
+                <td>{speciality.exam3TimeExam}</td> 
               </tr>
             </FetchedDataTable>  
           </Auxillary>             
